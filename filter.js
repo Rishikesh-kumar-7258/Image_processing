@@ -20,3 +20,24 @@ export const toGrayscale = (imageData) => {
 
     return new_imgdata;
 }
+
+export const toWarm = (imageData) => {
+    let rgb_val = imageData.data;
+    let new_imgdata = new ImageData(imageData.width, imageData.height);
+    let new_rgb_val = new_imgdata.data;
+
+    // Code for warm color
+
+    return new_imgdata;
+}
+
+export const toCool = (imageData) => {
+
+    let rgb_val = imageData.data;
+    let new_imgdata = new ImageData(imageData.width, imageData.height);
+    let new_rgb_val = new_imgdata.data;
+
+    // Code for cool color
+
+    return new_imgdata;
+}
