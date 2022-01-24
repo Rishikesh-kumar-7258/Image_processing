@@ -31,11 +31,11 @@ file.addEventListener('change', (e) => {
 
 let button = document.querySelector('button');
 button.addEventListener('click', function() {
-    console.log(image_data);
     let new_imgdata = toGrayscale(image_data);
-    console.log(new_imgdata);
 
     let canvas = document.querySelector('#canvas2');
+    canvas.width = image_data.width;
+    canvas.height = image_data.height;
     let ctx = canvas.getContext('2d');
     ctx.putImageData(new_imgdata, 0, 0);
 
