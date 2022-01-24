@@ -23,20 +23,26 @@
 <body>
 
     <div class="container-fluid">
-        <div class="row">
-            <canvas id="canvas1" class="col-12 col-md-6"></canvas>
-            <canvas id="canvas2" class="col-12 col-md-6"></canvas>
+        <div class="row mt-3 text-center">
+            <div class="col-12 border">
+                <p>Uploaded Image</p>
+                <canvas id="canvas1"></canvas>
+            </div>
+            <div class="col-12 border">
+                <p>Converted Image</p>
+                <canvas id="canvas2"></canvas>
+            </div>
+            
             <div class="col-12">
-                <input type="file" name="img" id="img">
+                <label for="img">Upload your Image here</label>
+                <input type="file" name="img" id="img" class="form-control">
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-12">
-                <button class="btn btn-success">Upload Image</button>
-            </div>
-            <div class="col-12">
-                <button class="btn btn-success">Grayscale</button>
+                <button class="btn btn-success" id="upload">Upload Image</button>
+                <button class="btn btn-success" id="grayscale">Grayscale</button>
             </div>
         </div>
     </div>

@@ -1,43 +1,43 @@
 "use strict";
 export const toGrayscale = (imageData) => {
 
-    let rgb_val = imageData.data;
-    let new_imgdata = new ImageData(imageData.width, imageData.height);
-    let new_rgb_val = new_imgdata.data;
+    let RGBVal = imageData.data;
+    let newImageData = new ImageData(imageData.width, imageData.height);
+    let newRGBVal = newImageData.data;
 
-    for (let i = 0; i < rgb_val.length; i += 4) 
+    for (let i = 0; i < RGBVal.length; i += 4) 
     {
-        let r = rgb_val[i];
-        let g = rgb_val[i + 1];
-        let b = rgb_val[i + 2];
+        let r = RGBVal[i];
+        let g = RGBVal[i + 1];
+        let b = RGBVal[i + 2];
 
         let gray = (r + g + b) / 3;
-        new_rgb_val[i] = gray;
-        new_rgb_val[i + 1] = gray;
-        new_rgb_val[i + 2] = gray;
-        new_rgb_val[i + 3] = 255;
+        newRGBVal[i] = gray;
+        newRGBVal[i + 1] = gray;
+        newRGBVal[i + 2] = gray;
+        newRGBVal[i + 3] = 255;
     }
 
-    return new_imgdata;
+    return newImageData;
 }
 
 export const toWarm = (imageData) => {
-    let rgb_val = imageData.data;
-    let new_imgdata = new ImageData(imageData.width, imageData.height);
-    let new_rgb_val = new_imgdata.data;
+    let RGBVal = imageData.data;
+    let newImageData = new ImageData(imageData.width, imageData.height);
+    let newRGBVal = newImageData.data;
 
     // Code for warm color
 
-    return new_imgdata;
+    return newImageData;
 }
 
 export const toCool = (imageData) => {
 
-    let rgb_val = imageData.data;
-    let new_imgdata = new ImageData(imageData.width, imageData.height);
-    let new_rgb_val = new_imgdata.data;
+    let RGBVal = imageData.data;
+    let newImageData = new ImageData(imageData.width, imageData.height);
+    let newRGBVal = newImageData.data;
 
     // Code for cool color
 
-    return new_imgdata;
+    return newImageData;
 }
