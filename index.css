@@ -1,4 +1,4 @@
-#brightness{
+input{
     width : 100%;
 }
 input[type="range"]::-moz-range-track {

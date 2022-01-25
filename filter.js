@@ -15,29 +15,42 @@ export const toGrayscale = (imageData) => {
         newRGBVal[i] = gray;
         newRGBVal[i + 1] = gray;
         newRGBVal[i + 2] = gray;
-        newRGBVal[i + 3] = 255;
+        newRGBVal[i + 3] = RGBVal[i + 3];
     }
 
     return newImageData;
 }
 
-export const toWarm = (imageData) => {
+export const toWarm = (imageData, value) => {
+    
     let RGBVal = imageData.data;
     let newImageData = new ImageData(imageData.width, imageData.height);
     let newRGBVal = newImageData.data;
 
-    // Code for warm color
+    for (let i = 0; i < RGBVal.length; i += 4)
+    {
+        newRGBVal[i] = trucate(RGBVal[i] + value);
+        newRGBVal[i+1] = RGBVal[i+1];
+        newRGBVal[i + 2] = RGBVal[i + 2];
+        newRGBVal[i + 3] = RGBVal[i+3];
+    }
 
     return newImageData;
 }
 
-export const toCool = (imageData) => {
+export const toCool = (imageData, value) => {
 
     let RGBVal = imageData.data;
     let newImageData = new ImageData(imageData.width, imageData.height);
     let newRGBVal = newImageData.data;
 
-    // Code for cool color
+    for (let i = 0; i < RGBVal.length; i += 4)
+    {
+        newRGBVal[i] = RGBVal[i];
+        newRGBVal[i+1] = RGBVal[i+1];
+        newRGBVal[i + 2] = trucate(RGBVal[i + 2] + value);
+        newRGBVal[i + 3] = RGBVal[i+3];
+    }
 
     return newImageData;
 }

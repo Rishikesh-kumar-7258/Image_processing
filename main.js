@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, brightness } from "./filter.js";
+import { toGrayscale, brightness, toCool, toWarm } from "./filter.js";
 
 // console.log("Image processing");
 
@@ -88,6 +88,38 @@ brightnessBtn.addEventListener('change', (e) => {
         // Getting the modified, according to brightness function, image data
         let newImageData = brightness(imageData, parseInt(e.target.value));
 
+        // Setting the width and height of canvas according to the image size
+        canvas2.width = imageData.width;
+        canvas2.height = imageData.height;
+    
+        // Drawing the image on canvas
+        ctx2.putImageData(newImageData, 0, 0);
+    
+})
+
+// for changing cool
+let coolBtn = document.querySelector('#cool');
+coolBtn.addEventListener('change', (e) => {
+    
+        // Getting the modified, according to cool function, image data
+        let newImageData = toCool(imageData, parseInt(e.target.value));
+    
+        // Setting the width and height of canvas according to the image size
+        canvas2.width = imageData.width;
+        canvas2.height = imageData.height;
+    
+        // Drawing the image on canvas
+        ctx2.putImageData(newImageData, 0, 0);
+    
+})
+
+// for changing cool
+let warmBtn = document.querySelector('#warm');
+warmBtn.addEventListener('change', (e) => {
+    
+        // Getting the modified, according to cool function, image data
+        let newImageData = toWarm(imageData, parseInt(e.target.value));
+    
         // Setting the width and height of canvas according to the image size
         canvas2.width = imageData.width;
         canvas2.height = imageData.height;
