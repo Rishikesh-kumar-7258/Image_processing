@@ -44,6 +44,13 @@
                 <button class="btn btn-success" id="upload">Upload Image</button>
                 <button class="btn btn-success" id="grayscale">Grayscale</button>
             </div>
+            <div class="col-12">
+                <div class="w-50">
+                    <label for="brightness" class="form-label">Brightness</label>
+                    <input list="brightnessList" type="range" name="brightness" id="brightness" min="-255" max="255" step="1" value="0">
+                    <datalist id="brightnessList"></datalist>
+                </div>
+            </div>
         </div>
     </div>
 

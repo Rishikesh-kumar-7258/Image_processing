@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale } from "./filter.js";
+import { toGrayscale, brightness } from "./filter.js";
 
 // console.log("Image processing");
 
@@ -39,6 +39,16 @@ file.addEventListener('change', (e) => {
     }
 })
 
+// populating the datalist
+let brightnessList = document.querySelector("#brightnessList");
+for (let i = -255; i <= 255; i+=10)
+{
+    let option = document.createElement("option");
+    option.value = i;
+    option.innerHTML = i;
+    brightnessList.appendChild(option);
+}
+
 // Upload btn function
 let uploadBtn = document.querySelector("#upload");
 uploadBtn.addEventListener("click", () => {
@@ -69,4 +79,20 @@ grayscaleBtn.addEventListener('click', function() {
     // Drawing the image on canvas
     ctx2.putImageData(newImageData, 0, 0);
 
+})
+
+// For changing the brightness
+let brightnessBtn = document.querySelector('#brightness');
+brightnessBtn.addEventListener('change', (e) => {
+    
+        // Getting the modified, according to brightness function, image data
+        let newImageData = brightness(imageData, parseInt(e.target.value));
+
+        // Setting the width and height of canvas according to the image size
+        canvas2.width = imageData.width;
+        canvas2.height = imageData.height;
+    
+        // Drawing the image on canvas
+        ctx2.putImageData(newImageData, 0, 0);
+    
 })
