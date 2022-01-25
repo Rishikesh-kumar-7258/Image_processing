@@ -22,7 +22,7 @@ export const toGrayscale = (imageData) => {
 }
 
 export const toWarm = (imageData, value) => {
-    
+
     let RGBVal = imageData.data;
     let newImageData = new ImageData(imageData.width, imageData.height);
     let newRGBVal = newImageData.data;
@@ -72,4 +72,26 @@ export const brightness = (imageData, value) => {
         return newImageData;
 }
 
-export const trucate = (value) => Math.min(255, Math.max(0, value));
+export const toWeightedGrayscale = (imageData) => {
+
+    let RGBVal = imageData.data;
+    let newImageData = new ImageData(imageData.width, imageData.height);
+    let newRGBVal = newImageData.data;
+
+    for (let i = 0; i < RGBVal.length; i += 4) 
+    {
+        let r = RGBVal[i];
+        let g = RGBVal[i + 1];
+        let b = RGBVal[i + 2];
+
+        let gray = 0.3 * r + 0.59 * g + 0.11 * b;
+        newRGBVal[i] = gray;
+        newRGBVal[i + 1] = gray;
+        newRGBVal[i + 2] = gray;
+        newRGBVal[i + 3] = RGBVal[i + 3];
+    }
+
+    return newImageData;
+}
+
+const trucate = (value) => Math.min(255, Math.max(0, value));
