@@ -32,7 +32,7 @@
                 <p>Converted Image</p>
                 <canvas id="canvas2"></canvas>
             </div>
-            
+
             <div class="col-12">
                 <label for="img">Upload your Image here</label>
                 <input type="file" name="img" id="img" class="form-control">
@@ -44,11 +44,13 @@
                 <button class="btn btn-success" id="upload">Upload Image</button>
                 <button class="btn btn-success" id="grayscale">Grayscale</button>
                 <button class="btn btn-success" id="weightedGrayscale">weightedGrayscale</button>
+                <button class="btn btn-success" id="blackWhite">blackWhite</button>
             </div>
             <div class="col-6">
-                    <label for="brightness" class="form-label">Brightness</label>
-                    <input list="brightnessList" type="range" name="brightness" id="brightness" min="-255" max="255" step="1" value="0">
-                    <datalist id="brightnessList"></datalist>
+                <label for="brightness" class="form-label">Brightness</label>
+                <input list="brightnessList" type="range" name="brightness" id="brightness" min="-255" max="255"
+                    step="1" value="0">
+                <datalist id="brightnessList"></datalist>
             </div>
             <div class="col-6">
                 <label for="cool" class="form-label">Cool</label>
