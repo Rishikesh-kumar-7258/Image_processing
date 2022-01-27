@@ -113,3 +113,14 @@ export const toBlackWhite = (imageData) => {
 }
 
 const trucate = (value) => Math.min(255, Math.max(0, value));
+
+const mean = (arr) => arr.reduce((a, b) => a + b, 0) / arr.length;
+
+const variance = (arr) => {
+
+    let m = mean(arr);
+
+    let s = arr.reduce((a, b) => a + (b-m)*(b - m)) / arr.length;
+
+    return s;
+}
