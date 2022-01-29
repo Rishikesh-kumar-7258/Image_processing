@@ -16,7 +16,7 @@ let ctx1 = canvas1.getContext('2d');
 
 // Cavas2 element to draw the processed image
 let canvas2 = document.querySelector('#canvas2');
-let ctx2 = canvas2.getContext('2d');
+// let ctx1 = canvas2.getContext('2d');
 
 // Variable to store the uploaded image
 let uploadedImg = new Image();
@@ -59,15 +59,16 @@ uploadBtn.addEventListener("click", () => {
     canvas1.width = uploadedImg.width;
     canvas1.height = uploadedImg.height;
 
-    canvas2.width = uploadedImg.width;
-    canvas2.height = uploadedImg.height;
-
     // Drawing image on canvas
     ctx1.drawImage(uploadedImg, 0, 0);
 
     // Getting image data from the image
     originalImageData = ctx1.getImageData(0, 0, uploadedImg.width, uploadedImg.height);
     filteredImageData = originalImageData;
+
+    brightnessValue = 0;
+    coolValue = 0;
+    warmValue = 0;
 })
 
 
@@ -90,13 +91,13 @@ uploadBtn.addEventListener("click", () => {
 
 // Coverting the image to grayscale when clicking on grayscale button
 let grayscaleBtn = document.querySelector('#grayscale');
-grayscaleBtn.addEventListener('click', function() {
+grayscaleBtn.addEventListener('click', function () {
 
     // Getting the modified, according to grayscale function, image data
     filteredImageData = toGrayscale(filteredImageData);
 
     // Drawing the image on canvas
-    ctx2.putImageData(filteredImageData, 0, 0);
+    ctx1.putImageData(filteredImageData, 0, 0);
 
 })
 
@@ -108,7 +109,7 @@ weightedGrayscale.addEventListener('click', (e) => {
     filteredImageData = toWeightedGrayscale(filteredImageData);
 
     // Drawing the image on canvas
-    ctx2.putImageData(filteredImageData, 0, 0);
+    ctx1.putImageData(filteredImageData, 0, 0);
 })
 
 // For changing the brightness
@@ -123,7 +124,7 @@ brightnessBtn.addEventListener('change', (e) => {
     brightnessValue = currentBrightness;
 
     // Drawing the image on canvas
-    ctx2.putImageData(filteredImageData, 0, 0);
+    ctx1.putImageData(filteredImageData, 0, 0);
 
 })
 
@@ -141,7 +142,7 @@ coolBtn.addEventListener('change', (e) => {
     coolValue = currentCoolValue;
 
     // Drawing the image on canvas
-    ctx2.putImageData(filteredImageData, 0, 0);
+    ctx1.putImageData(filteredImageData, 0, 0);
 
 })
 
@@ -158,19 +159,19 @@ warmBtn.addEventListener('change', (e) => {
     warmValue = currentWarmValue;
 
     // Drawing the image on canvas
-    ctx2.putImageData(filteredImageData, 0, 0);
+    ctx1.putImageData(filteredImageData, 0, 0);
 
 })
 
 //Black and White filter
 let blackWhiteBtn = document.querySelector('#blackWhite');
-blackWhiteBtn.addEventListener('click', function() {
+blackWhiteBtn.addEventListener('click', function () {
 
     // Getting the modified, according to grayscale function, image data
     filteredImageData = toBlackWhite(filteredImageData, 100);
 
     // Drawing the image on canvas
-    ctx2.putImageData(filteredImageData, 0, 0);
+    ctx1.putImageData(filteredImageData, 0, 0);
 
 })
 
@@ -178,16 +179,25 @@ blackWhiteBtn.addEventListener('click', function() {
 
 //Sketch filter
 let sketch = document.querySelector('#sketch');
-sketch.addEventListener('click', function() {
+sketch.addEventListener('click', function () {
 
     // Getting the modified, according to grayscale function, image data
-    let newImageData = toSketch(imageData);
-
-    // Setting the width and height of canvas according to the image size
-    canvas2.width = imageData.width;
-    canvas2.height = imageData.height;
+    filteredImageData = toSketch(filteredImageData);
 
     // Drawing the image on canvas
-    ctx2.putImageData(newImageData, 0, 0);
+    ctx1.putImageData(filteredImageData, 0, 0);
 
+})
+
+// removing all filters
+let originalImageBtn = document.querySelector("#original");
+originalImageBtn.addEventListener('click', (e) => {
+
+    filteredImageData = originalImageData;
+
+    ctx1.putImageData(filteredImageData, 0, 0);
+
+    brightnessValue = 0;
+    coolValue = 0;
+    warmValue = 0;
 })
