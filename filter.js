@@ -114,48 +114,48 @@ export const toBlackWhite = (imageData, threshold) => {
 }
 
 
-// export const toSketch = (imageData) => {
-//     let RGBVal = imageData.data;
-//     let newImageData = new ImageData(imageData.width, imageData.height);
+export const toSketch = (imageData) => {
+    let RGBVal = imageData.data;
+    let newImageData = new ImageData(imageData.width, imageData.height);
 
-//     let newRGBVal = newImageData.data;
-//     for (let i = 0; i < RGBVal.length; i += 4) {
-//         let avg = (RGBVal[i] + RGBVal[i + 1] + RGBVal[i + 2]) / 3;
-//         if ( avg > 200)
-//         {
-//             newRGBVal[i] = 255;
-//             newRGBVal[i + 1] = 255;
-//             newRGBVal[i + 2] = 255;
-//             newRGBVal[i + 3] = RGBVal[i + 3];
-//         }
-//         else if (avg > 150)
-//         {
-//             newRGBVal[i] = 200;
-//             newRGBVal[i + 1] = 200;
-//             newRGBVal[i + 2] = 200;
-//             newRGBVal[i + 3] = RGBVal[i + 3];
-//         }
-//         else if (avg > 100) {
-//             newRGBVal[i] = 155;
-//             newRGBVal[i + 1] = 155;
-//             newRGBVal[i + 2] = 155;
-//             newRGBVal[i + 3] = RGBVal[i + 3];
-//         }
-//         else if (avg > 50) {
-//             newRGBVal[i] = 100;
-//             newRGBVal[i + 1] = 100;
-//             newRGBVal[i + 2] = 100;
-//             newRGBVal[i + 3] = RGBVal[i + 3];
-//         }      
-//         else {
-//             newRGBVal[i] = 0;
-//             newRGBVal[i + 1] = 0;
-//             newRGBVal[i + 2] = 0;
-//             newRGBVal[i + 3] = RGBVal[i + 3];
-//         }
-//     }
-//     return newImageData;
-// }
+    let newRGBVal = newImageData.data;
+    for (let i = 0; i < RGBVal.length; i += 4) {
+        let avg = (RGBVal[i] + RGBVal[i + 1] + RGBVal[i + 2]) / 3;
+        if ( avg > 200)
+        {
+            newRGBVal[i] = 255;
+            newRGBVal[i + 1] = 255;
+            newRGBVal[i + 2] = 255;
+            newRGBVal[i + 3] = RGBVal[i + 3];
+        }
+        else if (avg > 150)
+        {
+            newRGBVal[i] = 200;
+            newRGBVal[i + 1] = 200;
+            newRGBVal[i + 2] = 200;
+            newRGBVal[i + 3] = RGBVal[i + 3];
+        }
+        else if (avg > 100) {
+            newRGBVal[i] = 155;
+            newRGBVal[i + 1] = 155;
+            newRGBVal[i + 2] = 155;
+            newRGBVal[i + 3] = RGBVal[i + 3];
+        }
+        else if (avg > 50) {
+            newRGBVal[i] = 100;
+            newRGBVal[i + 1] = 100;
+            newRGBVal[i + 2] = 100;
+            newRGBVal[i + 3] = RGBVal[i + 3];
+        }      
+        else {
+            newRGBVal[i] = 0;
+            newRGBVal[i + 1] = 0;
+            newRGBVal[i + 2] = 0;
+            newRGBVal[i + 3] = RGBVal[i + 3];
+        }
+    }
+    return newImageData;
+}
 
 const trucate = (value) => Math.min(255, Math.max(0, value));
 

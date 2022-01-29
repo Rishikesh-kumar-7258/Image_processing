@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite } from "./filter.js";
+import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toSketch } from "./filter.js";
 
 // console.log("Image processing");
 
@@ -171,5 +171,23 @@ blackWhiteBtn.addEventListener('click', function() {
 
     // Drawing the image on canvas
     ctx2.putImageData(filteredImageData, 0, 0);
+
+})
+
+
+
+//Sketch filter
+let sketch = document.querySelector('#sketch');
+sketch.addEventListener('click', function() {
+
+    // Getting the modified, according to grayscale function, image data
+    let newImageData = toSketch(imageData);
+
+    // Setting the width and height of canvas according to the image size
+    canvas2.width = imageData.width;
+    canvas2.height = imageData.height;
+
+    // Drawing the image on canvas
+    ctx2.putImageData(newImageData, 0, 0);
 
 })
