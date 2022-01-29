@@ -89,7 +89,7 @@ export const toWeightedGrayscale = (imageData) => {
     return newImageData;
 }
 
-export const toBlackWhite = (imageData) => {
+export const toBlackWhite = (imageData, threshold) => {
     let RGBVal = imageData.data;
     let newImageData = new ImageData(imageData.width, imageData.height);
 
@@ -97,7 +97,7 @@ export const toBlackWhite = (imageData) => {
     for (let i = 0; i < RGBVal.length; i += 4) {
         let avg = (RGBVal[i] + RGBVal[i + 1] + RGBVal[i + 2]) / 3;
         
-        if (avg > 100) {
+        if (avg > threshold) {
             newRGBVal[i] = 255;
             newRGBVal[i + 1] = 255;
             newRGBVal[i + 2] = 255;

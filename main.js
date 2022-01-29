@@ -6,6 +6,9 @@ import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWh
 const file = document.getElementById("img"); // File input
 let originalImageData; // Variable to store the image data of the uploded file
 let filteredImageData; // Variable to store the image data of the filtered image
+let brightnessValue = 0; // variable to store the currentBrightness value
+let coolValue = 0; // variable to store the currentCool value
+let warmValue = 0; // variable to store the current warm value
 
 // canvas1 element to draw the uploaded image
 let canvas1 = document.querySelector('#canvas1');
@@ -112,8 +115,12 @@ weightedGrayscale.addEventListener('click', (e) => {
 let brightnessBtn = document.querySelector('#brightness');
 brightnessBtn.addEventListener('change', (e) => {
 
+    // Getting the current brightness value
+    let currentBrightness = parseInt(e.target.value);
+
     // Getting the modified, according to brightness function, image data
-    filteredImageData = brightness(filteredImageData, parseInt(e.target.value));
+    filteredImageData = brightness(filteredImageData, currentBrightness - brightnessValue);
+    brightnessValue = currentBrightness;
 
     // Drawing the image on canvas
     ctx2.putImageData(filteredImageData, 0, 0);
@@ -125,10 +132,13 @@ let warmBtn = document.querySelector('#warm');
 let coolBtn = document.querySelector('#cool');
 coolBtn.addEventListener('change', (e) => {
 
-    warmBtn.value = 0;
+    // warmBtn.value = 0;
+    // Getting the current cool value
+    let currentCoolValue = parseInt(e.target.value);
 
     // Getting the modified, according to cool function, image data
-    filteredImageData = toCool(filteredImageData, parseInt(e.target.value));
+    filteredImageData = toCool(filteredImageData, currentCoolValue - coolValue);
+    coolValue = currentCoolValue;
 
     // Drawing the image on canvas
     ctx2.putImageData(filteredImageData, 0, 0);
@@ -138,10 +148,14 @@ coolBtn.addEventListener('change', (e) => {
 // for changing cool
 warmBtn.addEventListener('change', (e) => {
 
-    coolBtn.value = 0;
+    // coolBtn.value = 0;
+    // Getting the current warm value
+    let currentWarmValue = parseInt(e.target.value);
 
     // Getting the modified, according to cool function, image data
-    filteredImageData = toWarm(filteredImageData, parseInt(e.target.value));
+    filteredImageData = toWarm(filteredImageData, currentWarmValue - warmValue);
+
+    warmValue = currentWarmValue;
 
     // Drawing the image on canvas
     ctx2.putImageData(filteredImageData, 0, 0);
@@ -153,7 +167,7 @@ let blackWhiteBtn = document.querySelector('#blackWhite');
 blackWhiteBtn.addEventListener('click', function() {
 
     // Getting the modified, according to grayscale function, image data
-    filteredImageData = toBlackWhite(filteredImageData);
+    filteredImageData = toBlackWhite(filteredImageData, 100);
 
     // Drawing the image on canvas
     ctx2.putImageData(filteredImageData, 0, 0);
