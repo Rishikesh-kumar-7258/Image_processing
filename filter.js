@@ -120,7 +120,7 @@ const variance = (arr) => {
 
     let m = mean(arr);
 
-    let s = arr.reduce((a, b) => a + (b-m)*(b - m)) / arr.length;
+    let s = arr.reduce((a, b) => a + (b - m) * (b - m)) / arr.length;
 
     return s;
 }
