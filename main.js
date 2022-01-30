@@ -52,11 +52,15 @@ let uploadBtn = document.querySelector("#upload");
 uploadBtn.addEventListener("click", () => {
 
     // Drawing image on canvas
-    let ratio = canvas1.width / uploadedImg.width;
-    canvas1.width = uploadedImg.width * ratio;
-    canvas1.height = uploadedImg.height * ratio + 10;
+    // let ratio = canvas1.width / uploadedImg.width;
+    // canvas1.width = uploadedImg.width * ratio;
+    // canvas1.height = uploadedImg.height * ratio + 10;
 
-    ctx1.drawImage(uploadedImg, 0, 0, canvas1.width, canvas1.height);
+    canvas1.width = uploadedImg.width;
+    canvas1.height = uploadedImg.height;
+
+    // ctx1.drawImage(uploadedImg, 0, 0, canvas1.width, canvas1.height);
+    ctx1.drawImage(uploadedImg, 0, 0);
 
     // Getting image data from the image
     originalImageData = ctx1.getImageData(0, 0, uploadedImg.width, uploadedImg.height);
@@ -178,7 +182,7 @@ let sketch = document.querySelector('#sketch');
 sketch.addEventListener('click', function () {
 
     // Getting the modified, according to grayscale function, image data
-    filteredImageData = toSketch(filteredImageData);
+    filteredImageData = toSketch(originalImageData);
 
     // Drawing the image on canvas
     ctx1.putImageData(filteredImageData, 0, 0);
