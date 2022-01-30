@@ -157,18 +157,7 @@ export const toSketch = (imageData) => {
     return newImageData;
 }
 
-const trucate = (value) => Math.min(255, Math.max(0, value));
 
-const mean = (arr) => arr.reduce((a, b) => a + b, 0) / arr.length;
-
-const variance = (arr) => {
-
-    let m = mean(arr);
-
-    let s = arr.reduce((a, b) => a + (b-m)*(b - m)) / arr.length;
-
-    return s;
-}
 
 const RGBtoHSL = (RGBArray) => {
 
@@ -201,4 +190,87 @@ const RGBtoHSL = (RGBArray) => {
     }
 
     return HSLArray;
+}
+
+// Frost image filter (currently on hold first, implement mean and gaussian blur which will give idea about frost filter)
+const toFrost = (imageData, d=1, wSize=7) => {
+    let RGBVal = imageData.data;
+    let newImageData = new ImageData(imageData.width, imageData.height);
+
+    let n = RGBVal.length;
+
+    s = distanceFromCenter(wSize);
+
+    for (let i = 0; i < n; i+=4)
+    {
+        for (let j = 0; j < n; j+=4)
+        {
+            let tempWindow = [];
+            for (let k = i; k < i + 4*wSize; k+=4)
+            {
+                for (let l = j; k < j + 4*wSize; k+=4)
+                {
+                    tempWindow.push(RGBVal[i]);
+                    tempWindow.push(RGBVal[i+1]);
+                    tempWindow.push(RGBVal[i+2]);
+                    tempWindow.push(RGBVal[i+3]);
+                }
+            }
+
+            let windowMean = mean(tempWindow);
+            let wVariance = variance(tempWindow);
+            let windowB = d * (wVariance / (windowMean*windowMean));
+
+            for (let k = i; k < i + 4*wSize; k+=4)
+            {
+                for (let l = j; k < j + 4*wSize; k+=4)
+                {
+                    tempWindow.push(RGBVal[i]);
+                    tempWindow.push(RGBVal[i+1]);
+                    tempWindow.push(RGBVal[i+2]);
+                    tempWindow.push(RGBVal[i+3]);
+                }
+            }
+        }
+    }
+}
+
+//=============================== Utility functions ========================================
+
+// function to trucate the value between 0 and 255
+const trucate = (value) => Math.min(255, Math.max(0, value));
+
+// Function to find the mean of a matrix
+const mean = (arr) => arr.reduce((a, b) => a + b, 0) / arr.length;
+
+// function to find the variance of a matrix
+const variance = (arr) => {
+
+    let m = mean(arr);
+
+    let s = arr.reduce((a, b) => a + (b-m)*(b - m)) / arr.length;
+
+    return s;
+}
+
+// function to find weight of a pixel
+const weight = (b, s) => Math.exp(-b*s);
+
+// function to find the distance of each pixel from center of the array
+const distanceFromCenter = (size) => {
+
+    let center = size / 2 - 1;
+    let arr = [];
+
+    for (let i = 0; i < n; i++)
+    {
+        let temp = [];
+        for (let j = 0; j < n; j++)
+        {
+            temp.push(Math.sqrt(Math.pow(i-c, 2), Math.pow(j-c, 2)));
+        }
+
+        arr.push(temp);
+        temp.clear();
+    }
 }
