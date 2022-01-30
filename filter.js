@@ -156,7 +156,6 @@ export const toSketch = (imageData) => {
 }
 
 
-
 const RGBtoHSL = (RGBArray) => {
 
     let HSLArray = [];
@@ -190,7 +189,11 @@ const RGBtoHSL = (RGBArray) => {
 }
 
 // Mean blur filter
-export const toMeanBlur = (imageData) => {
+export const toMeanBlur = (imageData, windowSize) => {
+
+    // todo have to improve the algorithm for large windowSize
+
+    windowSize = windowSize < 1 ? 1 : windowSize;
 
     let RGBVal = imageData.data;
     let width = imageData.width;
@@ -199,21 +202,17 @@ export const toMeanBlur = (imageData) => {
     let newImageData = new ImageData(width, height);
     let newRGBval = newImageData.data;
 
-    let windowSize = 15;
-
     for (let i = 0; i < height - windowSize - 1; i++) {
         for (let j = 0; j < width - windowSize - 1; j++) {
             let currSum = getSum(RGBVal, i, j, windowSize, width, height);
-
-            // console.log(currSum, i);
-            // break;
 
             for (let i = 0; i < currSum.length; i++) 
             {
                 currSum[i] /= windowSize * windowSize;
                 Math.round(currSum[i]);
             }
-            let p = ((i + (windowSize / 2)) * width * 4) + ((j + (windowSize / 2)) * 4);
+
+            let p = ((i + Math.floor(windowSize/2)) * width * 4) + ((j + Math.floor(windowSize/2)) * 4);
 
             newRGBval[p] = currSum[0];
             newRGBval[p + 1] = currSum[1];
@@ -225,6 +224,7 @@ export const toMeanBlur = (imageData) => {
     }
 
     return newImageData;
+
 }
 
 // Frost image filter (currently on hold first, implement mean and gaussian blur which will give idea about frost filter)

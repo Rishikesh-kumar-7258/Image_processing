@@ -210,13 +210,12 @@ downloadBtn.addEventListener("click", (e) => {
 
 // mean Blur filter
 let meanBlurBtn = document.querySelector("#meanBlur");
-meanBlurBtn.addEventListener("click", () => {
+meanBlurBtn.addEventListener("change", (e) => {
     
         // Getting the modified, according to mean blur function, image data
-        filteredImageData = toMeanBlur(originalImageData);
+        filteredImageData = toMeanBlur(originalImageData, parseInt(e.target.value));
     
         // Drawing the image on canvas
         ctx1.putImageData(filteredImageData, 0, 0);
 
-        console.log(filteredImageData);
 })
