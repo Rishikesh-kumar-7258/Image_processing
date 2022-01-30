@@ -192,6 +192,11 @@ const RGBtoHSL = (RGBArray) => {
     return HSLArray;
 }
 
+// Mean blur filter
+const meanBlur = (imageData, radius) => {
+    
+}
+
 // Frost image filter (currently on hold first, implement mean and gaussian blur which will give idea about frost filter)
 const toFrost = (imageData, d=1, wSize=7) => {
     let RGBVal = imageData.data;

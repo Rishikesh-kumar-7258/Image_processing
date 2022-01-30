@@ -197,3 +197,9 @@ originalImageBtn.addEventListener('click', (e) => {
     coolValue = 0;
     warmValue = 0;
 })
+
+// Downloading image
+let downloadBtn = document.querySelector("#download");
+downloadBtn.addEventListener("click", (e) => {
+    e.target.href = canvas1.toDataURL("image/png");
+})
