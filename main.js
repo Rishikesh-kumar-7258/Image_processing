@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toSketch } from "./filter.js";
+import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toSketch, toMeanBlur} from "./filter.js";
 
 // console.log("Image processing");
 
@@ -202,4 +202,17 @@ originalImageBtn.addEventListener('click', (e) => {
 let downloadBtn = document.querySelector("#download");
 downloadBtn.addEventListener("click", (e) => {
     e.target.href = canvas1.toDataURL("image/png");
+})
+
+// mean Blur filter
+let meanBlurBtn = document.querySelector("#meanBlur");
+meanBlurBtn.addEventListener("click", () => {
+    
+        // Getting the modified, according to mean blur function, image data
+        filteredImageData = toMeanBlur(originalImageData);
+    
+        // Drawing the image on canvas
+        ctx1.putImageData(filteredImageData, 0, 0);
+
+        console.log(filteredImageData);
 })

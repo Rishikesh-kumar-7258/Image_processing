@@ -193,8 +193,55 @@ const RGBtoHSL = (RGBArray) => {
 }
 
 // Mean blur filter
-const meanBlur = (imageData, radius) => {
-    
+export const toMeanBlur = (imageData) => {
+
+    let RGBVal = imageData.data;
+    let width = imageData.width;
+    let height = imageData.height;
+
+    let newImageData = new ImageData(width, height);
+    let newRGBval = newImageData.data;
+
+    let windowSize = 3;
+
+    for (let i = 0; i < height-windowSize -1; i++)
+    {
+        for (let j = 0; j < width-windowSize-1; j++)
+        {
+            let currSum = [0, 0, 0, 0];
+            if (j === 0)
+            {
+                currSum = getSum(RGBVal, i, j, windowSize, width, height);
+            }
+            else
+            {
+                for (let k = i; k < i+windowSize; k++) 
+                {
+                    let p = getPixel(RGBVal, k, j-1, width);
+                    currSum[0] -= RGBVal[p];
+                    currSum[1] -= RGBVal[p+1];
+                    currSum[2] -= RGBVal[p+2];
+                    currSum[3] -= RGBVal[p+3];
+
+                    let pixel = getPixel(RGBVal, k, j+windowSize-1, width);
+                    currSum[0] += pixel[0];
+                    currSum[1] += pixel[1];
+                    currSum[2] += pixel[2];
+                    currSum[3] += pixel[3];
+                }
+            }
+
+            let mn = [currSum[0] / (windowSize*windowSize), currSum[1] / (windowSize*windowSize), currSum[2] / (windowSize*windowSize), currSum[3] / (windowSize*windowSize)];
+            let p = (i+windowSize/2 * width * 4) + (j + windowSize/2 * 4);
+
+            newRGBval[p] = mn[0];
+            newRGBval[p+1] = mn[1];
+            newRGBval[p+2] = mn[2];
+            newRGBval[p+3] = RGBVal[p + 3];
+        }
+    }
+
+    return newImageData;
 }
 
 // Frost image filter (currently on hold first, implement mean and gaussian blur which will give idea about frost filter)
@@ -278,4 +325,28 @@ const distanceFromCenter = (size) => {
         arr.push(temp);
         temp.clear();
     }
+}
+
+const getPixel = (arr, x, y, width, height) => {
+    let p = (x * 4 * width) + (y * 4);
+
+    return [arr[p], arr[p + 1], arr[p + 2], arr[p + 3]];
+}
+
+const getSum = (arr, i,j, size, width, height) => {
+    let sum = [0, 0, 0, 0];
+    for (let k = i; k < i +size; k++)
+    {
+        for (let l = j; l < j +size; l++)
+        {
+            let pixel = getPixel(arr, k, l, width, height);
+            sum[0] += pixel[0];
+            sum[1] += pixel[1];
+            sum[2] += pixel[2];
+            sum[3] += pixel[3];
+
+        }
+    }
+
+    return sum;
 }
