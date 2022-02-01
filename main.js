@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toSketch} from "./filter.js";
+import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toSketch, toSharpen} from "./filter.js";
 
 // console.log("Image processing");
 
@@ -63,23 +63,6 @@ uploadBtn.addEventListener("click", () => {
     imageData = ctx1.getImageData(0, 0, uploadedImg.width, uploadedImg.height);
 })
 
-
-// //upload button with size of the window
-// let uploadBtn = document.querySelector("#upload");
-// uploadBtn.addEventListener("click", () => {
-//     let ratio = 1;
-//     let h = uploadedImg.height;
-//     let w = uploadedImg.width;
-//     if (window.innerHeight / h < ratio) {
-//         uploadedImg.height = (window.innerHeight / h) * h;
-//     }
-//     if (window.innerWidth / w < ratio) {
-//         uploadedImg.width = (window.innerWidth / w) * w;
-//     }
-//     ctx1.drawImage(uploadedImg, 0, 0);
-
-//     imageData = ctx1.getImageData(0, 0, uploadedImg.width, uploadedImg.height);
-// })
 
 // Coverting the image to grayscale when clicking on grayscale button
 let grayscaleBtn = document.querySelector('#grayscale');
@@ -187,5 +170,15 @@ Sketch.addEventListener('click', function(){
     canvas2.width = imageData.width;
     canvas2.height = imageData.height;
 
+    ctx2.putImageData(newImageData, 0, 0);
+})
+
+
+let sharp = document.querySelector('#toSharpen');
+sharp.addEventListener('click', function(){
+    
+    let newImageData = toSharpen(imageData);
+    canvas2.width = imageData.width;
+    canvas2.height = imageData.height;
     ctx2.putImageData(newImageData, 0, 0);
 })
