@@ -213,7 +213,7 @@ let meanBlurBtn = document.querySelector("#meanBlur");
 meanBlurBtn.addEventListener("change", (e) => {
     
         // Getting the modified, according to mean blur function, image data
-        filteredImageData = toMeanBlur(originalImageData, parseInt(e.target.value));
+        filteredImageData = toMeanBlur(filteredImageData, parseInt(e.target.value));
     
         // Drawing the image on canvas
         ctx1.putImageData(filteredImageData, 0, 0);
