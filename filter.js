@@ -89,7 +89,7 @@ export const toWeightedGrayscale = (imageData) => {
     return newImageData;
 }
 
-export const toBlackWhite = (imageData) => {
+export const toBlackWhite = (imageData, threshold) => {
     let RGBVal = imageData.data;
     let newImageData = new ImageData(imageData.width, imageData.height);
 
@@ -97,7 +97,7 @@ export const toBlackWhite = (imageData) => {
     for (let i = 0; i < RGBVal.length; i += 4) {
         let avg = (RGBVal[i] + RGBVal[i + 1] + RGBVal[i + 2]) / 3;
 
-        if (avg > 128) {
+        if (avg > threshold) {
             newRGBVal[i] = 255;
             newRGBVal[i + 1] = 255;
             newRGBVal[i + 2] = 255;
@@ -165,8 +165,43 @@ const letiance = (arr) => {
 
     let s = arr.reduce((a, b) => a + (b - m) * (b - m)) / arr.length;
 
-    return s;
+    let newRGBVal = newImageData.data;
+    for (let i = 0; i < RGBVal.length; i += 4) {
+        let avg = (RGBVal[i] + RGBVal[i + 1] + RGBVal[i + 2]) / 3;
+        if (avg > 200) {
+            newRGBVal[i] = 255;
+            newRGBVal[i + 1] = 255;
+            newRGBVal[i + 2] = 255;
+            newRGBVal[i + 3] = RGBVal[i + 3];
+        }
+        else if (avg > 150) {
+            newRGBVal[i] = 200;
+            newRGBVal[i + 1] = 200;
+            newRGBVal[i + 2] = 200;
+            newRGBVal[i + 3] = RGBVal[i + 3];
+        }
+        else if (avg > 100) {
+            newRGBVal[i] = 155;
+            newRGBVal[i + 1] = 155;
+            newRGBVal[i + 2] = 155;
+            newRGBVal[i + 3] = RGBVal[i + 3];
+        }
+        else if (avg > 50) {
+            newRGBVal[i] = 100;
+            newRGBVal[i + 1] = 100;
+            newRGBVal[i + 2] = 100;
+            newRGBVal[i + 3] = RGBVal[i + 3];
+        }
+        else {
+            newRGBVal[i] = 0;
+            newRGBVal[i + 1] = 0;
+            newRGBVal[i + 2] = 0;
+            newRGBVal[i + 3] = RGBVal[i + 3];
+        }
+    }
+    return newImageData;
 }
+
 
 const RGBtoHSL = (RGBArray) => {
 
@@ -319,4 +354,140 @@ export const toSharpen = (imageData)=> {
     // ctx.putImageData(dstData, 0, 0);
     console.log("Sharpen filter");
     return dstData;
+
+  // Mean blur filter
+export const toMeanBlur = (imageData, windowSize) => {
+
+    // todo have to improve the algorithm for large windowSize
+
+    windowSize = windowSize < 1 ? 1 : windowSize;
+
+    let RGBVal = imageData.data;
+    let width = imageData.width;
+    let height = imageData.height;
+
+    let newImageData = new ImageData(width, height);
+    let newRGBval = newImageData.data;
+
+    for (let i = 0; i < height - windowSize - 1; i++) {
+        for (let j = 0; j < width - windowSize - 1; j++) {
+            let currSum = getSum(RGBVal, i, j, windowSize, width, height);
+
+            for (let i = 0; i < currSum.length; i++) 
+            {
+                currSum[i] /= windowSize * windowSize;
+                Math.round(currSum[i]);
+            }
+
+            let p = ((i + Math.floor(windowSize/2)) * width * 4) + ((j + Math.floor(windowSize/2)) * 4);
+
+            newRGBval[p] = currSum[0];
+            newRGBval[p + 1] = currSum[1];
+            newRGBval[p + 2] = currSum[2];
+            newRGBval[p + 3] = RGBVal[p+3];
+        }
+
+
+    }
+
+    return newImageData;
+
+}
+
+// Frost image filter (currently on hold first, implement mean and gaussian blur which will give idea about frost filter)
+const toFrost = (imageData, d = 1, wSize = 7) => {
+    let RGBVal = imageData.data;
+    let newImageData = new ImageData(imageData.width, imageData.height);
+
+    let n = RGBVal.length;
+
+    s = distanceFromCenter(wSize);
+
+    for (let i = 0; i < n; i += 4) {
+        for (let j = 0; j < n; j += 4) {
+            let tempWindow = [];
+            for (let k = i; k < i + 4 * wSize; k += 4) {
+                for (let l = j; k < j + 4 * wSize; k += 4) {
+                    tempWindow.push(RGBVal[i]);
+                    tempWindow.push(RGBVal[i + 1]);
+                    tempWindow.push(RGBVal[i + 2]);
+                    tempWindow.push(RGBVal[i + 3]);
+                }
+            }
+
+            let windowMean = mean(tempWindow);
+            let wVariance = variance(tempWindow);
+            let windowB = d * (wVariance / (windowMean * windowMean));
+
+            for (let k = i; k < i + 4 * wSize; k += 4) {
+                for (let l = j; k < j + 4 * wSize; k += 4) {
+                    tempWindow.push(RGBVal[i]);
+                    tempWindow.push(RGBVal[i + 1]);
+                    tempWindow.push(RGBVal[i + 2]);
+                    tempWindow.push(RGBVal[i + 3]);
+                }
+            }
+        }
+    }
+}
+
+//=============================== Utility functions ========================================
+
+// function to trucate the value between 0 and 255
+const trucate = (value) => Math.min(255, Math.max(0, value));
+
+// Function to find the mean of a matrix
+const mean = (arr) => arr.reduce((a, b) => a + b, 0) / arr.length;
+
+// function to find the variance of a matrix
+const variance = (arr) => {
+
+    let m = mean(arr);
+
+    let s = arr.reduce((a, b) => a + (b - m) * (b - m)) / arr.length;
+
+    return s;
+}
+
+// function to find weight of a pixel
+const weight = (b, s) => Math.exp(-b * s);
+
+// function to find the distance of each pixel from center of the array
+const distanceFromCenter = (size) => {
+
+    let center = size / 2 - 1;
+    let arr = [];
+
+    for (let i = 0; i < n; i++) {
+        let temp = [];
+        for (let j = 0; j < n; j++) {
+            temp.push(Math.sqrt(Math.pow(i - c, 2), Math.pow(j - c, 2)));
+        }
+
+        arr.push(temp);
+        temp.clear();
+    }
+}
+
+const getPixel = (arr, x, y, width, height) => {
+    let p = (x * 4 * width) + (y * 4);
+
+    return [arr[p], arr[p + 1], arr[p + 2], arr[p + 3]];
+}
+
+const getSum = (arr, i, j, size, width, height) => {
+    let sum = [0, 0, 0, 0];
+    for (let k = i; k < i + size; k++) {
+        for (let l = j; l < j + size; l++) {
+
+            let pixel = getPixel(arr, k, l, width, height);
+            sum[0] += pixel[0];
+            sum[1] += pixel[1];
+            sum[2] += pixel[2];
+            sum[3] += pixel[3];
+
+        }
+    }
+
+    return sum;
 }
