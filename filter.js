@@ -155,9 +155,9 @@ export const toSketch = (imageData) => {
     return newImageData;
 }
 
-const trucate = (value) => Math.min(255, Math.max(0, value));
+// const trucate = (value) => Math.min(255, Math.max(0, value));
 
-const mean = (arr) => arr.reduce((a, b) => a + b, 0) / arr.length;
+// const mean = (arr) => arr.reduce((a, b) => a + b, 0) / arr.length;
 
 const letiance = (arr) => {
 
@@ -354,6 +354,8 @@ export const toSharpen = (imageData)=> {
     // ctx.putImageData(dstData, 0, 0);
     console.log("Sharpen filter");
     return dstData;
+}
+
 
   // Mean blur filter
 export const toMeanBlur = (imageData, windowSize) => {

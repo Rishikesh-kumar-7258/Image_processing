@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toSketch, toMeanBlur, toSharpen} from "./filter.js";
+import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toSketch, toMeanBlur, toSharpen } from "./filter.js";
 
 // console.log("Image processing");
 
@@ -193,13 +193,14 @@ sketch.addEventListener('click', function () {
 let originalImageBtn = document.querySelector("#original");
 originalImageBtn.addEventListener('click', (e) => {
 
-    filteredImageData = originalImageData;
+    // filteredImageData = originalImageData;
 
-    ctx1.putImageData(filteredImageData, 0, 0);
+    // ctx1.putImageData(filteredImageData, 0, 0);
 
-    brightnessValue = 0;
-    coolValue = 0;
-    warmValue = 0;
+    // brightnessValue = 0;
+    // coolValue = 0;
+    // warmValue = 0;
+    uploadBtn.click();
 })
 
 // Downloading image
@@ -211,31 +212,30 @@ downloadBtn.addEventListener("click", (e) => {
 // mean Blur filter
 let meanBlurBtn = document.querySelector("#meanBlur");
 meanBlurBtn.addEventListener("change", (e) => {
-    
-        // Getting the modified, according to mean blur function, image data
-        filteredImageData = toMeanBlur(filteredImageData, parseInt(e.target.value));
-    
-        // Drawing the image on canvas
-        ctx1.putImageData(filteredImageData, 0, 0);
+
+    // Getting the modified, according to mean blur function, image data
+    filteredImageData = toMeanBlur(filteredImageData, parseInt(e.target.value));
+
+    // Drawing the image on canvas
+    ctx1.putImageData(filteredImageData, 0, 0);
 
 })
 
-let Sketch = document.querySelector('#toSketch');
-Sketch.addEventListener('click', function(){
-    let newImageData = toSketch(imageData);
+// let Sketch = document.querySelector('#toSketch');
+// Sketch.addEventListener('click', function(){
+//     filteredImageData = toSketch(imageData);
 
-    canvas2.width = imageData.width;
-    canvas2.height = imageData.height;
+//     // canvas1.width = imageData.width;
+//     // canvas1.height = imageData.height;
 
-    ctx2.putImageData(newImageData, 0, 0);
-})
+//     ctx1.putImageData(filteredImageData, 0, 0);
+// })
 
 
 let sharp = document.querySelector('#toSharpen');
-sharp.addEventListener('click', function(){
-    
-    let newImageData = toSharpen(imageData);
-    canvas2.width = imageData.width;
-    canvas2.height = imageData.height;
-    ctx2.putImageData(newImageData, 0, 0);
+sharp.addEventListener('click', function () {
+    filteredImageData = toSharpen(originalImageData);
+    // canvas1.width = imageData.width;
+    // canvas1.height = imageData.height;
+    ctx1.putImageData(filteredImageData, 0, 0);
 })
