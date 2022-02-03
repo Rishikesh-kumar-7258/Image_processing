@@ -57,8 +57,8 @@
             </div>
             <div class="col-6">
                 <label for="brightness" class="form-label">Brightness</label>
-                <input list="brightnessList" type="range" name="brightness" id="brightness" min="-155" max="155"
-                    step="1" value="0">
+                <input list="brightnessList" type="range" name="brightness" id="brightness" min="0" max="300"
+                    step="1" value="100">
                 <datalist id="brightnessList"></datalist>
             </div>
             <div class="col-6">
@@ -71,7 +71,11 @@
             </div>
             <div class="col-6">
                 <label for="meanBlur" class="form-label">Mean Blur</label>
-                <input type="range" name="meanBlur" id="meanBlur" min="1" max="51" step="2" value="0">
+                <input type="range" name="meanBlur" id="meanBlur" min="1" max="51" step="1" value="0">
+            </div>
+            <div class="col-6">
+                <label for="contrast" class="form-label">Contrast</label>
+                <input type="range" name="contrast" id="contrast" min="0" max="300" step="1" value="100">
             </div>
         </div>
     </div>

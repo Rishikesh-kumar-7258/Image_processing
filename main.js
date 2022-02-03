@@ -120,11 +120,12 @@ brightnessBtn.addEventListener('change', (e) => {
     let currentBrightness = parseInt(e.target.value);
 
     // Getting the modified, according to brightness function, image data
-    filteredImageData = brightness(filteredImageData, currentBrightness - brightnessValue);
-    brightnessValue = currentBrightness;
+    // filteredImageData = brightness(filteredImageData, currentBrightness - brightnessValue);
+    // brightnessValue = currentBrightness;
 
-    // Drawing the image on canvas
-    ctx1.putImageData(filteredImageData, 0, 0);
+    // // Drawing the image on canvas
+    // ctx1.putImageData(filteredImageData, 0, 0);
+    brightnessImage(currentBrightness);
 
 })
 
@@ -213,12 +214,7 @@ downloadBtn.addEventListener("click", (e) => {
 let meanBlurBtn = document.querySelector("#meanBlur");
 meanBlurBtn.addEventListener("change", (e) => {
 
-    // Getting the modified, according to mean blur function, image data
-    filteredImageData = toMeanBlur(filteredImageData, parseInt(e.target.value));
-
-    // Drawing the image on canvas
-    ctx1.putImageData(filteredImageData, 0, 0);
-
+    blurImage(parseInt(e.target.value));
 })
 
 // let Sketch = document.querySelector('#toSketch');
@@ -239,3 +235,57 @@ sharp.addEventListener('click', function () {
     // canvas1.height = imageData.height;
     ctx1.putImageData(filteredImageData, 0, 0);
 })
+
+let contrast = document.querySelector("#contrast");
+contrast.addEventListener("change", (e) => {
+    addContrast(parseInt(e.target.value));
+})
+
+
+// function to set change the blur of the image applicable only for this file
+const blurImage = (value) => {
+
+    ctx1.filter = `blur(${value}px)`;
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
+
+const brightnessImage = (value) => {
+
+    ctx1.filter = `brightness(${value}%)`;
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
+
+const addContrast = (value) => {
+    ctx1.filter = `contrast(${value}%)`;
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
+
+const addGrayScale = (value) => {
+    ctx1.filter = `grayscale(${value}%)`;
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
+
+const addRotateHue = (value) => {
+    ctx1.filter = `hue-rotate(${value}deg)`;
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
+
+const addOpacity = (value) => {
+    ctx1.filter = `opacity(${value}%)`;
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
+
+const invertImage = (value) => {
+    ctx1.filter = `invert(${value}%)`;
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
+
+const addSaturation = (value) => {
+    ctx1.filter = `saturate(${value}%)`;
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
+
+const addSepia = (value) => {
+    ctx1.filter = `sepia(${value}%)`;
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
