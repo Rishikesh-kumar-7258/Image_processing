@@ -262,6 +262,8 @@ const toFrost = (imageData, d = 1, wSize = 7) => {
             }
         }
     }
+
+    return newImageData;
 }
 
 //=============================== Utility functions ========================================
