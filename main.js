@@ -315,10 +315,11 @@ const drawImage = () => {
 
 
 const soft = () => {
-    ctx1.filter = "blur(10px) saturation(50%) contrast(200%)";
+    ctx1.filter = 'blur(0.6px) saturate(101%) contrast(113%) brightness(105%)';
     ctx1.drawImage(uploadedImg, 0, 0);
 }
 
 let softBtn = document.querySelector("#soft");
-softBtn.addEventListener("click", (e) => { soft();
-})
+softBtn.addEventListener("click", (e) => { soft(); })
+
+
