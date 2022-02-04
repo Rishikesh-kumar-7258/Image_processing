@@ -322,6 +322,7 @@ const soft = () => {
 let softBtn = document.querySelector("#soft");
 softBtn.addEventListener("click", (e) => { soft(); })
 
+
 // working good just need to add the threshold value
 const faded = () => {
     ctx1.filter = 'blur(0.2px) saturate(80%) contrast(100%) brightness(110%) ';  
@@ -331,6 +332,7 @@ const faded = () => {
 let fadedBtn = document.querySelector("#faded");
 fadedBtn.addEventListener("click", (e) => { faded(); })
 
+
 // Blossom Filter
 const blossom = () => {
     ctx1.filter = 'saturate(180%) contrast(95%) brightness(130%) ';  
@@ -339,4 +341,5 @@ const blossom = () => {
 
 let blossomBtn = document.querySelector("#blossom");
 blossomBtn.addEventListener("click", (e) => { blossom(); })
+
 
