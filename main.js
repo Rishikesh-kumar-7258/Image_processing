@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toSketch, toMeanBlur, toSharpen } from "./filter.js";
+import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toSketch, toMeanBlur, toSharpen} from "./filter.js";
 
 // console.log("Image processing");
 
@@ -312,3 +312,13 @@ const drawImage = () => {
 
     ctx1.drawImage(uploadedImg, 0, 0);
 }
+
+
+const soft = () => {
+    ctx1.filter = "blur(10px) saturation(50%) contrast(200%)";
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
+
+let softBtn = document.querySelector("#soft");
+softBtn.addEventListener("click", (e) => { soft();
+})
