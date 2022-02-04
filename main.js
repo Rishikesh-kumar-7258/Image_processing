@@ -17,6 +17,19 @@ let ctx1 = canvas1.getContext('2d');
 // Variable to store the uploaded image
 let uploadedImg = new Image();
 
+// Dictionary to hold different filtes and its values
+let addedFilters = {
+    "blur" : 0,
+    "brightness" : 100,
+    "contrast" : 0,
+    "grayscale" : 0,
+    "hue-rotate" : 0,
+    "opacity" : 100,
+    "invert" : 0,
+    "saturation" : 0,
+    "sepia" : 0
+};
+
 // On uploading the file on the file input
 file.addEventListener('change', (e) => {
     // console.log(e.target.files[0]);
@@ -287,5 +300,15 @@ const addSaturation = (value) => {
 
 const addSepia = (value) => {
     ctx1.filter = `sepia(${value}%)`;
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
+
+const drawImage = () => {
+    let currFilters = ""
+    for (let key in addedFilters)
+    {
+        
+    }
+
     ctx1.drawImage(uploadedImg, 0, 0);
 }
