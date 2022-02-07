@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toSketch, toMeanBlur, toSharpen } from "./filter.js";
+import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toSketch, toMeanBlur, toSharpen} from "./filter.js";
 
 // console.log("Image processing");
 
@@ -294,3 +294,34 @@ const drawImage = () => {
 
     ctx1.drawImage(uploadedImg, 0, 0);
 }
+
+//  Soft filter Working perfectly
+const soft = () => {
+    ctx1.filter = 'blur(0.6px) saturate(101%) contrast(113%) brightness(105%)';
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
+
+let softBtn = document.querySelector("#soft");
+softBtn.addEventListener("click", (e) => { soft(); })
+
+
+// working good just need to add the threshold value
+const faded = () => {
+    ctx1.filter = 'blur(0.2px) saturate(80%) contrast(100%) brightness(110%) ';  
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
+
+let fadedBtn = document.querySelector("#faded");
+fadedBtn.addEventListener("click", (e) => { faded(); })
+
+
+// Blossom Filter
+const blossom = () => {
+    ctx1.filter = 'saturate(180%) contrast(95%) brightness(130%) ';  
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
+
+let blossomBtn = document.querySelector("#blossom");
+blossomBtn.addEventListener("click", (e) => { blossom(); })
+
+
