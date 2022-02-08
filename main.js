@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toSketch, toMeanBlur, toSharpen} from "./filter.js";
+import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toOil_painting, toMeanBlur, toSharpen} from "./filter.js";
 
 // console.log("Image processing");
 
@@ -192,11 +192,11 @@ blackWhiteBtn.addEventListener('click', function () {
 
 
 //Sketch filter
-let sketch = document.querySelector('#sketch');
-sketch.addEventListener('click', function () {
+let oil_painting = document.querySelector('#oil_painting');
+oil_painting.addEventListener('click', function () {
 
     // Getting the modified, according to grayscale function, image data
-    filteredImageData = toSketch(originalImageData);
+    filteredImageData = toOil_painting(originalImageData);
 
     // Drawing the image on canvas
     ctx1.putImageData(filteredImageData, 0, 0);
@@ -255,6 +255,8 @@ contrast.addEventListener("change", (e) => {
 })
 
 
+
+// *
 // function to set change the blur of the image applicable only for this file
 const blurImage = (value) => {
 
@@ -343,3 +345,4 @@ let blossomBtn = document.querySelector("#blossom");
 blossomBtn.addEventListener("click", (e) => { blossom(); })
 
 
+// *

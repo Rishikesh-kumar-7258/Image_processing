@@ -114,7 +114,7 @@ export const toBlackWhite = (imageData, threshold) => {
 }
 
 
-export const toSketch = (imageData) => {
+export const toOil_painting = (imageData) => {
     let RGBVal = imageData.data;
     let newImageData = new ImageData(imageData.width, imageData.height);
 
@@ -160,9 +160,7 @@ export const toSketch = (imageData) => {
 // const mean = (arr) => arr.reduce((a, b) => a + b, 0) / arr.length;
 
 const letiance = (arr) => {
-
     let m = mean(arr);
-
     let s = arr.reduce((a, b) => a + (b - m) * (b - m)) / arr.length;
 
     let newRGBVal = newImageData.data;
