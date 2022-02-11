@@ -340,17 +340,25 @@ const blossom = () => {
     ctx1.filter = 'saturate(180%) contrast(95%) brightness(130%) ';  
     ctx1.drawImage(uploadedImg, 0, 0);
 }
-
-
 let blossomBtn = document.querySelector("#blossom");
 blossomBtn.addEventListener("click", (e) => { blossom(); })
 
+
+// Ivory Filter
 const ivory = () => {
     ctx1.filter = 'contrast(75%) saturate(105%) brightness(100%) sepia(15%)';
     ctx1.drawImage(uploadedImg, 0, 0);
 }
-
-
 let ivoryBtn = document.querySelector("#ivory");
 ivoryBtn.addEventListener("click", (e) => { ivory(); })
+
+
+// Black and white filter
+const blackwhite = () => {
+    ctx1.filter = 'contrast(175%) saturate(0%) brightness(100%) ';
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
+let blackwhiteBtn = document.querySelector("#blackwhite");
+blackwhiteBtn.addEventListener("click", (e) => { blackwhite(); })
+
 // *
