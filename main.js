@@ -341,8 +341,16 @@ const blossom = () => {
     ctx1.drawImage(uploadedImg, 0, 0);
 }
 
+
 let blossomBtn = document.querySelector("#blossom");
 blossomBtn.addEventListener("click", (e) => { blossom(); })
 
+const ivory = () => {
+    ctx1.filter = 'contrast(75%) saturate(105%) brightness(100%) sepia(15%)';
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
 
+
+let ivoryBtn = document.querySelector("#ivory");
+ivoryBtn.addEventListener("click", (e) => { ivory(); })
 // *
