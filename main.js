@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toSketch, toMeanBlur, toSharpen} from "./filter.js";
+import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toOil_painting, toMeanBlur, toSharpen} from "./filter.js";
 
 // console.log("Image processing");
 
@@ -37,7 +37,6 @@ file.addEventListener('change', (e) => {
         uploadedImg.onload = function (element) {
             console.log("Image is loaded");
         }
-
     }
 })
 
@@ -93,7 +92,6 @@ grayscaleBtn.addEventListener('click', function () {
 
     // Drawing the image on canvas
     ctx1.putImageData(filteredImageData, 0, 0);
-
 })
 
 // To changed image into weightedGrayscale
@@ -139,7 +137,6 @@ coolBtn.addEventListener('change', (e) => {
 
     // Drawing the image on canvas
     ctx1.putImageData(filteredImageData, 0, 0);
-
 })
 
 // for changing cool
@@ -174,11 +171,11 @@ blackWhiteBtn.addEventListener('click', function () {
 
 
 //Sketch filter
-let sketch = document.querySelector('#sketch');
-sketch.addEventListener('click', function () {
+let oil_painting = document.querySelector('#oil_painting');
+oil_painting.addEventListener('click', function () {
 
     // Getting the modified, according to grayscale function, image data
-    filteredImageData = toSketch(originalImageData);
+    filteredImageData = toOil_painting(originalImageData);
 
     // Drawing the image on canvas
     ctx1.putImageData(filteredImageData, 0, 0);
@@ -237,6 +234,8 @@ contrast.addEventListener("change", (e) => {
 })
 
 
+
+// *
 // function to set change the blur of the image applicable only for this file
 const blurImage = (value) => {
 
@@ -321,7 +320,32 @@ const blossom = () => {
     ctx1.drawImage(uploadedImg, 0, 0);
 }
 
+
 let blossomBtn = document.querySelector("#blossom");
 blossomBtn.addEventListener("click", (e) => { blossom(); })
 
+const ivory = () => {
+    ctx1.filter = 'contrast(75%) saturate(105%) brightness(100%) sepia(15%)';
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
 
+
+let ivoryBtn = document.querySelector("#ivory");
+ivoryBtn.addEventListener("click", (e) => { ivory(); })
+
+const bl = () => {
+    ctx1.filter = 'contrast(175%) saturate(0%) brightness(100%) ';
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
+
+let blBtn = document.querySelector("#bl");
+blBtn.addEventListener("click", (e) => { bl(); })
+
+// *
+const classic = () => {
+    ctx1.filter = 'contrast(125%) saturate(105%) brightness(80%) sepia(35%)';
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
+
+let classicBtn = document.querySelector("#classic");
+classicBtn.addEventListener("click", (e) => { classic(); })
