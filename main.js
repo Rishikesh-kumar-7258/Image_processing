@@ -47,7 +47,6 @@ file.addEventListener('change', (e) => {
         uploadedImg.onload = function (element) {
             console.log("Image is loaded");
         }
-
     }
 })
 
@@ -111,7 +110,6 @@ grayscaleBtn.addEventListener('click', function () {
 
     // Drawing the image on canvas
     ctx1.putImageData(filteredImageData, 0, 0);
-
 })
 
 // To changed image into weightedGrayscale
@@ -157,7 +155,6 @@ coolBtn.addEventListener('change', (e) => {
 
     // Drawing the image on canvas
     ctx1.putImageData(filteredImageData, 0, 0);
-
 })
 
 // for changing cool
@@ -363,3 +360,10 @@ let blBtn = document.querySelector("#bl");
 blBtn.addEventListener("click", (e) => { bl(); })
 
 // *
+const classic = () => {
+    ctx1.filter = 'contrast(125%) saturate(105%) brightness(80%) sepia(35%)';
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
+
+let classicBtn = document.querySelector("#classic");
+classicBtn.addEventListener("click", (e) => { classic(); })
