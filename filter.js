@@ -493,3 +493,19 @@ const getSum = (arr, i, j, size, width, height) => {
 
     return sum;
 }
+const getSum = (arr, i, j, size, width, height) => {
+    let sum = [0, 0, 0, 0];
+    for (let k = i; k < i + size; k++) {
+        for (let l = j; l < j + size; l++) {
+
+            let pixel = getPixel(arr, k, l, width, height);
+            sum[0] += pixel[0];
+            sum[1] += pixel[1];
+            sum[2] += pixel[2];
+            sum[3] += pixel[3];
+
+        }
+    }
+
+    return sum;
+}
