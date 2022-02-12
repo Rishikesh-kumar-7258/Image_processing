@@ -18,17 +18,7 @@ let ctx1 = canvas1.getContext('2d');
 let uploadedImg = new Image();
 
 // Dictionary to hold different filtes and its values
-let addedFilters = {
-    "blur" : 0,
-    "brightness" : 100,
-    "contrast" : 0,
-    "grayscale" : 0,
-    "hue-rotate" : 0,
-    "opacity" : 100,
-    "invert" : 0,
-    "saturation" : 0,
-    "sepia" : 0
-};
+let addedFilters = [];
 
 // On uploading the file on the file input
 file.addEventListener('change', (e) => {
@@ -50,14 +40,6 @@ file.addEventListener('change', (e) => {
     }
 })
 
-// populating the datalist
-let brightnessList = document.querySelector("#brightnessList");
-for (let i = -255; i <= 255; i += 10) {
-    let option = document.createElement("option");
-    option.value = i;
-    option.innerHTML = i;
-    brightnessList.appendChild(option);
-}
 
 // Upload btn function
 let uploadBtn = document.querySelector("#upload");
@@ -150,7 +132,7 @@ coolBtn.addEventListener('change', (e) => {
     let currentCoolValue = parseInt(e.target.value);
 
     // Getting the modified, according to cool function, image data
-    filteredImageData = toCool(filteredImageData, currentCoolValue - coolValue);
+    filteredImageData = toCool(originalImageData, currentCoolValue);
     coolValue = currentCoolValue;
 
     // Drawing the image on canvas
@@ -165,7 +147,7 @@ warmBtn.addEventListener('change', (e) => {
     let currentWarmValue = parseInt(e.target.value);
 
     // Getting the modified, according to cool function, image data
-    filteredImageData = toWarm(filteredImageData, currentWarmValue - warmValue);
+    filteredImageData = toWarm(originalImageData, currentWarmValue);
 
     warmValue = currentWarmValue;
 
@@ -304,9 +286,9 @@ const addSepia = (value) => {
 
 const drawImage = () => {
     let currFilters = ""
-    for (let key in addedFilters)
+    for (let f in addedFilters)
     {
-        
+        currFilters += f + " ";
     }
 
     ctx1.drawImage(uploadedImg, 0, 0);
@@ -324,7 +306,7 @@ softBtn.addEventListener("click", (e) => { soft(); })
 
 // working good just need to add the threshold value
 const faded = () => {
-    ctx1.filter = 'blur(0.2px) saturate(80%) contrast(100%) brightness(110%) ';  
+    ctx1.filter = 'blur(0.2px) saturate(80%) contrast(100%) brightness(110%) grayscale(50%)'; 
     ctx1.drawImage(uploadedImg, 0, 0);
 }
 
@@ -352,7 +334,7 @@ let ivoryBtn = document.querySelector("#ivory");
 ivoryBtn.addEventListener("click", (e) => { ivory(); })
 
 const bl = () => {
-    ctx1.filter = 'contrast(175%) saturate(0%) brightness(100%) ';
+    ctx1.filter = 'contrast(175%) saturate(0%) brightness(100%)';
     ctx1.drawImage(uploadedImg, 0, 0);
 }
 
