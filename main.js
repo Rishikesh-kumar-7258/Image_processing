@@ -367,3 +367,11 @@ const classic = () => {
 
 let classicBtn = document.querySelector("#classic");
 classicBtn.addEventListener("click", (e) => { classic(); })
+
+const frost = () => {
+    ctx1.filter = 'contrast(100%) saturate(100%) brightness(100%) sepia(100%)';
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
+
+let frostBtn = document.querySelector("#frost");
+frostBtn.addEventListener("click", (e) => { frost(); })    
