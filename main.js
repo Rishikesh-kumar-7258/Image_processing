@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toOil_painting, toMeanBlur, toSharpen} from "./filter.js";
+import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toOil_painting, toMeanBlur, toSharpen} from "./filter.js";
 
 // console.log("Image processing");
 
@@ -156,17 +156,17 @@ warmBtn.addEventListener('change', (e) => {
 
 })
 
-//Black and White filter
-let blackWhiteBtn = document.querySelector('#blackWhite');
-blackWhiteBtn.addEventListener('click', function () {
+// //Black and White filter
+// let blackWhiteBtn = document.querySelector('#blackWhite');
+// blackWhiteBtn.addEventListener('click', function () {
 
-    // Getting the modified, according to grayscale function, image data
-    filteredImageData = toBlackWhite(originalImageData, 128);
+//     // Getting the modified, according to grayscale function, image data
+//     filteredImageData = toBlackWhite(originalImageData, 128);
 
-    // Drawing the image on canvas
-    ctx1.putImageData(filteredImageData, 0, 0);
+//     // Drawing the image on canvas
+//     ctx1.putImageData(filteredImageData, 0, 0);
 
-})
+// })
 
 
 
@@ -333,13 +333,13 @@ const ivory = () => {
 let ivoryBtn = document.querySelector("#ivory");
 ivoryBtn.addEventListener("click", (e) => { ivory(); })
 
-const bl = () => {
+const blackwhite = () => {
     ctx1.filter = 'contrast(175%) saturate(0%) brightness(100%)';
     ctx1.drawImage(uploadedImg, 0, 0);
 }
 
-let blBtn = document.querySelector("#bl");
-blBtn.addEventListener("click", (e) => { bl(); })
+let blackwhiteBtn = document.querySelector("#blackwhite");
+blackwhiteBtn.addEventListener("click", (e) => { blackwhite(); })
 
 // *
 const classic = () => {
