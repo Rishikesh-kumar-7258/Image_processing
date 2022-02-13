@@ -306,7 +306,7 @@ softBtn.addEventListener("click", (e) => { soft(); })
 
 // working good just need to add the threshold value
 const faded = () => {
-    ctx1.filter = 'blur(0.2px) saturate(80%) contrast(100%) brightness(110%) grayscale(50%)'; 
+    ctx1.filter = 'blur(0.2px) saturate(80%) contrast(100%) brightness(110%) grayscale(30%)'; 
     ctx1.drawImage(uploadedImg, 0, 0);
 }
 
