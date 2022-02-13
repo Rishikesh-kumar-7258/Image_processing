@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toOil_painting, toMeanBlur, toSharpen} from "./filter.js";
+import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toOil_painting, toMeanBlur, toSharpen, toFrost} from "./filter.js";
 
 // console.log("Image processing");
 
@@ -351,8 +351,11 @@ let classicBtn = document.querySelector("#classic");
 classicBtn.addEventListener("click", (e) => { classic(); })
 
 const frost = () => {
-    ctx1.filter = 'contrast(100%) saturate(100%) brightness(100%) sepia(100%)';
-    ctx1.drawImage(uploadedImg, 0, 0);
+    // ctx1.filter = 'contrast(100%) saturate(100%) brightness(100%) sepia(100%)';
+    // ctx1.drawImage(uploadedImg, 0, 0);
+
+    filteredImageData = toFrost(originalImageData);
+    ctx1.putImageData(filteredImageData, 0, 0);
 }
 
 let frostBtn = document.querySelector("#frost");

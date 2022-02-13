@@ -395,36 +395,45 @@ export const toMeanBlur = (imageData, windowSize) => {
 }
 
 // Frost image filter (currently on hold first, implement mean and gaussian blur which will give idea about frost filter)
-const toFrost = (imageData, d = 1, wSize = 7) => {
+export const toFrost = (imageData, d = 1, wSize = 7) => {
     let RGBVal = imageData.data;
     let newImageData = new ImageData(imageData.width, imageData.height);
+    let newRGBVal = newImageData.data;
 
     let n = RGBVal.length;
 
-    s = distanceFromCenter(wSize);
+    let s = distanceFromCenter(wSize);
 
-    for (let i = 0; i < n; i += 4) {
-        for (let j = 0; j < n; j += 4) {
+    for (let i = 0; i < imageData.height; i += 4) {
+        for (let j = 0; j < imageData.width; j += 4) {
+
             let tempWindow = [];
-            for (let k = i; k < i + 4 * wSize; k += 4) {
-                for (let l = j; k < j + 4 * wSize; k += 4) {
-                    tempWindow.push(RGBVal[i]);
-                    tempWindow.push(RGBVal[i + 1]);
-                    tempWindow.push(RGBVal[i + 2]);
-                    tempWindow.push(RGBVal[i + 3]);
+            for (let tempWindowIndex = 0; tempWindowIndex < wSize; tempWindowIndex++) {
+                let tempwindow2 = []
+                for (let tempWindowIndex2 = 0; tempWindowIndex2 < wSize; tempWindowIndex2++) {
+                    tempwindow2.push(RGBVal[(i + tempWindowIndex) * imageData.width + j + tempWindowIndex2]);
+                }
+                tempWindow.push(tempwindow2);
+            }
+
+            let windowMean = mean(tempWindow, wSize);
+            let wVariance = variance(tempWindow, wSize);
+            let windowB = d * (wVariance / (windowMean * windowMean));
+            let sumOfWeight = 0, sumOfPixelWeight = 0;
+
+            for (let sRowIndex = 0; sRowIndex < s.length; sRowIndex++) {
+                for (let sColIndex = 0; sColIndex < s.length; sColIndex++)
+                {
+                    s[sRowIndex][sColIndex] = Math.exp(-1*windowB*s[sRowIndex][sColIndex]);
+                    sumOfWeight += s[sRowIndex][sColIndex];
+                    sumOfPixelWeight += s[sRowIndex][sColIndex] * tempWindow[sRowIndex][sColIndex];
                 }
             }
 
-            let windowMean = mean(tempWindow);
-            let wVariance = variance(tempWindow);
-            let windowB = d * (wVariance / (windowMean * windowMean));
-
-            for (let k = i; k < i + 4 * wSize; k += 4) {
-                for (let l = j; k < j + 4 * wSize; k += 4) {
-                    tempWindow.push(RGBVal[i]);
-                    tempWindow.push(RGBVal[i + 1]);
-                    tempWindow.push(RGBVal[i + 2]);
-                    tempWindow.push(RGBVal[i + 3]);
+            tempWindow[Math.floor(wSize/2)][Math.floor(wSize/2)] = sumOfPixelWeight / sumOfWeight;
+            for (let tempWindowIndex = 0; tempWindowIndex < wSize; tempWindowIndex++) {
+                for (let tempWindowIndex2 = 0; tempWindowIndex2 < wSize; tempWindowIndex2++) {
+                    newRGBVal[(i+tempWindowIndex) * 4 * imageData.width + j + temp] = tempWindow[tempWindowIndex][tempWindowIndex2];
                 }
             }
         }
@@ -439,16 +448,35 @@ const toFrost = (imageData, d = 1, wSize = 7) => {
 const trucate = (value) => Math.min(255, Math.max(0, value));
 
 // Function to find the mean of a matrix
-const mean = (arr) => arr.reduce((a, b) => a + b, 0) / arr.length;
+const mean = (arr, size) => 
+{
+    let sum = 0;
+    for (let i = 0; i < size; i++)
+    {
+        for (let j = 0; j < size; j++)
+        {
+            sum += arr[i][j];
+        }
+    }
+
+    return sum / (size * size);
+}
 
 // function to find the variance of a matrix
-const variance = (arr) => {
+const variance = (arr, size) => {
 
-    let m = mean(arr);
+    let m = mean(arr, size);
 
-    let s = arr.reduce((a, b) => a + (b - m) * (b - m)) / arr.length;
+    let sum = 0;
+    for (let i = 0; i < size; i++) 
+    {
+        for (let j = 0; j < size; j++)
+        {
+            sum += Math.pow(arr[i][j] - m, 2);
+        }
+    }
 
-    return s;
+    return sum/(size*size);
 }
 
 // function to find weight of a pixel
@@ -457,18 +485,19 @@ const weight = (b, s) => Math.exp(-b * s);
 // function to find the distance of each pixel from center of the array
 const distanceFromCenter = (size) => {
 
-    let center = size / 2 - 1;
+    let center = Math.floor(size / 2) - 1;
     let arr = [];
 
-    for (let i = 0; i < n; i++) {
+    for (let i = 0; i < size; i++) {
         let temp = [];
-        for (let j = 0; j < n; j++) {
-            temp.push(Math.sqrt(Math.pow(i - c, 2), Math.pow(j - c, 2)));
+        for (let j = 0; j < size; j++) {
+            temp.push(Math.sqrt(Math.pow(i - center, 2), Math.pow(j - center, 2)));
         }
 
         arr.push(temp);
-        temp.clear();
     }
+
+    print(arr);
 }
 
 const getPixel = (arr, x, y, width, height) => {
@@ -477,22 +506,6 @@ const getPixel = (arr, x, y, width, height) => {
     return [arr[p], arr[p + 1], arr[p + 2], arr[p + 3]];
 }
 
-const getSum = (arr, i, j, size, width, height) => {
-    let sum = [0, 0, 0, 0];
-    for (let k = i; k < i + size; k++) {
-        for (let l = j; l < j + size; l++) {
-
-            let pixel = getPixel(arr, k, l, width, height);
-            sum[0] += pixel[0];
-            sum[1] += pixel[1];
-            sum[2] += pixel[2];
-            sum[3] += pixel[3];
-
-        }
-    }
-
-    return sum;
-}
 const getSum = (arr, i, j, size, width, height) => {
     let sum = [0, 0, 0, 0];
     for (let k = i; k < i + size; k++) {
