@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toOil_painting, toMeanBlur, toSharpen, toFrost} from "./filter.js";
+import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toOil_painting, toMeanBlur, toSharpen, toFrost } from "./filter.js";
 
 // console.log("Image processing");
 
@@ -286,8 +286,7 @@ const addSepia = (value) => {
 
 const drawImage = () => {
     let currFilters = ""
-    for (let f in addedFilters)
-    {
+    for (let f in addedFilters) {
         currFilters += f + " ";
     }
 
@@ -306,7 +305,7 @@ softBtn.addEventListener("click", (e) => { soft(); })
 
 // working good just need to add the threshold value
 const faded = () => {
-    ctx1.filter = 'blur(0.2px) saturate(80%) contrast(100%) brightness(110%) grayscale(30%)'; 
+    ctx1.filter = 'blur(0.2px) saturate(80%) contrast(100%) brightness(110%) grayscale(30%)';
     ctx1.drawImage(uploadedImg, 0, 0);
 }
 
@@ -316,7 +315,7 @@ fadedBtn.addEventListener("click", (e) => { faded(); })
 
 // Blossom Filter
 const blossom = () => {
-    ctx1.filter = 'saturate(180%) contrast(95%) brightness(130%) ';  
+    ctx1.filter = 'saturate(180%) contrast(95%) brightness(130%) ';
     ctx1.drawImage(uploadedImg, 0, 0);
 }
 
@@ -341,7 +340,7 @@ const blackwhite = () => {
 let blackwhiteBtn = document.querySelector("#blackwhite");
 blackwhiteBtn.addEventListener("click", (e) => { blackwhite(); })
 
-// *
+// 
 const classic = () => {
     ctx1.filter = 'contrast(125%) saturate(105%) brightness(80%) sepia(35%)';
     ctx1.drawImage(uploadedImg, 0, 0);
@@ -351,12 +350,15 @@ let classicBtn = document.querySelector("#classic");
 classicBtn.addEventListener("click", (e) => { classic(); })
 
 const frost = () => {
-    // ctx1.filter = 'contrast(100%) saturate(100%) brightness(100%) sepia(100%)';
-    // ctx1.drawImage(uploadedImg, 0, 0);
+    ctx1.filter = 'contrast(100%) saturate(100%) brightness(100%) sepia(100%)';
+    ctx1.drawImage(uploadedImg, 0, 0);
 
-    filteredImageData = toFrost(originalImageData);
-    ctx1.putImageData(filteredImageData, 0, 0);
+
 }
 
 let frostBtn = document.querySelector("#frost");
-frostBtn.addEventListener("click", (e) => { frost(); })    
+frostBtn.addEventListener("click", (e) => {
+    frost();
+    // filteredImageData = toFrost(originalImageData);
+    // ctx1.putImageData(filteredImageData, 0, 0);
+})    

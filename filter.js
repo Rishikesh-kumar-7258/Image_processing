@@ -89,29 +89,29 @@ export const toWeightedGrayscale = (imageData) => {
     return newImageData;
 }
 
-// export const toBlackWhite = (imageData, threshold) => {
-//     let RGBVal = imageData.data;
-//     let newImageData = new ImageData(imageData.width, imageData.height);
+export const toBlackWhite = (imageData, threshold) => {
+    let RGBVal = imageData.data;
+    let newImageData = new ImageData(imageData.width, imageData.height);
 
-//     let newRGBVal = newImageData.data;
-//     for (let i = 0; i < RGBVal.length; i += 4) {
-//         let avg = (RGBVal[i] + RGBVal[i + 1] + RGBVal[i + 2]) / 3;
+    let newRGBVal = newImageData.data;
+    for (let i = 0; i < RGBVal.length; i += 4) {
+        let avg = (RGBVal[i] + RGBVal[i + 1] + RGBVal[i + 2]) / 3;
 
-//         if (avg > threshold) {
-//             newRGBVal[i] = 255;
-//             newRGBVal[i + 1] = 255;
-//             newRGBVal[i + 2] = 255;
-//             newRGBVal[i + 3] = RGBVal[i + 3];
-//         }
-//         else {
-//             newRGBVal[i] = 0;
-//             newRGBVal[i + 1] = 0;
-//             newRGBVal[i + 2] = 0;
-//             newRGBVal[i + 3] = RGBVal[i + 3];
-//         }
-//     }
-//     return newImageData;
-// }
+        if (avg > threshold) {
+            newRGBVal[i] = 255;
+            newRGBVal[i + 1] = 255;
+            newRGBVal[i + 2] = 255;
+            newRGBVal[i + 3] = RGBVal[i + 3];
+        }
+        else {
+            newRGBVal[i] = 0;
+            newRGBVal[i + 1] = 0;
+            newRGBVal[i + 2] = 0;
+            newRGBVal[i + 3] = RGBVal[i + 3];
+        }
+    }
+    return newImageData;
+}
 
 
 export const toOil_painting = (imageData) => {
@@ -399,8 +399,6 @@ export const toFrost = (imageData, d = 1, wSize = 7) => {
     let RGBVal = imageData.data;
     let newImageData = new ImageData(imageData.width, imageData.height);
     let newRGBVal = newImageData.data;
-
-    let n = RGBVal.length;
 
     let s = distanceFromCenter(wSize);
 
