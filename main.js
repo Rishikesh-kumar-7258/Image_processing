@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toSketch, toMeanBlur, toSharpen, toSoft, toFaded, toBlossom, toFrost } from "./filter.js";
+import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toOil_painting, toMeanBlur, toSharpen, toFrost } from "./filter.js";
 
 // console.log("Image processing");
 
@@ -18,17 +18,7 @@ let ctx1 = canvas1.getContext('2d');
 let uploadedImg = new Image();
 
 // Dictionary to hold different filtes and its values
-let addedFilters = {
-    "blur": 0,
-    "brightness": 100,
-    "contrast": 0,
-    "grayscale": 0,
-    "hue-rotate": 0,
-    "opacity": 100,
-    "invert": 0,
-    "saturation": 0,
-    "sepia": 0
-};
+let addedFilters = [];
 
 // On uploading the file on the file input
 file.addEventListener('change', (e) => {
@@ -47,18 +37,9 @@ file.addEventListener('change', (e) => {
         uploadedImg.onload = function (element) {
             console.log("Image is loaded");
         }
-
     }
 })
 
-// populating the datalist
-let brightnessList = document.querySelector("#brightnessList");
-for (let i = -255; i <= 255; i += 10) {
-    let option = document.createElement("option");
-    option.value = i;
-    option.innerHTML = i;
-    brightnessList.appendChild(option);
-}
 
 // Upload btn function
 let uploadBtn = document.querySelector("#upload");
@@ -111,7 +92,6 @@ grayscaleBtn.addEventListener('click', function () {
 
     // Drawing the image on canvas
     ctx1.putImageData(filteredImageData, 0, 0);
-
 })
 
 // To changed image into weightedGrayscale
@@ -152,12 +132,11 @@ coolBtn.addEventListener('change', (e) => {
     let currentCoolValue = parseInt(e.target.value);
 
     // Getting the modified, according to cool function, image data
-    filteredImageData = toCool(filteredImageData, currentCoolValue - coolValue);
+    filteredImageData = toCool(originalImageData, currentCoolValue);
     coolValue = currentCoolValue;
 
     // Drawing the image on canvas
     ctx1.putImageData(filteredImageData, 0, 0);
-
 })
 
 // for changing cool
@@ -168,7 +147,7 @@ warmBtn.addEventListener('change', (e) => {
     let currentWarmValue = parseInt(e.target.value);
 
     // Getting the modified, according to cool function, image data
-    filteredImageData = toWarm(filteredImageData, currentWarmValue - warmValue);
+    filteredImageData = toWarm(originalImageData, currentWarmValue);
 
     warmValue = currentWarmValue;
 
@@ -177,26 +156,26 @@ warmBtn.addEventListener('change', (e) => {
 
 })
 
-//Black and White filter
-let blackWhiteBtn = document.querySelector('#blackWhite');
-blackWhiteBtn.addEventListener('click', function () {
+// //Black and White filter
+// let blackWhiteBtn = document.querySelector('#blackWhite');
+// blackWhiteBtn.addEventListener('click', function () {
 
-    // Getting the modified, according to grayscale function, image data
-    filteredImageData = toBlackWhite(originalImageData, 128);
+//     // Getting the modified, according to grayscale function, image data
+//     filteredImageData = toBlackWhite(originalImageData, 128);
 
-    // Drawing the image on canvas
-    ctx1.putImageData(filteredImageData, 0, 0);
+//     // Drawing the image on canvas
+//     ctx1.putImageData(filteredImageData, 0, 0);
 
-})
+// })
 
 
 
 //Sketch filter
-let sketch = document.querySelector('#sketch');
-sketch.addEventListener('click', function () {
+let oil_painting = document.querySelector('#oil_painting');
+oil_painting.addEventListener('click', function () {
 
     // Getting the modified, according to grayscale function, image data
-    filteredImageData = toSketch(originalImageData);
+    filteredImageData = toOil_painting(originalImageData);
 
     // Drawing the image on canvas
     ctx1.putImageData(filteredImageData, 0, 0);
@@ -255,6 +234,8 @@ contrast.addEventListener("change", (e) => {
 })
 
 
+
+// *
 // function to set change the blur of the image applicable only for this file
 const blurImage = (value) => {
 
@@ -273,14 +254,30 @@ const addContrast = (value) => {
     ctx1.drawImage(uploadedImg, 0, 0);
 }
 
+const addGrayScale = (value) => {
+    ctx1.filter = `grayscale(${value}%)`;
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
 
+const addRotateHue = (value) => {
+    ctx1.filter = `hue-rotate(${value}deg)`;
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
 
+const addOpacity = (value) => {
+    ctx1.filter = `opacity(${value}%)`;
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
 
 const invertImage = (value) => {
     ctx1.filter = `invert(${value}%)`;
     ctx1.drawImage(uploadedImg, 0, 0);
 }
 
+const addSaturation = (value) => {
+    ctx1.filter = `saturate(${value}%)`;
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
 
 const addSepia = (value) => {
     ctx1.filter = `sepia(${value}%)`;
@@ -289,38 +286,31 @@ const addSepia = (value) => {
 
 const drawImage = () => {
     let currFilters = ""
-    for (let key in addedFilters) {
-
+    for (let f in addedFilters) {
+        currFilters += f + " ";
     }
 
     ctx1.drawImage(uploadedImg, 0, 0);
 }
 
 //  Soft filter Working perfectly
-// const soft = () => {
-//     ctx1.filter = 'blur(0.6px) saturate(101%) contrast(113%) brightness(105%)';
-//     ctx1.drawImage(uploadedImg, 0, 0);
-// }
+const soft = () => {
+    ctx1.filter = 'blur(0.6px) saturate(101%) contrast(113%) brightness(105%)';
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
 
 let softBtn = document.querySelector("#soft");
-softBtn.addEventListener("click", (e) => {
-    filteredImageData = toSoft(originalImageData);
-    ctx1.putImageData(filteredImageData, 0, 0);
-})
+softBtn.addEventListener("click", (e) => { soft(); })
 
 
-// // working good just need to add the threshold value
-// const faded = () => {
-//     ctx1.filter = 'blur(0.2px) saturate(80%) contrast(100%) brightness(110%) ';
-//     ctx1.drawImage(uploadedImg, 0, 0);
-// }
+// working good just need to add the threshold value
+const faded = () => {
+    ctx1.filter = 'blur(0.2px) saturate(80%) contrast(100%) brightness(110%) grayscale(30%)';
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
 
-//faded filter
 let fadedBtn = document.querySelector("#faded");
-fadedBtn.addEventListener("click", (e) => {
-    filteredImageData = toFaded(originalImageData);
-    ctx1.putImageData(filteredImageData, 0, 0);
-})
+fadedBtn.addEventListener("click", (e) => { faded(); })
 
 
 // Blossom Filter
@@ -329,18 +319,46 @@ const blossom = () => {
     ctx1.drawImage(uploadedImg, 0, 0);
 }
 
-//blossom filter
-let blossomBtn = document.querySelector("#blossom");
-blossomBtn.addEventListener("click", (e) => {
-    filteredImageData = toBlossom(originalImageData);
-    ctx1.putImageData(filteredImageData, 0, 0);
-    // ctx1.filter = toBlossom(originalImageData);
-})
 
-//frost filter
+let blossomBtn = document.querySelector("#blossom");
+blossomBtn.addEventListener("click", (e) => { blossom(); })
+
+const ivory = () => {
+    ctx1.filter = 'contrast(75%) saturate(105%) brightness(100%) sepia(15%)';
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
+
+
+let ivoryBtn = document.querySelector("#ivory");
+ivoryBtn.addEventListener("click", (e) => { ivory(); })
+
+const blackwhite = () => {
+    ctx1.filter = 'contrast(175%) saturate(0%) brightness(100%)';
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
+
+let blackwhiteBtn = document.querySelector("#blackwhite");
+blackwhiteBtn.addEventListener("click", (e) => { blackwhite(); })
+
+// 
+const classic = () => {
+    ctx1.filter = 'contrast(125%) saturate(105%) brightness(80%) sepia(35%)';
+    ctx1.drawImage(uploadedImg, 0, 0);
+}
+
+let classicBtn = document.querySelector("#classic");
+classicBtn.addEventListener("click", (e) => { classic(); })
+
+const frost = () => {
+    ctx1.filter = 'contrast(100%) saturate(100%) brightness(100%) sepia(100%)';
+    ctx1.drawImage(uploadedImg, 0, 0);
+
+
+}
+
 let frostBtn = document.querySelector("#frost");
 frostBtn.addEventListener("click", (e) => {
-    filteredImageData = toFrost(originalImageData);
-    ctx1.putImageData(filteredImageData, 0, 0);
-})
-
+    frost();
+    // filteredImageData = toFrost(originalImageData);
+    // ctx1.putImageData(filteredImageData, 0, 0);
+})    
