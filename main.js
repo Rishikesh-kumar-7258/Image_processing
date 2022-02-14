@@ -1,4 +1,4 @@
-import {toGrayScale} from "./filter.js";
+import {toBlur, toCool, toGrayScale, toSharpen, toWarm} from "./filter.js";
 
 const file = document.getElementById("img"); // File input
 let originalImageData; // Variable to store the image data of the uploded file
@@ -37,9 +37,22 @@ file.addEventListener('change', (e) => {
 let uploadBtn = document.querySelector("#upload");
 uploadBtn.addEventListener("click", () => {
 
-    let mat = cv.imread(uploadedImg); // Reading the image using opencv
-    cv.imshow('canvas1', mat); // Displaying the image on canvas1
-    originalImageData = ctx1.getImageData(0, 0, canvas1.width, canvas1.height); // Getting the image data from canvas1
+    canvas1.width = uploadedImg.width;
+    canvas1.height = uploadedImg.height;
+
+    // ctx1.drawImage(uploadedImg, 0, 0, canvas1.width, canvas1.height);
+    ctx1.drawImage(uploadedImg, 0, 0);
+
+    // Getting image data from the image
+    originalImageData = ctx1.getImageData(0, 0, uploadedImg.width, uploadedImg.height);
+    filteredImageData = originalImageData;
+})
+
+// original image
+let originalImageBtn = document.querySelector("#original");
+originalImageBtn.addEventListener('click', (e) => {
+
+    uploadBtn.click();
 })
 
 // converting image to grayscale
@@ -48,4 +61,36 @@ grayScaleBtn.addEventListener("click", () => {
     
         filteredImageData = toGrayScale(originalImageData); // Storing the image data in originalImageData variable
         ctx1.putImageData(filteredImageData, 0, 0); // Displaying the image data on canvas1
+})
+
+// converting image to warm
+let warmSlider = document.querySelector("#warm");
+warmSlider.addEventListener("change", () => {
+    let value = parseInt(warmSlider.value);
+    filteredImageData = toWarm(originalImageData, value);
+    ctx1.putImageData(filteredImageData, 0, 0);
+})
+
+// converting image to cool
+let coolSlider = document.querySelector("#cool");
+coolSlider.addEventListener("change", () => {
+    let value = parseInt(coolSlider.value);
+    filteredImageData = toCool(originalImageData, value);
+    ctx1.putImageData(filteredImageData, 0, 0);
+})
+
+// Blurring the image
+let blurSlider = document.querySelector("#blur");
+blurSlider.addEventListener("change", () => {
+    let value = parseInt(blurSlider.value);
+    filteredImageData = toBlur(originalImageData, value);
+    ctx1.putImageData(filteredImageData, 0, 0);
+})
+
+// Sharpening the image
+let sharpBtn = document.querySelector("#sharp");
+sharpBtn.addEventListener("click", () => {
+    filteredImageData = toSharpen(originalImageData);
+    // ctx1.putImageData(filteredImageData, 0, 0);
+    console.log(filteredImageData);
 })
