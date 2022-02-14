@@ -23,7 +23,7 @@
 
     <div class="container-fluid">
         <div class="row mt-3 text-center">
-            <div class="col-12 border"> 
+            <div class="col-12 border">
                 <p>Uploaded Image</p>
                 <canvas id="canvas1" class="col-12 col-md-4"></canvas>
             </div>
@@ -51,21 +51,19 @@
             <div class="col-12 mb-2">
                 <button class="btn btn-success" id="grayscale">Grayscale</button>
                 <button class="btn btn-success" id="weightedGrayscale">weightedGrayscale</button>
-                <button class="btn btn-success" id="blackWhite">dont press</button>
+                <button class="btn btn-success" id="blackWhite">blackWhite</button>
                 <button class="btn btn-success" id="toSharpen">Sharpen</button>
-                <button class="btn btn-success" id="oil_painting">Oil Painting</button>
+                <button class="btn btn-success" id="sketch">Sketch</button>
                 <button class="btn btn-success" id="soft">soft</button>
                 <button class="btn btn-success" id="faded">Faded</button>
                 <button class="btn btn-success" id="blossom">Blossom</button>
-                <button class="btn btn-success" id="ivory">Ivory</button>
-                <button class="btn btn-success" id="bl">Black & White</button>
-                <button class="btn btn-success" id="classic">Classic</button>
                 <button class="btn btn-success" id="frost">Frost</button>
             </div>
             <div class="col-6">
                 <label for="brightness" class="form-label">Brightness</label>
-                <input type="range" name="brightness" id="brightness" min="0" max="300"
+                <input list="brightnessList" type="range" name="brightness" id="brightness" min="0" max="300"
                     step="1" value="100">
+                <datalist id="brightnessList"></datalist>
             </div>
             <div class="col-6">
                 <label for="cool" class="form-label">Cool</label>
@@ -76,8 +74,8 @@
                 <input type="range" name="warm" id="warm" min="0" max="200" step="1" value="0">
             </div>
             <div class="col-6">
-                <label for="meanBlur" class="form-label">Blur</label>
-                <input type="range" name="meanBlur" id="meanBlur" min="0" max="51" step="1" value="0">
+                <label for="meanBlur" class="form-label">Mean Blur</label>
+                <input type="range" name="meanBlur" id="meanBlur" min="1" max="51" step="1" value="0">
             </div>
             <div class="col-6">
                 <label for="contrast" class="form-label">Contrast</label>
