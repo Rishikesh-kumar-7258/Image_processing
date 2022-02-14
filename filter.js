@@ -300,7 +300,7 @@ this.sharpen = function () {
 
 */
 
-export const toSharpen = (imageData)=> {
+export const toSharpen = (imageData) => {
     let w = imageData.width;
     let h = imageData.height;
     let mix = 0.1;
@@ -355,7 +355,7 @@ export const toSharpen = (imageData)=> {
 }
 
 
-  // Mean blur filter
+// Mean blur filter
 export const toMeanBlur = (imageData, windowSize) => {
 
     // todo have to improve the algorithm for large windowSize
@@ -373,18 +373,17 @@ export const toMeanBlur = (imageData, windowSize) => {
         for (let j = 0; j < width - windowSize - 1; j++) {
             let currSum = getSum(RGBVal, i, j, windowSize, width, height);
 
-            for (let i = 0; i < currSum.length; i++) 
-            {
+            for (let i = 0; i < currSum.length; i++) {
                 currSum[i] /= windowSize * windowSize;
                 Math.round(currSum[i]);
             }
 
-            let p = ((i + Math.floor(windowSize/2)) * width * 4) + ((j + Math.floor(windowSize/2)) * 4);
+            let p = ((i + Math.floor(windowSize / 2)) * width * 4) + ((j + Math.floor(windowSize / 2)) * 4);
 
             newRGBval[p] = currSum[0];
             newRGBval[p + 1] = currSum[1];
             newRGBval[p + 2] = currSum[2];
-            newRGBval[p + 3] = RGBVal[p+3];
+            newRGBval[p + 3] = RGBVal[p + 3];
         }
 
 
@@ -436,6 +435,22 @@ export const toMeanBlur = (imageData, windowSize) => {
 //             }
 //         }
 //     }
+            // for (let sRowIndex = 0; sRowIndex < s.length; sRowIndex++) {
+    //             for (let sColIndex = 0; sColIndex < s.length; sColIndex++) {
+    //                 s[sRowIndex][sColIndex] = Math.exp(-1 * windowB * s[sRowIndex][sColIndex]);
+    //                 sumOfWeight += s[sRowIndex][sColIndex];
+    //                 sumOfPixelWeight += s[sRowIndex][sColIndex] * tempWindow[sRowIndex][sColIndex];
+    //             }
+    //         }
+
+    //         tempWindow[Math.floor(wSize / 2)][Math.floor(wSize / 2)] = sumOfPixelWeight / sumOfWeight;
+    //         for (let tempWindowIndex = 0; tempWindowIndex < wSize; tempWindowIndex++) {
+    //             for (let tempWindowIndex2 = 0; tempWindowIndex2 < wSize; tempWindowIndex2++) {
+    //                 newRGBVal[(i + tempWindowIndex) * 4 * imageData.width + j + temp] = tempWindow[tempWindowIndex][tempWindowIndex2];
+    //             }
+    //         }
+    //     }
+    // }
 
 //     return newImageData;
 // }
@@ -446,13 +461,10 @@ export const toMeanBlur = (imageData, windowSize) => {
 const trucate = (value) => Math.min(255, Math.max(0, value));
 
 // Function to find the mean of a matrix
-const mean = (arr, size) => 
-{
+const mean = (arr, size) => {
     let sum = 0;
-    for (let i = 0; i < size; i++)
-    {
-        for (let j = 0; j < size; j++)
-        {
+    for (let i = 0; i < size; i++) {
+        for (let j = 0; j < size; j++) {
             sum += arr[i][j];
         }
     }
@@ -466,15 +478,13 @@ const variance = (arr, size) => {
     let m = mean(arr, size);
 
     let sum = 0;
-    for (let i = 0; i < size; i++) 
-    {
-        for (let j = 0; j < size; j++)
-        {
+    for (let i = 0; i < size; i++) {
+        for (let j = 0; j < size; j++) {
             sum += Math.pow(arr[i][j] - m, 2);
         }
     }
 
-    return sum/(size*size);
+    return sum / (size * size);
 }
 
 // function to find weight of a pixel
