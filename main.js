@@ -91,6 +91,5 @@ blurSlider.addEventListener("change", () => {
 let sharpBtn = document.querySelector("#sharp");
 sharpBtn.addEventListener("click", () => {
     filteredImageData = toSharpen(originalImageData);
-    // ctx1.putImageData(filteredImageData, 0, 0);
-    console.log(filteredImageData);
+    ctx1.putImageData(filteredImageData, 0, 0);
 })

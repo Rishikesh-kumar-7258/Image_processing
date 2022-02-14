@@ -50,7 +50,20 @@ export const toCool = (imageData, value) => {
 
 export const toSharpen = (imageData) => {
 
-    
+    let originalMat = new cv.matFromImageData(imageData); // Converting the image data to opencv mat
+    let sharpenMat = new cv.Mat();
+
+    originalMat.convertTo(sharpenMat, cv.CV_8UC4, 1, 0);
+
+    let M = new cv.matFromArray(3, 3, cv.CV_32FC1, [-1,-1,-1,-1,7,1,-1,-1,-1]);
+    let anchor = new cv.Point(-1,-1);
+
+    cv.filter2D(sharpenMat, sharpenMat, cv.CV_8U, M, anchor, 0, cv.BORDER_DEFAULT);
+
+    let filteredImageData = new ImageData(imageData.width, imageData.height);
+    filteredImageData.data.set(sharpenMat.data);
+
+    return filteredImageData;
 }
 
 export const toBlur = (imageData, value) => {
@@ -75,3 +88,15 @@ export const toBlur = (imageData, value) => {
 
 // Utility functions
 const trucate = (value) => Math.min(255, Math.max(0, value));
+
+function imageDataToImage(imagedata) {
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+    canvas.width = imagedata.width;
+    canvas.height = imagedata.height;
+    ctx.putImageData(imagedata, 0, 0);
+
+    var image = new Image();
+    image.src = canvas.toDataURL();
+    return image;
+}
