@@ -1,4 +1,4 @@
-import {toBlur, toCool, toGrayScale, toSharpen, toWarm} from "./filter.js";
+import {toBlur, toCool, toGrayScale, toSepia, toSharpen, toVignette, toWarm} from "./filter.js";
 
 const file = document.getElementById("img"); // File input
 let originalImageData; // Variable to store the image data of the uploded file
@@ -91,5 +91,19 @@ blurSlider.addEventListener("change", () => {
 let sharpBtn = document.querySelector("#sharp");
 sharpBtn.addEventListener("click", () => {
     filteredImageData = toSharpen(originalImageData);
+    ctx1.putImageData(filteredImageData, 0, 0);
+})
+
+// Sepia Effect
+let sepiaBtn = document.getElementById("sepia");
+sepiaBtn.addEventListener("click", () => {
+    filteredImageData = toSepia(originalImageData);
+    ctx1.putImageData(filteredImageData, 0, 0);
+})
+
+// Vignette filter
+let vignetteBtn = document.getElementById("vignette");
+vignetteBtn.addEventListener("click", () => {
+    filteredImageData = toVignette(originalImageData);
     ctx1.putImageData(filteredImageData, 0, 0);
 })
