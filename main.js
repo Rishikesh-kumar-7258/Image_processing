@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toOil_painting, toMeanBlur, toSharpen, toFrost, tofst, toVignette } from "./filter.js";
+import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toOil_painting, toMeanBlur, toSharpen, toFrost, toVignette } from "./filter.js";
 
 // console.log("Image processing");
 
@@ -349,30 +349,30 @@ const classic = () => {
 let classicBtn = document.querySelector("#classic");
 classicBtn.addEventListener("click", (e) => { classic(); })
 
-const frost = () => {
+const ivory2 = () => {
     ctx1.filter = 'contrast(100%) saturate(100%) brightness(100%) sepia(100%)';
     ctx1.drawImage(uploadedImg, 0, 0);
-
-
 }
+let ivory2Btn = document.querySelector("#ivory2");
+ivory2Btn.addEventListener("click", (e) => { ivory2(); })
 
-let frostBtn = document.querySelector("#frost");
-frostBtn.addEventListener("click", (e) => {
-    frost();
-    // filteredImageData = toFrost(originalImageData);
-    // ctx1.putImageData(filteredImageData, 0, 0);
-})    
-// let fsttBtn = document.querySelector("#fst");
-// fsttBtn.addEventListener("click", (e) => {
-//     // frost();
-//     filteredImageData = tofst(originalImageData);
-//     ctx1.putImageData(filteredImageData, 0, 0);
-// }) 
+//Sketch filter
+let frost = document.querySelector('#frost');
+frost.addEventListener('click', function () {
+
+    // Getting the modified, according to grayscale function, image data
+    filteredImageData = toFrost(originalImageData);
+
+    // Drawing the image on canvas
+    ctx1.putImageData(filteredImageData, 0, 0);
+
+})
+
 
 
 let vignetteBtn = document.querySelector("#vignette");
 vignetteBtn.addEventListener("click", (e) => {
-    console.log("vignette");
+    // console.log("vignette");
     filteredImageData = toVignette(originalImageData);
     ctx1.putImageData(filteredImageData, 0, 0);
 })
