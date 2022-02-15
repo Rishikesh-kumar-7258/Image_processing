@@ -349,16 +349,16 @@ const classic = () => {
 let classicBtn = document.querySelector("#classic");
 classicBtn.addEventListener("click", (e) => { classic(); })
 
-const ivory2 = () => {
+const frost = () => {
     ctx1.filter = 'contrast(100%) saturate(100%) brightness(100%) sepia(100%)';
     ctx1.drawImage(uploadedImg, 0, 0);
 
 
 }
 
-let ivory2Btn = document.querySelector("#ivory2");
-ivory2Btn.addEventListener("click", (e) => {
-    ivory2();
+let frostBtn = document.querySelector("#frost");
+frostBtn.addEventListener("click", (e) => {
+    frost();
     // filteredImageData = toFrost(originalImageData);
     // ctx1.putImageData(filteredImageData, 0, 0);
 })    
@@ -376,29 +376,3 @@ vignetteBtn.addEventListener("click", (e) => {
     filteredImageData = toVignette(originalImageData);
     ctx1.putImageData(filteredImageData, 0, 0);
 })
-
-
-
-
-let frost = document.querySelector('#frost');
-frost.addEventListener('click', function () {
-
-    // Getting the modified, according to grayscale function, image data
-    filteredImageData = toFrost(originalImageData);
-
-    // Drawing the image on canvas
-    ctx1.putImageData(filteredImageData, 0, 0);
-
-})
-
-
-// let vignete = document.querySelector('#vignete');
-// vignete.addEventListener('click', function () {
-
-//     // Getting the modified, according to grayscale function, image data
-//     filteredImageData = toVignette(originalImageData);
-
-//     // Drawing the image on canvas
-//     ctx1.putImageData(filteredImageData, 0, 0);
-
-// })
