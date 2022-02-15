@@ -109,7 +109,7 @@ export const toVignette = (imageData) => {
     let X_resultant_kernel = gaussainKernel(imageData.width, 200);
     let Y_resultant_kernel = gaussainKernel(imageData.height, 200);
 
-    let resultant_kernel = multiply( Y_resultant_kernel, transpose(X_resultant_kernel));
+    let resultant_kernel = multiply(Y_resultant_kernel, transpose(X_resultant_kernel));
 
     let mask = flatten(resultant_kernel);
     for (let i = 0; i < mask.length; i++) mask[i] /= 255;
@@ -127,6 +127,49 @@ export const toVignette = (imageData) => {
 
     let filteredImageData = new ImageData(imageData.width, imageData.height); // Converting the blurred image to image data
     filteredImageData.data.set(vigMat.data);
+    return filteredImageData;
+}
+
+export const toEdge = (imageData) => {
+
+    // Making cv.Mat from image data
+    let originalMat = new cv.matFromImageData(imageData);
+
+    // Making an empty cv.Mat to store the result
+    let edgeMat = new cv.Mat();
+
+    originalMat.convertTo(edgeMat, cv.CV_8UC4, 1, 0);
+
+    // converting the image to grayscale
+    cv.cvtColor(edgeMat, edgeMat, cv.COLOR_RGBA2GRAY, 0);
+    cv.Canny(edgeMat, edgeMat, 50, 150, 3, false);
+    cv.cvtColor(edgeMat, edgeMat, cv.COLOR_GRAY2RGBA);
+
+    let filteredImageData = new ImageData(imageData.width, imageData.height); // Converting the blurred image to image data
+    filteredImageData.data.set(edgeMat.data);
+
+    return filteredImageData;
+}
+
+export const toBilateral = (imageData) => {
+    // Making cv.Mat from image data
+    let originalMat = new cv.matFromImageData(imageData);
+
+    // Making an empty cv.Mat to store the result
+    let bilMat = new cv.Mat();
+
+    originalMat.convertTo(bilMat, cv.CV_8UC4, 1, 0);
+
+    // converting colorspace from rgba to rgb
+    cv.cvtColor(bilMat, bilMat, cv.COLOR_RGBA2RGB);
+
+    cv.bilateralFilter(bilMat, bilMat, 9, 75, 75, cv.BORDER_DEFAULT);
+
+    cv.cvtColor(bilMat, bilMat, cv.COLOR_RGB2RGBA);
+
+    let filteredImageData = new ImageData(imageData.width, imageData.height); // Converting the blurred image to image data
+    filteredImageData.data.set(bilMat.data);
+
     return filteredImageData;
 }
 

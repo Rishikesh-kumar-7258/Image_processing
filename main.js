@@ -1,4 +1,4 @@
-import {toBlur, toCool, toGrayScale, toSepia, toSharpen, toVignette, toWarm} from "./filter.js";
+import {toBilateral, toBlur, toCool, toEdge, toGrayScale, toSepia, toSharpen, toVignette, toWarm} from "./filter.js";
 
 const file = document.getElementById("img"); // File input
 let originalImageData; // Variable to store the image data of the uploded file
@@ -105,5 +105,19 @@ sepiaBtn.addEventListener("click", () => {
 let vignetteBtn = document.getElementById("vignette");
 vignetteBtn.addEventListener("click", () => {
     filteredImageData = toVignette(originalImageData);
+    ctx1.putImageData(filteredImageData, 0, 0);
+})
+
+// Edge detection in image
+let edgeBtn = document.querySelector("#edge");
+edgeBtn.addEventListener("click", () => {
+    filteredImageData = toEdge(originalImageData);
+    ctx1.putImageData(filteredImageData, 0, 0);
+})
+
+// Applyingn bilateral filter
+let bilateralBtn = document.querySelector("#bilateral");
+bilateralBtn.addEventListener("click", () => {
+    filteredImageData = toBilateral(originalImageData);
     ctx1.putImageData(filteredImageData, 0, 0);
 })
