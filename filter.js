@@ -393,50 +393,67 @@ export const toMeanBlur = (imageData, windowSize) => {
 
 }
 
-// Frost image filter (currently on hold first, implement mean and gaussian blur which will give idea about frost filter)
-export const toFrost = (imageData, d = 1, wSize = 7) => {
-    let RGBVal = imageData.data;
-    let newImageData = new ImageData(imageData.width, imageData.height);
-    let newRGBVal = newImageData.data;
+// // Frost image filter (currently on hold first, implement mean and gaussian blur which will give idea about frost filter)
+// export const toFrost = (imageData, d = 1, wSize = 7) => {
+//     let RGBVal = imageData.data;
+//     let newImageData = new ImageData(imageData.width, imageData.height);
+//     let newRGBVal = newImageData.data;
 
-    let s = distanceFromCenter(wSize);
+//     let s = distanceFromCenter(wSize);
 
-    for (let i = 0; i < imageData.height; i += 4) {
-        for (let j = 0; j < imageData.width; j += 4) {
+//     for (let i = 0; i < imageData.height; i += 4) {
+//         for (let j = 0; j < imageData.width; j += 4) {
 
-            let tempWindow = [];
-            for (let tempWindowIndex = 0; tempWindowIndex < wSize; tempWindowIndex++) {
-                let tempwindow2 = []
-                for (let tempWindowIndex2 = 0; tempWindowIndex2 < wSize; tempWindowIndex2++) {
-                    tempwindow2.push(RGBVal[(i + tempWindowIndex) * imageData.width + j + tempWindowIndex2]);
-                }
-                tempWindow.push(tempwindow2);
-            }
+//             let tempWindow = [];
+//             for (let tempWindowIndex = 0; tempWindowIndex < wSize; tempWindowIndex++) {
+//                 let tempwindow2 = []
+//                 for (let tempWindowIndex2 = 0; tempWindowIndex2 < wSize; tempWindowIndex2++) {
+//                     tempwindow2.push(RGBVal[(i + tempWindowIndex) * imageData.width + j + tempWindowIndex2]);
+//                 }
+//                 tempWindow.push(tempwindow2);
+//             }
 
-            let windowMean = mean(tempWindow, wSize);
-            let wVariance = variance(tempWindow, wSize);
-            let windowB = d * (wVariance / (windowMean * windowMean));
-            let sumOfWeight = 0, sumOfPixelWeight = 0;
+//             let windowMean = mean(tempWindow, wSize);
+//             let wVariance = variance(tempWindow, wSize);
+//             let windowB = d * (wVariance / (windowMean * windowMean));
+//             let sumOfWeight = 0, sumOfPixelWeight = 0;
 
-            for (let sRowIndex = 0; sRowIndex < s.length; sRowIndex++) {
-                for (let sColIndex = 0; sColIndex < s.length; sColIndex++) {
-                    s[sRowIndex][sColIndex] = Math.exp(-1 * windowB * s[sRowIndex][sColIndex]);
-                    sumOfWeight += s[sRowIndex][sColIndex];
-                    sumOfPixelWeight += s[sRowIndex][sColIndex] * tempWindow[sRowIndex][sColIndex];
-                }
-            }
+//             for (let sRowIndex = 0; sRowIndex < s.length; sRowIndex++) {
+//                 for (let sColIndex = 0; sColIndex < s.length; sColIndex++)
+//                 {
+//                     s[sRowIndex][sColIndex] = Math.exp(-1*windowB*s[sRowIndex][sColIndex]);
+//                     sumOfWeight += s[sRowIndex][sColIndex];
+//                     sumOfPixelWeight += s[sRowIndex][sColIndex] * tempWindow[sRowIndex][sColIndex];
+//                 }
+//             }
 
-            tempWindow[Math.floor(wSize / 2)][Math.floor(wSize / 2)] = sumOfPixelWeight / sumOfWeight;
-            for (let tempWindowIndex = 0; tempWindowIndex < wSize; tempWindowIndex++) {
-                for (let tempWindowIndex2 = 0; tempWindowIndex2 < wSize; tempWindowIndex2++) {
-                    newRGBVal[(i + tempWindowIndex) * 4 * imageData.width + j + temp] = tempWindow[tempWindowIndex][tempWindowIndex2];
-                }
-            }
-        }
-    }
+//             tempWindow[Math.floor(wSize/2)][Math.floor(wSize/2)] = sumOfPixelWeight / sumOfWeight;
+//             for (let tempWindowIndex = 0; tempWindowIndex < wSize; tempWindowIndex++) {
+//                 for (let tempWindowIndex2 = 0; tempWindowIndex2 < wSize; tempWindowIndex2++) {
+//                     newRGBVal[(i+tempWindowIndex) * 4 * imageData.width + j + temp] = tempWindow[tempWindowIndex][tempWindowIndex2];
+//                 }
+//             }
+//         }
+//     }
+// for (let sRowIndex = 0; sRowIndex < s.length; sRowIndex++) {
+//             for (let sColIndex = 0; sColIndex < s.length; sColIndex++) {
+//                 s[sRowIndex][sColIndex] = Math.exp(-1 * windowB * s[sRowIndex][sColIndex]);
+//                 sumOfWeight += s[sRowIndex][sColIndex];
+//                 sumOfPixelWeight += s[sRowIndex][sColIndex] * tempWindow[sRowIndex][sColIndex];
+//             }
+//         }
 
-    return newImageData;
-}
+//         tempWindow[Math.floor(wSize / 2)][Math.floor(wSize / 2)] = sumOfPixelWeight / sumOfWeight;
+//         for (let tempWindowIndex = 0; tempWindowIndex < wSize; tempWindowIndex++) {
+//             for (let tempWindowIndex2 = 0; tempWindowIndex2 < wSize; tempWindowIndex2++) {
+//                 newRGBVal[(i + tempWindowIndex) * 4 * imageData.width + j + temp] = tempWindow[tempWindowIndex][tempWindowIndex2];
+//             }
+//         }
+//     }
+// }
+
+//     return newImageData;
+// }
 
 //=============================== Utility functions ========================================
 
@@ -515,6 +532,7 @@ const getSum = (arr, i, j, size, width, height) => {
 }
 
 
+// Saturation function
 function saturate(imageData, value) {
     value = value / 100;
     var RGBVal = imageData.data;
@@ -532,7 +550,9 @@ function saturate(imageData, value) {
 
 
 
-export const tofst = (imageData) => {
+// export const tofst = (imageData) => {
+// Frost function
+export const toFrost = (imageData) => {
 
     let RGBVal = imageData.data;
     let newImageData = new ImageData(imageData.width, imageData.height);
