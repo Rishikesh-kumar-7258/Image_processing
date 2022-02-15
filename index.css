@@ -11,3 +11,8 @@ input[type="range"]::-moz-range-track {
         #ccc 11%, 
         #ccc 20%);
 }
+
+.hide
+{
+    display: none;
+}

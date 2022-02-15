@@ -1,4 +1,4 @@
-import {toBilateral, toBlur, toCartoon, toCool, toEdge, toGrayScale, toSepia, toSharpen, toVignette, toWarm} from "./filter.js";
+import {kissMe, toBilateral, toBlur, toCartoon, toCool, toEdge, toGrayScale, toSepia, toSharpen, toVignette, toWarm} from "./filter.js";
 
 const file = document.getElementById("img"); // File input
 let originalImageData; // Variable to store the image data of the uploded file
@@ -129,3 +129,13 @@ cartoonBtn.addEventListener("click", () => {
     filteredImageData = toCartoon(originalImageData);
     ctx1.putImageData(filteredImageData, 0, 0);
 })
+
+// checking a new filter
+let checkBtn= document.querySelector("#check");
+checkBtn.addEventListener("click", () => {
+    let filteredImageData = kissMe(originalImageData);
+    ctx1.putImageData(filteredImageData, 0, 0);
+})
+
+// Vignetting image
+// let vignetteBtn = document.querySelector("#vignette");
