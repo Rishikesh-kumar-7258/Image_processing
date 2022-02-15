@@ -376,3 +376,15 @@ frost.addEventListener('click', function () {
     ctx1.putImageData(filteredImageData, 0, 0);
 
 })
+
+
+// let vignete = document.querySelector('#vignete');
+// vignete.addEventListener('click', function () {
+
+//     // Getting the modified, according to grayscale function, image data
+//     filteredImageData = toVignette(originalImageData);
+
+//     // Drawing the image on canvas
+//     ctx1.putImageData(filteredImageData, 0, 0);
+
+// })

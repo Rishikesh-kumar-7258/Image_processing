@@ -435,22 +435,22 @@ export const toMeanBlur = (imageData, windowSize) => {
 //             }
 //         }
 //     }
-            // for (let sRowIndex = 0; sRowIndex < s.length; sRowIndex++) {
-    //             for (let sColIndex = 0; sColIndex < s.length; sColIndex++) {
-    //                 s[sRowIndex][sColIndex] = Math.exp(-1 * windowB * s[sRowIndex][sColIndex]);
-    //                 sumOfWeight += s[sRowIndex][sColIndex];
-    //                 sumOfPixelWeight += s[sRowIndex][sColIndex] * tempWindow[sRowIndex][sColIndex];
-    //             }
-    //         }
+// for (let sRowIndex = 0; sRowIndex < s.length; sRowIndex++) {
+//             for (let sColIndex = 0; sColIndex < s.length; sColIndex++) {
+//                 s[sRowIndex][sColIndex] = Math.exp(-1 * windowB * s[sRowIndex][sColIndex]);
+//                 sumOfWeight += s[sRowIndex][sColIndex];
+//                 sumOfPixelWeight += s[sRowIndex][sColIndex] * tempWindow[sRowIndex][sColIndex];
+//             }
+//         }
 
-    //         tempWindow[Math.floor(wSize / 2)][Math.floor(wSize / 2)] = sumOfPixelWeight / sumOfWeight;
-    //         for (let tempWindowIndex = 0; tempWindowIndex < wSize; tempWindowIndex++) {
-    //             for (let tempWindowIndex2 = 0; tempWindowIndex2 < wSize; tempWindowIndex2++) {
-    //                 newRGBVal[(i + tempWindowIndex) * 4 * imageData.width + j + temp] = tempWindow[tempWindowIndex][tempWindowIndex2];
-    //             }
-    //         }
-    //     }
-    // }
+//         tempWindow[Math.floor(wSize / 2)][Math.floor(wSize / 2)] = sumOfPixelWeight / sumOfWeight;
+//         for (let tempWindowIndex = 0; tempWindowIndex < wSize; tempWindowIndex++) {
+//             for (let tempWindowIndex2 = 0; tempWindowIndex2 < wSize; tempWindowIndex2++) {
+//                 newRGBVal[(i + tempWindowIndex) * 4 * imageData.width + j + temp] = tempWindow[tempWindowIndex][tempWindowIndex2];
+//             }
+//         }
+//     }
+// }
 
 //     return newImageData;
 // }
@@ -533,16 +533,16 @@ const getSum = (arr, i, j, size, width, height) => {
 
 // Saturation function
 function saturate(imageData, value) {
-    value = value/100;
+    value = value / 100;
     var RGBVal = imageData.data;
     for (var i = 0; i < RGBVal.length; i += 4) {
-        var r = RGBVal[i]; 
+        var r = RGBVal[i];
         var g = RGBVal[i + 1];
         var b = RGBVal[i + 2];
-        var gray = 0.2989*r + 0.5870*g + 0.1140*b; //weights from CCIR 601 spec
-        RGBVal[i] = trucate(-gray * value + RGBVal[i] * (1+value));
-        RGBVal[i+1] = trucate(-gray * value + RGBVal[i+1] * (1+value));
-        RGBVal[i+2] = trucate(-gray * value + RGBVal[i+2] * (1+value));
+        var gray = 0.2989 * r + 0.5870 * g + 0.1140 * b; //weights from CCIR 601 spec
+        RGBVal[i] = trucate(-gray * value + RGBVal[i] * (1 + value));
+        RGBVal[i + 1] = trucate(-gray * value + RGBVal[i + 1] * (1 + value));
+        RGBVal[i + 2] = trucate(-gray * value + RGBVal[i + 2] * (1 + value));
     }
     return imageData;
 };
@@ -568,3 +568,6 @@ export const toFrost = (imageData) => {
 
     return newImageData;
 }
+
+
+
