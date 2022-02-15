@@ -142,7 +142,7 @@ export const toEdge = (imageData) => {
 
     // converting the image to grayscale
     cv.cvtColor(edgeMat, edgeMat, cv.COLOR_RGBA2GRAY, 0);
-    cv.Canny(edgeMat, edgeMat, 50, 150, 3, false);
+    cv.Canny(edgeMat, edgeMat, 100, 120, 3.8, false);
     cv.cvtColor(edgeMat, edgeMat, cv.COLOR_GRAY2RGBA);
 
     let filteredImageData = new ImageData(imageData.width, imageData.height); // Converting the blurred image to image data
@@ -153,24 +153,46 @@ export const toEdge = (imageData) => {
 
 export const toBilateral = (imageData) => {
     // Making cv.Mat from image data
+
+    // TODO this is not workings
     let originalMat = new cv.matFromImageData(imageData);
 
     // Making an empty cv.Mat to store the result
     let bilMat = new cv.Mat();
 
-    originalMat.convertTo(bilMat, cv.CV_8UC4, 1, 0);
+    originalMat.convertTo(bilMat, cv.CV_8U, 1, 0);
 
     // converting colorspace from rgba to rgb
-    cv.cvtColor(bilMat, bilMat, cv.COLOR_RGBA2RGB);
+    cv.cvtColor(bilMat, bilMat, cv.COLOR_RGBA2RGB,0);
+    // cv.adaptiveThreshold(bilMat, bilMat, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY, 11, 12);
 
     cv.bilateralFilter(bilMat, bilMat, 9, 75, 75, cv.BORDER_DEFAULT);
 
-    cv.cvtColor(bilMat, bilMat, cv.COLOR_RGB2RGBA);
+    cv.cvtColor(bilMat, bilMat, cv.Color_RGB2RGBA,0);
 
     let filteredImageData = new ImageData(imageData.width, imageData.height); // Converting the blurred image to image data
     filteredImageData.data.set(bilMat.data);
 
     return filteredImageData;
+}
+
+export const toCartoon = (imageData) => {
+
+    let edgeData = toBlur(imageData, 8);
+    console.log(edgeData);
+    edgeData = toEdge(edgeData);
+    
+    let filteredImageData = new ImageData(imageData.width, imageData.height); // Converting the blurred image to image data
+
+    for (let i = 0; i < imageData.data.length; i += 4) {
+        filteredImageData.data[i] = imageData.data[i] | edgeData.data[i];
+        filteredImageData.data[i + 1] = imageData.data[i+1] | edgeData.data[i + 1];
+        filteredImageData.data[i + 2] = imageData.data[i+2] | edgeData.data[i + 2];
+        filteredImageData.data[i + 3] = imageData.data[i+3];
+    }
+
+    return filteredImageData;
+
 }
 
 // Utility functions

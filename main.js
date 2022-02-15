@@ -1,4 +1,4 @@
-import {toBilateral, toBlur, toCool, toEdge, toGrayScale, toSepia, toSharpen, toVignette, toWarm} from "./filter.js";
+import {toBilateral, toBlur, toCartoon, toCool, toEdge, toGrayScale, toSepia, toSharpen, toVignette, toWarm} from "./filter.js";
 
 const file = document.getElementById("img"); // File input
 let originalImageData; // Variable to store the image data of the uploded file
@@ -116,8 +116,16 @@ edgeBtn.addEventListener("click", () => {
 })
 
 // Applyingn bilateral filter
-let bilateralBtn = document.querySelector("#bilateral");
-bilateralBtn.addEventListener("click", () => {
-    filteredImageData = toBilateral(originalImageData);
+// let bilateralBtn = document.querySelector("#bilateral");
+// bilateralBtn.addEventListener("click", () => {
+//     filteredImageData = toBilateral(originalImageData);
+//     console.log(filteredImageData);
+//     ctx1.putImageData(filteredImageData, 0, 0);
+// })
+
+// Applying cartoon filter
+let cartoonBtn = document.querySelector("#cartoon");
+cartoonBtn.addEventListener("click", () => {
+    filteredImageData = toCartoon(originalImageData);
     ctx1.putImageData(filteredImageData, 0, 0);
 })
