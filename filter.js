@@ -513,3 +513,71 @@ const getSum = (arr, i, j, size, width, height) => {
 
     return sum;
 }
+
+
+function saturate(imageData, value) {
+    value = value / 100;
+    var RGBVal = imageData.data;
+    for (var i = 0; i < RGBVal.length; i += 4) {
+        var r = RGBVal[i];
+        var g = RGBVal[i + 1];
+        var b = RGBVal[i + 2];
+        var gray = 0.2989 * r + 0.5870 * g + 0.1140 * b; //weights from CCIR 601 spec
+        RGBVal[i] = trucate(-gray * value + RGBVal[i] * (1 + value));
+        RGBVal[i + 1] = trucate(-gray * value + RGBVal[i + 1] * (1 + value));
+        RGBVal[i + 2] = trucate(-gray * value + RGBVal[i + 2] * (1 + value));
+    }
+    return imageData;
+};
+
+
+
+export const tofst = (imageData) => {
+
+    let RGBVal = imageData.data;
+    let newImageData = new ImageData(imageData.width, imageData.height);
+    let newRGBVal = newImageData.data;
+
+    for (let i = 0; i < RGBVal.length; i += 4) {
+        newRGBVal[i] = trucate(RGBVal[i] - 25);
+        newRGBVal[i + 1] = RGBVal[i + 1];
+        newRGBVal[i + 2] = trucate(RGBVal[i + 2] + 25);
+        newRGBVal[i + 3] = RGBVal[i + 3];
+    }
+
+
+    newImageData = saturate(newImageData, 100);
+    // newImageData = contrastImage(newImageData, 50);
+
+    return newImageData;
+}
+
+
+//vignette image filter
+export const toVignette = (imageData) => {
+    let width = imageData.width;
+    let height = imageData.height;
+    console.log("vignette")
+    let RGBVal = imageData.data;
+    let newImageData = new ImageData(imageData.width, imageData.height);
+    let newRGBVal = newImageData.data;
+    let centerX = width / 2;
+    let centerY = height / 2;
+    let radius = Math.min(centerX, centerY);
+    let maxDistance = radius * radius;
+    for (let i = 0; i < RGBVal.length; i += 4) {
+        let x = (i / 4) % width;
+        let y = Math.floor((i / 4) / width);
+        let distance = (x - centerX) * (x - centerX) + (y - centerY) * (y - centerY);
+        let factor = 1 - distance / maxDistance;
+        if (factor < 0) {
+            factor = 0;
+        }
+        newRGBVal[i] = RGBVal[i] * factor;
+        newRGBVal[i + 1] = RGBVal[i + 1] * factor;
+        newRGBVal[i + 2] = RGBVal[i + 2] * factor;
+        newRGBVal[i + 3] = RGBVal[i + 3];
+    }
+    console.log("vignette");
+    return newImageData;
+};

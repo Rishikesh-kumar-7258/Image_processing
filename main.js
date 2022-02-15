@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toOil_painting, toMeanBlur, toSharpen, toFrost } from "./filter.js";
+import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toOil_painting, toMeanBlur, toSharpen, toFrost, tofst, toVignette } from "./filter.js";
 
 // console.log("Image processing");
 
@@ -362,3 +362,17 @@ frostBtn.addEventListener("click", (e) => {
     // filteredImageData = toFrost(originalImageData);
     // ctx1.putImageData(filteredImageData, 0, 0);
 })    
+// let fsttBtn = document.querySelector("#fst");
+// fsttBtn.addEventListener("click", (e) => {
+//     // frost();
+//     filteredImageData = tofst(originalImageData);
+//     ctx1.putImageData(filteredImageData, 0, 0);
+// }) 
+
+
+let vignetteBtn = document.querySelector("#vignette");
+vignetteBtn.addEventListener("click", (e) => {
+    console.log("vignette");
+    filteredImageData = toVignette(originalImageData);
+    ctx1.putImageData(filteredImageData, 0, 0);
+})
