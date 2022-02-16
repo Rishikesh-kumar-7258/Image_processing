@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toOil_painting, toMeanBlur, toSharpen, toFrost, tofst, toVignette } from "./filter.js";
+import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toOil_painting, toMeanBlur, toSharpen, toFrost, tofst, toVignette, toCartoon } from "./filter.js";
 
 // console.log("Image processing");
 
@@ -10,9 +10,9 @@ let brightnessValue = 0; // variable to store the currentBrightness value
 let coolValue = 0; // variable to store the currentCool value
 let warmValue = 0; // variable to store the current warm value
 
-// canvas1 element to draw the uploaded image
-let canvas1 = document.querySelector('#canvas1');
-let ctx1 = canvas1.getContext('2d');
+// canvas element to draw the uploaded image
+let canvas = document.querySelector('#canvas');
+let ctx = canvas.getContext('2d');
 
 // Variable to store the uploaded image
 let uploadedImg = new Image();
@@ -41,47 +41,24 @@ file.addEventListener('change', (e) => {
 })
 
 
-// Upload btn function
+// Upload button function
 let uploadBtn = document.querySelector("#upload");
 uploadBtn.addEventListener("click", () => {
+    //calculating image canvas width and height
+    canvas.width = uploadedImg.width;
+    canvas.height = uploadedImg.height;
 
-    // Drawing image on canvas
-    // let ratio = canvas1.width / uploadedImg.width;
-    // canvas1.width = uploadedImg.width * ratio;
-    // canvas1.height = uploadedImg.height * ratio + 10;
-
-    canvas1.width = uploadedImg.width;
-    canvas1.height = uploadedImg.height;
-
-    // ctx1.drawImage(uploadedImg, 0, 0, canvas1.width, canvas1.height);
-    ctx1.drawImage(uploadedImg, 0, 0);
+    // ctx.drawImage(uploadedImg, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(uploadedImg, 0, 0);
 
     // Getting image data from the image
-    originalImageData = ctx1.getImageData(0, 0, uploadedImg.width, uploadedImg.height);
+    originalImageData = ctx.getImageData(0, 0, uploadedImg.width, uploadedImg.height);
     filteredImageData = originalImageData;
 
     brightnessValue = 0;
     coolValue = 0;
     warmValue = 0;
 })
-
-
-// //upload button with size of the window
-// let uploadBtn = document.querySelector("#upload");
-// uploadBtn.addEventListener("click", () => {
-//     let ratio = 1;
-//     let h = uploadedImg.height;
-//     let w = uploadedImg.width;
-//     if (window.innerHeight / h < ratio) {
-//         uploadedImg.height = (window.innerHeight / h) * h;
-//     }
-//     if (window.innerWidth / w < ratio) {
-//         uploadedImg.width = (window.innerWidth / w) * w;
-//     }
-//     ctx1.drawImage(uploadedImg, 0, 0);
-
-//     originalImageData = ctx1.getImageData(0, 0, uploadedImg.width, uploadedImg.height);
-// })
 
 // Coverting the image to grayscale when clicking on grayscale button
 let grayscaleBtn = document.querySelector('#grayscale');
@@ -91,8 +68,9 @@ grayscaleBtn.addEventListener('click', function () {
     filteredImageData = toGrayscale(originalImageData);
 
     // Drawing the image on canvas
-    ctx1.putImageData(filteredImageData, 0, 0);
+    ctx.putImageData(filteredImageData, 0, 0);
 })
+
 
 // To changed image into weightedGrayscale
 let weightedGrayscale = document.querySelector("#weightedGrayscale");
@@ -102,7 +80,7 @@ weightedGrayscale.addEventListener('click', (e) => {
     filteredImageData = toWeightedGrayscale(originalImageData);
 
     // Drawing the image on canvas
-    ctx1.putImageData(filteredImageData, 0, 0);
+    ctx.putImageData(filteredImageData, 0, 0);
 })
 
 // For changing the brightness
@@ -111,19 +89,11 @@ brightnessBtn.addEventListener('change', (e) => {
 
     // Getting the current brightness value
     let currentBrightness = parseInt(e.target.value);
-
-    // Getting the modified, according to brightness function, image data
-    // filteredImageData = brightness(filteredImageData, currentBrightness - brightnessValue);
-    // brightnessValue = currentBrightness;
-
-    // // Drawing the image on canvas
-    // ctx1.putImageData(filteredImageData, 0, 0);
     brightnessImage(currentBrightness);
 
 })
 
 // for changing cool
-let warmBtn = document.querySelector('#warm');
 let coolBtn = document.querySelector('#cool');
 coolBtn.addEventListener('change', (e) => {
 
@@ -136,10 +106,11 @@ coolBtn.addEventListener('change', (e) => {
     coolValue = currentCoolValue;
 
     // Drawing the image on canvas
-    ctx1.putImageData(filteredImageData, 0, 0);
+    ctx.putImageData(filteredImageData, 0, 0);
 })
 
 // for changing cool
+let warmBtn = document.querySelector('#warm');
 warmBtn.addEventListener('change', (e) => {
 
     // coolBtn.value = 0;
@@ -152,23 +123,9 @@ warmBtn.addEventListener('change', (e) => {
     warmValue = currentWarmValue;
 
     // Drawing the image on canvas
-    ctx1.putImageData(filteredImageData, 0, 0);
+    ctx.putImageData(filteredImageData, 0, 0);
 
 })
-
-// //Black and White filter
-// let blackWhiteBtn = document.querySelector('#blackWhite');
-// blackWhiteBtn.addEventListener('click', function () {
-
-//     // Getting the modified, according to grayscale function, image data
-//     filteredImageData = toBlackWhite(originalImageData, 128);
-
-//     // Drawing the image on canvas
-//     ctx1.putImageData(filteredImageData, 0, 0);
-
-// })
-
-
 
 //Sketch filter
 let oil_painting = document.querySelector('#oil_painting');
@@ -178,28 +135,27 @@ oil_painting.addEventListener('click', function () {
     filteredImageData = toOil_painting(originalImageData);
 
     // Drawing the image on canvas
-    ctx1.putImageData(filteredImageData, 0, 0);
+    ctx.putImageData(filteredImageData, 0, 0);
 
 })
 
 // removing all filters
 let originalImageBtn = document.querySelector("#original");
 originalImageBtn.addEventListener('click', (e) => {
+    //assigning original image data to filtered image data
+    filteredImageData = originalImageData;
 
-    // filteredImageData = originalImageData;
+    ctx.putImageData(filteredImageData, 0, 0);
 
-    // ctx1.putImageData(filteredImageData, 0, 0);
-
-    // brightnessValue = 0;
-    // coolValue = 0;
-    // warmValue = 0;
-    uploadBtn.click();
+    brightnessValue = 0;
+    coolValue = 0;
+    warmValue = 0;
 })
 
-// Downloading image
+// Downloading filtered image
 let downloadBtn = document.querySelector("#download");
 downloadBtn.addEventListener("click", (e) => {
-    e.target.href = canvas1.toDataURL("image/png");
+    e.target.href = canvas.toDataURL("image/png");
 })
 
 // mean Blur filter
@@ -209,132 +165,90 @@ meanBlurBtn.addEventListener("change", (e) => {
     blurImage(parseInt(e.target.value));
 })
 
-// let Sketch = document.querySelector('#toSketch');
-// Sketch.addEventListener('click', function(){
-//     filteredImageData = toSketch(imageData);
-
-//     // canvas1.width = imageData.width;
-//     // canvas1.height = imageData.height;
-
-//     ctx1.putImageData(filteredImageData, 0, 0);
-// })
-
 
 let sharp = document.querySelector('#toSharpen');
 sharp.addEventListener('click', function () {
+    //Getting sharppened image data
     filteredImageData = toSharpen(originalImageData);
-    // canvas1.width = imageData.width;
-    // canvas1.height = imageData.height;
-    ctx1.putImageData(filteredImageData, 0, 0);
+    //drawing image to canvas
+    ctx.putImageData(filteredImageData, 0, 0);
 })
 
+
+//contrast filter
 let contrast = document.querySelector("#contrast");
 contrast.addEventListener("change", (e) => {
     addContrast(parseInt(e.target.value));
 })
 
-
-
-// *
 // function to set change the blur of the image applicable only for this file
 const blurImage = (value) => {
 
-    ctx1.filter = `blur(${value}px)`;
-    ctx1.drawImage(uploadedImg, 0, 0);
+    ctx.filter = `blur(${value}px)`;
+    ctx.drawImage(uploadedImg, 0, 0);
 }
 
 const brightnessImage = (value) => {
 
-    ctx1.filter = `brightness(${value}%)`;
-    ctx1.drawImage(uploadedImg, 0, 0);
+    ctx.filter = `brightness(${value}%)`;
+    ctx.drawImage(uploadedImg, 0, 0);
 }
 
 const addContrast = (value) => {
-    ctx1.filter = `contrast(${value}%)`;
-    ctx1.drawImage(uploadedImg, 0, 0);
-}
-
-const addGrayScale = (value) => {
-    ctx1.filter = `grayscale(${value}%)`;
-    ctx1.drawImage(uploadedImg, 0, 0);
-}
-
-const addRotateHue = (value) => {
-    ctx1.filter = `hue-rotate(${value}deg)`;
-    ctx1.drawImage(uploadedImg, 0, 0);
-}
-
-const addOpacity = (value) => {
-    ctx1.filter = `opacity(${value}%)`;
-    ctx1.drawImage(uploadedImg, 0, 0);
-}
-
-const invertImage = (value) => {
-    ctx1.filter = `invert(${value}%)`;
-    ctx1.drawImage(uploadedImg, 0, 0);
-}
-
-const addSaturation = (value) => {
-    ctx1.filter = `saturate(${value}%)`;
-    ctx1.drawImage(uploadedImg, 0, 0);
-}
-
-const addSepia = (value) => {
-    ctx1.filter = `sepia(${value}%)`;
-    ctx1.drawImage(uploadedImg, 0, 0);
-}
-
-const drawImage = () => {
-    let currFilters = ""
-    for (let f in addedFilters) {
-        currFilters += f + " ";
-    }
-
-    ctx1.drawImage(uploadedImg, 0, 0);
+    ctx.filter = `contrast(${value}%)`;
+    ctx.drawImage(uploadedImg, 0, 0);
 }
 
 //  Soft filter Working perfectly
 const soft = () => {
-    ctx1.filter = 'blur(0.6px) saturate(101%) contrast(113%) brightness(105%)';
-    ctx1.drawImage(uploadedImg, 0, 0);
+    ctx.filter = 'blur(0.6px) saturate(101%) contrast(113%) brightness(105%)';
+    ctx.drawImage(uploadedImg, 0, 0);
 }
 
+//soft button filter
 let softBtn = document.querySelector("#soft");
-softBtn.addEventListener("click", (e) => { soft(); })
+softBtn.addEventListener("click", (e) => {
+    soft();
+})
 
 
 // working good just need to add the threshold value
 const faded = () => {
-    ctx1.filter = 'blur(0.2px) saturate(80%) contrast(100%) brightness(110%) grayscale(30%)';
-    ctx1.drawImage(uploadedImg, 0, 0);
+    ctx.filter = 'blur(0.2px) saturate(80%) contrast(100%) brightness(110%) grayscale(30%)';
+    ctx.drawImage(uploadedImg, 0, 0);
 }
 
+//frost button filter
 let fadedBtn = document.querySelector("#faded");
 fadedBtn.addEventListener("click", (e) => { faded(); })
 
 
 // Blossom Filter
 const blossom = () => {
-    ctx1.filter = 'saturate(180%) contrast(95%) brightness(130%) ';
-    ctx1.drawImage(uploadedImg, 0, 0);
+    ctx.filter = 'saturate(180%) contrast(95%) brightness(130%) ';
+    ctx.drawImage(uploadedImg, 0, 0);
 }
 
-
 let blossomBtn = document.querySelector("#blossom");
-blossomBtn.addEventListener("click", (e) => { blossom(); })
+blossomBtn.addEventListener("click", (e) => {
+    blossom();
+})
 
+//ivory filter button
 const ivory = () => {
-    ctx1.filter = 'contrast(75%) saturate(105%) brightness(100%) sepia(15%)';
-    ctx1.drawImage(uploadedImg, 0, 0);
+    ctx.filter = 'contrast(75%) saturate(105%) brightness(100%) sepia(15%)';
+    ctx.drawImage(uploadedImg, 0, 0);
 }
 
 
 let ivoryBtn = document.querySelector("#ivory");
-ivoryBtn.addEventListener("click", (e) => { ivory(); })
+ivoryBtn.addEventListener("click", (e) => {
+    ivory();
+})
 
 const blackwhite = () => {
-    ctx1.filter = 'contrast(175%) saturate(0%) brightness(100%)';
-    ctx1.drawImage(uploadedImg, 0, 0);
+    ctx.filter = 'contrast(175%) saturate(0%) brightness(100%)';
+    ctx.drawImage(uploadedImg, 0, 0);
 }
 
 let blackwhiteBtn = document.querySelector("#blackwhite");
@@ -342,37 +256,34 @@ blackwhiteBtn.addEventListener("click", (e) => { blackwhite(); })
 
 // 
 const classic = () => {
-    ctx1.filter = 'contrast(125%) saturate(105%) brightness(80%) sepia(35%)';
-    ctx1.drawImage(uploadedImg, 0, 0);
+    ctx.filter = 'contrast(125%) saturate(105%) brightness(80%) sepia(35%)';
+    ctx.drawImage(uploadedImg, 0, 0);
 }
 
 let classicBtn = document.querySelector("#classic");
 classicBtn.addEventListener("click", (e) => { classic(); })
 
 const frost = () => {
-    ctx1.filter = 'contrast(100%) saturate(100%) brightness(100%) sepia(100%)';
-    ctx1.drawImage(uploadedImg, 0, 0);
-
-
+    ctx.filter = 'contrast(100%) saturate(100%) brightness(100%) sepia(100%)';
+    ctx.drawImage(uploadedImg, 0, 0);
 }
 
 let frostBtn = document.querySelector("#frost");
 frostBtn.addEventListener("click", (e) => {
     frost();
-    // filteredImageData = toFrost(originalImageData);
-    // ctx1.putImageData(filteredImageData, 0, 0);
-})    
-// let fsttBtn = document.querySelector("#fst");
-// fsttBtn.addEventListener("click", (e) => {
-//     // frost();
-//     filteredImageData = tofst(originalImageData);
-//     ctx1.putImageData(filteredImageData, 0, 0);
-// }) 
+})
 
 
 let vignetteBtn = document.querySelector("#vignette");
 vignetteBtn.addEventListener("click", (e) => {
-    console.log("vignette");
     filteredImageData = toVignette(originalImageData);
-    ctx1.putImageData(filteredImageData, 0, 0);
+    ctx.putImageData(filteredImageData, 0, 0);
+})
+
+
+let cartoonBtn = document.querySelector("#cartoon");
+cartoonBtn.addEventListener("click", (e) => {
+    console.log("cartoon");
+    filteredImageData = toCartoon(originalImageData);
+    ctx.putImageData(filteredImageData, 0, 0);
 })
