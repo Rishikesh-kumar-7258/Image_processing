@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toOil_painting, toMeanBlur, toSharpen, toFrost, tofst, toVignette, toCartoon } from "./filter.js";
+import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toOil_painting, toMeanBlur, toSharpen, toFrost, toVignette} from "./filter.js";
 
 // console.log("Image processing");
 
@@ -263,14 +263,14 @@ const classic = () => {
 let classicBtn = document.querySelector("#classic");
 classicBtn.addEventListener("click", (e) => { classic(); })
 
-const frost = () => {
+const ivory2 = () => {
     ctx.filter = 'contrast(100%) saturate(100%) brightness(100%) sepia(100%)';
     ctx.drawImage(uploadedImg, 0, 0);
 }
 
-let frostBtn = document.querySelector("#frost");
-frostBtn.addEventListener("click", (e) => {
-    frost();
+let ivory2Btn = document.querySelector("#ivory2");
+ivory2Btn.addEventListener("click", (e) => {
+    ivory2();
 })
 
 
@@ -285,5 +285,11 @@ let cartoonBtn = document.querySelector("#cartoon");
 cartoonBtn.addEventListener("click", (e) => {
     console.log("cartoon");
     filteredImageData = toCartoon(originalImageData);
+    ctx.putImageData(filteredImageData, 0, 0);
+})
+
+let frostBtn = document.querySelector("#frost");
+frostBtn.addEventListener("click", (e) => {
+    filteredImageData = toFrost(originalImageData);
     ctx.putImageData(filteredImageData, 0, 0);
 })
