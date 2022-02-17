@@ -155,50 +155,6 @@ export const toOil_painting = (imageData) => {
     return newImageData;
 }
 
-// const trucate = (value) => Math.min(255, Math.max(0, value));
-
-// const mean = (arr) => arr.reduce((a, b) => a + b, 0) / arr.length;
-
-const letiance = (arr) => {
-    let m = mean(arr);
-    let s = arr.reduce((a, b) => a + (b - m) * (b - m)) / arr.length;
-
-    let newRGBVal = newImageData.data;
-    for (let i = 0; i < RGBVal.length; i += 4) {
-        let avg = (RGBVal[i] + RGBVal[i + 1] + RGBVal[i + 2]) / 3;
-        if (avg > 200) {
-            newRGBVal[i] = 255;
-            newRGBVal[i + 1] = 255;
-            newRGBVal[i + 2] = 255;
-            newRGBVal[i + 3] = RGBVal[i + 3];
-        }
-        else if (avg > 150) {
-            newRGBVal[i] = 200;
-            newRGBVal[i + 1] = 200;
-            newRGBVal[i + 2] = 200;
-            newRGBVal[i + 3] = RGBVal[i + 3];
-        }
-        else if (avg > 100) {
-            newRGBVal[i] = 155;
-            newRGBVal[i + 1] = 155;
-            newRGBVal[i + 2] = 155;
-            newRGBVal[i + 3] = RGBVal[i + 3];
-        }
-        else if (avg > 50) {
-            newRGBVal[i] = 100;
-            newRGBVal[i + 1] = 100;
-            newRGBVal[i + 2] = 100;
-            newRGBVal[i + 3] = RGBVal[i + 3];
-        }
-        else {
-            newRGBVal[i] = 0;
-            newRGBVal[i + 1] = 0;
-            newRGBVal[i + 2] = 0;
-            newRGBVal[i + 3] = RGBVal[i + 3];
-        }
-    }
-    return newImageData;
-}
 
 
 const RGBtoHSL = (RGBArray) => {
@@ -282,8 +238,6 @@ export const toSharpen = (imageData) => {
             dstBuff[dstOff + 3] = srcBuff[dstOff + 3];
         }
     }
-
-    // ctx.putImageData(dstData, 0, 0);
     console.log("Sharpen filter");
     return dstData;
 }
@@ -328,61 +282,6 @@ export const toMeanBlur = (imageData, windowSize) => {
 
 }
 
-// // Frost image filter (currently on hold first, implement mean and gaussian blur which will give idea about frost filter)
-// export const toFrost = (imageData, d = 1, wSize = 7) => {
-//     let RGBVal = imageData.data;
-//     let newImageData = new ImageData(imageData.width, imageData.height);
-//     let newRGBVal = newImageData.data;
-
-//     let s = distanceFromCenter(wSize);
-
-//     for (let i = 0; i < imageData.height; i += 4) {
-//         for (let j = 0; j < imageData.width; j += 4) {
-
-//             let tempWindow = [];
-//             for (let tempWindowIndex = 0; tempWindowIndex < wSize; tempWindowIndex++) {
-//                 let tempwindow2 = []
-//                 for (let tempWindowIndex2 = 0; tempWindowIndex2 < wSize; tempWindowIndex2++) {
-//                     tempwindow2.push(RGBVal[(i + tempWindowIndex) * imageData.width + j + tempWindowIndex2]);
-//                 }
-//                 tempWindow.push(tempwindow2);
-//             }
-
-//             let windowMean = mean(tempWindow, wSize);
-//             let wVariance = variance(tempWindow, wSize);
-//             let windowB = d * (wVariance / (windowMean * windowMean));
-//             let sumOfWeight = 0, sumOfPixelWeight = 0;
-
-//             for (let sRowIndex = 0; sRowIndex < s.length; sRowIndex++) {
-//                 for (let sColIndex = 0; sColIndex < s.length; sColIndex++) {
-//                     s[sRowIndex][sColIndex] = Math.exp(-1 * windowB * s[sRowIndex][sColIndex]);
-//                     sumOfWeight += s[sRowIndex][sColIndex];
-//                     sumOfPixelWeight += s[sRowIndex][sColIndex] * tempWindow[sRowIndex][sColIndex];
-//                 }
-//             }
-
-//             tempWindow[Math.floor(wSize / 2)][Math.floor(wSize / 2)] = sumOfPixelWeight / sumOfWeight;
-//             for (let tempWindowIndex = 0; tempWindowIndex < wSize; tempWindowIndex++) {
-//                 for (let tempWindowIndex2 = 0; tempWindowIndex2 < wSize; tempWindowIndex2++) {
-//                     newRGBVal[(i + tempWindowIndex) * 4 * imageData.width + j + temp] = tempWindow[tempWindowIndex][tempWindowIndex2];
-//                 }
-//             }
-//         }
-//     }
-
-//     return newImageData;
-// }
-//             tempWindow[Math.floor(wSize/2)][Math.floor(wSize/2)] = sumOfPixelWeight / sumOfWeight;
-//             for (let tempWindowIndex = 0; tempWindowIndex < wSize; tempWindowIndex++) {
-//                 for (let tempWindowIndex2 = 0; tempWindowIndex2 < wSize; tempWindowIndex2++) {
-//                     newRGBVal[(i+tempWindowIndex) * 4 * imageData.width + j + temp] = tempWindow[tempWindowIndex][tempWindowIndex2];
-//                 }
-//             }
-//         }
-//     }
-
-//     return newImageData;
-// }
 
 //=============================== Utility functions ========================================
 
@@ -469,14 +368,14 @@ const getSum = (arr, i, j, size, width, height) => {
 function saturate(imageData, value) {
     value = value / 100;
     var RGBVal = imageData.data;
-    for (var i = 0; i < RGBVal.length; i += 4) {
-        var r = RGBVal[i];
-        var g = RGBVal[i + 1];
-        var b = RGBVal[i + 2];
-        var gray = 0.2989 * r + 0.5870 * g + 0.1140 * b; //weights from CCIR 601 spec
-        RGBVal[i] = trucate(-gray * value + RGBVal[i] * (1 + value));
-        RGBVal[i + 1] = trucate(-gray * value + RGBVal[i + 1] * (1 + value));
-        RGBVal[i + 2] = trucate(-gray * value + RGBVal[i + 2] * (1 + value));
+    for (var index = 0; index < RGBVal.length; index += 4) {
+        var red = RGBVal[index];
+        var green = RGBVal[index + 1];
+        var blue = RGBVal[index + 2];
+        var gray = 0.2989 * red + 0.5870 * green + 0.1140 * blue; //weights from CCIR 601 spec
+        RGBVal[index] = trucate(-gray * value + RGBVal[index] * (1 + value));
+        RGBVal[index + 1] = trucate(-gray * value + RGBVal[index + 1] * (1 + value));
+        RGBVal[index + 2] = trucate(-gray * value + RGBVal[index + 2] * (1 + value));
     }
     return imageData;
 };
@@ -489,11 +388,11 @@ export const toFrost = (imageData) => {
     let newImageData = new ImageData(imageData.width, imageData.height);
     let newRGBVal = newImageData.data;
 
-    for (let i = 0; i < RGBVal.length; i += 4) {
-        newRGBVal[i] = trucate(RGBVal[i] - 25);
-        newRGBVal[i + 1] = RGBVal[i + 1];
-        newRGBVal[i + 2] = trucate(RGBVal[i + 2] + 25);
-        newRGBVal[i + 3] = RGBVal[i + 3];
+    for (let index = 0; index < RGBVal.length; index += 4) {
+        newRGBVal[index] = trucate(RGBVal[index] - 25);
+        newRGBVal[index + 1] = RGBVal[index + 1];
+        newRGBVal[index + 2] = trucate(RGBVal[index + 2] + 25);
+        newRGBVal[index + 3] = RGBVal[index + 3];
     }
 
 
