@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toOil_painting, toMeanBlur, toSharpen, toFrost, toVignette} from "./filter.js";
+import { toGrayscale, brightness, toCool, toWarm, toWeightedGrayscale, toBlackWhite, toOil_painting, toMeanBlur, toSharpen, toFrost, toVignette, toKissMe} from "./filter.js";
 
 // console.log("Image processing");
 
@@ -281,15 +281,23 @@ vignetteBtn.addEventListener("click", (e) => {
 })
 
 
-let cartoonBtn = document.querySelector("#cartoon");
-cartoonBtn.addEventListener("click", (e) => {
-    console.log("cartoon");
-    filteredImageData = toCartoon(originalImageData);
-    ctx.putImageData(filteredImageData, 0, 0);
-})
-
 let frostBtn = document.querySelector("#frost");
 frostBtn.addEventListener("click", (e) => {
     filteredImageData = toFrost(originalImageData);
+    ctx.putImageData(filteredImageData, 0, 0);
+})
+
+// Applying cartoon filter
+let cartoonBtn = document.querySelector("#cartoon");
+cartoonBtn.addEventListener("click", () => {
+    filteredImageData = toCartoon(originalImageData);
+    ctx1.putImageData(filteredImageData, 0, 0);
+})
+
+// checking a new filter
+let kissmeBtn= document.querySelector("#kissme");
+kissmeBtn.addEventListener("click", () => {
+    console.log('filteredImageData');
+    let filteredImageData = toKissMe(originalImageData);
     ctx.putImageData(filteredImageData, 0, 0);
 })
