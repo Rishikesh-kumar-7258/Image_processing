@@ -102,7 +102,7 @@ export const toSoft = (imageData) => {
 
 //to fade filter
 export const toFade = (imageData) => {
-    return "blur(0.2px) saturate(80%) contrast(100%) brightness(110%) grayscale(30%)";
+    return "blur(2px) saturate(80%) contrast(100%) brightness(110%) grayscale(10%)";
 }
 
 //blossom filter
