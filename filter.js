@@ -124,47 +124,6 @@ export const toIvorySecond = (imageData) => {
     return "contrast(100%) saturate(100%) brightness(100%) sepia(100%)";
 }
 
-// Oil Painting filter
-export const toOil_painting = (imageData) => {
-    let RGBVal = imageData.data;
-    let newImageData = new ImageData(imageData.width, imageData.height);
-
-    let newRGBVal = newImageData.data;
-    for (let index = 0; index < RGBVal.length; index += 4) {
-        let avg = (RGBVal[index] + RGBVal[index + 1] + RGBVal[index + 2]) / 3;
-        if (avg > 200) {
-            newRGBVal[index] = 255;
-            newRGBVal[index + 1] = 255;
-            newRGBVal[index + 2] = 255;
-            newRGBVal[index + 3] = RGBVal[index + 3];
-        }
-        else if (avg > 150) {
-            newRGBVal[index] = 200;
-            newRGBVal[index + 1] = 200;
-            newRGBVal[index + 2] = 200;
-            newRGBVal[index + 3] = RGBVal[index + 3];
-        }
-        else if (avg > 100) {
-            newRGBVal[index] = 155;
-            newRGBVal[index + 1] = 155;
-            newRGBVal[index + 2] = 155;
-            newRGBVal[index + 3] = RGBVal[index + 3];
-        }
-        else if (avg > 50) {
-            newRGBVal[index] = 100;
-            newRGBVal[index + 1] = 100;
-            newRGBVal[index + 2] = 100;
-            newRGBVal[index + 3] = RGBVal[index + 3];
-        }
-        else {
-            newRGBVal[index] = 0;
-            newRGBVal[index + 1] = 0;
-            newRGBVal[index + 2] = 0;
-            newRGBVal[index + 3] = RGBVal[index + 3];
-        }
-    }
-    return newImageData;
-}
 
 
 
@@ -504,8 +463,8 @@ export const toCartoon = (imageData) => {
     }
 
     return filteredImageData;
-
 }
+
 
 export const toKissMe = (imageData) => {
 

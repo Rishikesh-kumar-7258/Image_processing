@@ -1,0 +1,5 @@
+1. Kiss me Filter
+2. Cartoon Filter
+3. Remove some functions
+4. Self explanatory variables and functions names
+5. Apply one filter on top of other

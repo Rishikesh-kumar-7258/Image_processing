@@ -127,17 +127,7 @@ warmBtn.addEventListener('change', (e) => {
 
 })
 
-//Sketch filter
-let oil_painting = document.querySelector('#oil_painting');
-oil_painting.addEventListener('click', function () {
 
-    // Getting the modified, according to grayscale function, image data
-    filteredImageData = toOil_painting(originalImageData);
-
-    // Drawing the image on canvas
-    ctx.putImageData(filteredImageData, 0, 0);
-
-})
 
 // removing all filters
 let originalImageBtn = document.querySelector("#original");
@@ -230,7 +220,6 @@ ivoryBtn.addEventListener("click", (e) => {
 // Black and white filter
 let blackwhiteBtn = document.querySelector("#blackwhite");
 blackwhiteBtn.addEventListener("click", (e) => {
-    // blackwhite();
     ctx.filter = toBlackWhite(originalImageData);
     ctx.drawImage(uploadedImg, 0, 0);
 })
