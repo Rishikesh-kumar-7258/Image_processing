@@ -570,3 +570,17 @@ function flatten(matrix) {
     return result;
 }
 
+export const vickySaidThis = (imageData) => {
+
+    let filteredImageData = new ImageData(imageData.width, imageData.height);
+    let filteredData = filteredImageData.data;
+
+    let windowSize = 5;
+
+    for (let i = 0; i < imageData.data.length; i += 4*windowSize) {
+        filteredData[i] = imageData.data[i];
+        filteredData[i + 1] = imageData.data[i + 1];
+        filteredData[i + 2] = imageData.data[i + 2];
+        filteredData[i + 3] = imageData.data[i + 3];
+    }
+}
