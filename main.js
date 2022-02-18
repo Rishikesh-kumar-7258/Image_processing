@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, toCool, toWarm, toWeightedGrayscale, toSharpen, toFrost, toVignette, toKissMe, toBlackWhite, toIvory, toFade, toClassic, toSoft, toBlossom, toCartoon } from "./filter.js";
+import { toGrayscale, toCool, toWarm, toWeightedGrayscale, toSharpen, toFrost, toVignette, toKissMe, toBlackWhite, toIvory, magic, toFade, toClassic, toSoft, toBlossom, toCartoon } from "./filter.js";
 
 // console.log("Image processing");
 
@@ -258,5 +258,15 @@ let kissmeBtn = document.querySelector("#kissme");
 kissmeBtn.addEventListener("click", () => {
     console.log('filteredImageData');
     let filteredImageData = toKissMe(originalImageData);
+    ctx.putImageData(filteredImageData, 0, 0);
+})
+
+
+
+
+// magic filter
+let magicBtn = document.querySelector("#magic");
+magicBtn.addEventListener("click", (e) => { 
+    filteredImageData = magic(originalImageData);
     ctx.putImageData(filteredImageData, 0, 0);
 })

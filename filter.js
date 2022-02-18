@@ -123,37 +123,6 @@ export const toClassic = (imageData) => {
 
 
 
-const RGBtoHSL = (RGBArray) => {
-
-    let HSLArray = [];
-
-    let n = RGBArray.length;
-    for (let i = 0; i < i; i += 4) {
-        r = RGBArray[i] / 255;
-        g = RGBArray[i + 1] / 255;
-        b = RGBArray[i + 2] / 255;
-        a = RGBArray[i + 3] / 255;
-
-        max_ = max(r, g, b);
-        min_ = min(r, g, b);
-
-        let h, s, l;
-        l = Math.round((max_ + min_) / 2);
-
-        if (l < 0.5) s = (max_ - min_) / (max_ + min_);
-        else s = (max_ - min_) / (2 - max_ - min_);
-
-        if (max_ == r) h = (g - b) / (max_ - min_);
-        else if (max_ == g) h = 2 - (b - r) / (max_ - min_);
-        else h = 4 - (r - g) / (max_ - min_);
-
-        HSLArray.push(h);
-        HSLArray.push(s);
-        HSLArray.push(l);
-    }
-
-    return HSLArray;
-}
 
 
 export const toSharpen = (imageData) => {
@@ -569,4 +538,170 @@ function flatten(matrix) {
     }
     return result;
 }
+
+
+
+
+
+
+// const RGBtoHSL = (RGBArray) => {
+
+//     let HSLArray = [];
+
+//     let n = RGBArray.length;
+//     for (let i = 0; i < i; i += 4) {
+//         r = RGBArray[i] / 255;
+//         g = RGBArray[i + 1] / 255;
+//         b = RGBArray[i + 2] / 255;
+//         a = RGBArray[i + 3] / 255;
+
+//         max_ = max(r, g, b);
+//         min_ = min(r, g, b);
+
+//         let h, s, l;
+//         l = Math.round((max_ + min_) / 2);
+
+//         if (l < 0.5) s = (max_ - min_) / (max_ + min_);
+//         else s = (max_ - min_) / (2 - max_ - min_);
+
+//         if (max_ == r) h = (g - b) / (max_ - min_);
+//         else if (max_ == g) h = 2 - (b - r) / (max_ - min_);
+//         else h = 4 - (r - g) / (max_ - min_);
+
+//         HSLArray.push(h);
+//         HSLArray.push(s);
+//         HSLArray.push(l);
+//     }
+
+//     return HSLArray;
+// }
+
+
+
+// export const hslmagic = (RGBArray) => {
+//     xyz = RGBtoHSL();
+//     let h = xyz[0];
+//     let s = xyz[1];
+//     let l = xyz[2];
+//     h = h * 360;
+//     s = s * 100;
+//     l = l * 100;
+
+    // if (h >= 0 && h < 60) {
+    //     h = 30;
+    // } else if (h >= 60 && h < 120) {
+    //     h =90;
+    // }
+    // else if (h >= 120 && h < 180) {
+    //     h = 150;
+    // }
+    // else if (h >= 180 && h < 240) {
+    //    h = 210;
+    // }
+    // else if (h >= 240 && h < 300) {
+    //     h = 270;
+    // }
+    // else if (h >= 300 && h < 360) {
+    //     h = 330;
+    // }
+    
+    // return [h, s, l];
+// }
+
+
+// function hslToRgb(h, s, l){
+//     var r, g, b;
+
+//     if(s == 0){
+//         r = g = b = l; // achromatic
+//     }else{
+//         var hue2rgb = function hue2rgb(p, q, t){
+//             if(t < 0) t += 1;
+//             if(t > 1) t -= 1;
+//             if(t < 1/6) return p + (q - p) * 6 * t;
+//             if(t < 1/2) return q;
+//             if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+//             return p;
+//         }
+
+//         var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+//         var p = 2 * l - q;
+//         r = hue2rgb(p, q, h + 1/3);
+//         g = hue2rgb(p, q, h);
+//         b = hue2rgb(p, q, h - 1/3);
+//     }
+
+//     return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+// }
+
+
+
+export const magic = (imageData) => {
+    let dst = new cv.Mat();
+    let src = new cv.matFromImageData(imageData);
+    cv.cvtColor(src, dst, cv.COLOR_RGB2HSV, 0);
+    // let hsv = dst.getDataAsArray();
+    console.log(dst);
+    console.log(src);
+    let hsv = dst.data;
+//    making a threshold value for hsv
+// for loop in js
+    for (let i = 0; i < hsv.length; i += 3) {
+        if ((hsv[i] > 0 && hsv[i] < 30) && (hsv[i + 1] > 23 && hsv[i + 1] < 68)) {
+            hsv[i] = 15;
+            hsv[i + 1] = 10;
+        }
+        else if (hsv[i] > 30 && hsv[i] < 60) {
+            hsv[i] = 45;
+            hsv[i + 1] = 90;
+            hsv[i+2] = 50;
+        }
+        else if (hsv[i] > 60 && hsv[i] < 90) {
+            hsv[i] = 75;
+            hsv[i + 1] = 10;
+        }
+        else if (hsv[i] > 90 && hsv[i] < 120) {
+            hsv[i] = 105;
+            hsv[i + 1] = 90;
+        }
+        else if (hsv[i] > 120 && hsv[i] < 150) {
+            hsv[i] = 135;
+            hsv[i + 1] = 90;
+        }
+        else if (hsv[i] > 150 && hsv[i] < 180) {
+            hsv[i] = 165;
+            hsv[i + 1] = 50;
+        }
+        else if (hsv[i] > 180 && hsv[i] < 210) {
+            hsv[i] = 195;
+            hsv[i + 1] = 50;
+        }
+        else if (hsv[i] > 210 && hsv[i] < 240) {
+            hsv[i] = 225;
+            hsv[i + 1] = 0;
+            hsv[i+2] = 50;
+        }
+        else if (hsv[i] > 240 && hsv[i] < 270) {
+            hsv[i] = 255;
+        }
+        else if (hsv[i] > 270 && hsv[i] < 300) {
+            hsv[i] = 285;
+        }
+        else if (hsv[i] > 300 && hsv[i] < 330) {
+            hsv[i] = 315;
+        }
+        else if (hsv[i] > 330 && hsv[i] < 360) {
+            hsv[i] = 345;
+        }
+    }
+    cv.cvtColor(dst, dst, cv.COLOR_HSV2RGB, 0);
+    cv.cvtColor(dst, dst, cv.COLOR_RGB2RGBA, 0);
+    let filteredImageData = new ImageData(dst.cols, dst.rows);
+    filteredImageData.data.set(dst.data);
+    return filteredImageData;
+}
+
+
+
+
 

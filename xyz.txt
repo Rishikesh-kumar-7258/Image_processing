@@ -3,3 +3,4 @@
 3. Remove some functions
 4. Self explanatory variables and functions names
 5. Apply one filter on top of other
+6. Original button
