@@ -89,31 +89,42 @@ export const toWeightedGrayscale = (imageData) => {
     return newImageData;
 }
 
-export const toBlackWhite = (imageData, threshold) => {
-    let RGBVal = imageData.data;
-    let newImageData = new ImageData(imageData.width, imageData.height);
-
-    let newRGBVal = newImageData.data;
-    for (let index = 0; index < RGBVal.length; index += 4) {
-        let average = (RGBVal[index] + RGBVal[index + 1] + RGBVal[index + 2]) / 3;
-
-        if (average > threshold) {
-            newRGBVal[index] = 255;
-            newRGBVal[index + 1] = 255;
-            newRGBVal[index + 2] = 255;
-            newRGBVal[index + 3] = RGBVal[index + 3];
-        }
-        else {
-            newRGBVal[index] = 0;
-            newRGBVal[index + 1] = 0;
-            newRGBVal[index + 2] = 0;
-            newRGBVal[index + 3] = RGBVal[index + 3];
-        }
-    }
-    return newImageData;
+// Black and white filter
+export const toBlackWhite = (imageData) => {
+    return "contrast(175%) saturate(0%) brightness(100%)";
 }
 
+//soft image filter
+export const toSoft = (imageData) => { 
+    return "blur(0.6px) saturate(101%) contrast(113%) brightness(105%)";
+}
 
+//to fade filter
+export const toFade = (imageData) => {
+    return "blur(0.2px) saturate(80%) contrast(100%) brightness(110%) grayscale(30%)";
+}
+
+//blossom filter
+export const toBlossom = (imageData) => {
+    return "saturate(180%) contrast(95%) brightness(130%)";
+}
+
+//ivory filter
+export const toIvory = (imageData) => {
+    return "contrast(75%) saturate(105%) brightness(100%) sepia(15%)";
+}
+
+//classic filter
+export const toClassic = (imageData) => {
+    return "contrast(125%) saturate(105%) brightness(80%) sepia(35%)";
+}
+
+//ivory second filter
+export const toIvorySecond = (imageData) => {
+    return "contrast(100%) saturate(100%) brightness(100%) sepia(100%)";
+}
+
+// Oil Painting filter
 export const toOil_painting = (imageData) => {
     let RGBVal = imageData.data;
     let newImageData = new ImageData(imageData.width, imageData.height);
