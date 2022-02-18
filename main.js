@@ -17,9 +17,6 @@ let ctx = canvas.getContext('2d');
 // Variable to store the uploaded image
 let uploadedImg = new Image();
 
-// Dictionary to hold different filtes and its values
-let addedFilters = [];
-
 // On uploading the file on the file input
 file.addEventListener('change', (e) => {
     // console.log(e.target.files[0]);
@@ -135,7 +132,7 @@ originalImageBtn.addEventListener('click', (e) => {
     //assigning original image data to filtered image data
     filteredImageData = originalImageData;
 
-    ctx.putImageData(filteredImageData, 0, 0);
+    ctx.putImageData(originalImageData, 0, 0);
 
     brightnessValue = 0;
     coolValue = 0;
@@ -256,8 +253,6 @@ cartoonBtn.addEventListener("click", () => {
 // Kiss me filter
 let kissmeBtn = document.querySelector("#kissme");
 kissmeBtn.addEventListener("click", () => {
-    console.log('filteredImageData');
-    let filteredImageData = toKissMe(originalImageData);
     ctx.putImageData(filteredImageData, 0, 0);
 })
 
@@ -269,4 +264,33 @@ let magicBtn = document.querySelector("#magic");
 magicBtn.addEventListener("click", (e) => { 
     filteredImageData = magic(originalImageData);
     ctx.putImageData(filteredImageData, 0, 0);
+    
+    let lipImage =new Image();
+    lipImage.src = "lips-png-transparent-2.png";
+
+    // let windowcount = 4;
+    // let windowWidth = canvas.width / windowcount;
+    // let windowHeight = canvas.height / windowcount;
+
+    // for (let i = 0; i < windowcount; i++)
+    // {
+    //     for (let j = 0; j < windowcount; j++)
+    //     {
+    //         if (((i + j)&1) == 0) ctx.drawImage(lipImage, j * windowWidth, i * windowHeight, windowWidth, windowHeight);
+    //     }
+    // }
+
+    let imageWidth = 100;
+    let imageHeight = 70;
+
+    let countI = 0, countJ = 0;
+    for (let i = 0; i < canvas.width; i += imageWidth)
+    {
+        countI++;
+        for (let j = 0; j < canvas.height; j += imageHeight)
+        {
+            if ((countI+countJ) & 1) ctx.drawImage(lipImage, i, j, imageWidth, imageHeight);
+            countJ++;
+        }
+    }
 })
