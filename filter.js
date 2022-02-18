@@ -119,10 +119,6 @@ export const toClassic = (imageData) => {
     return "contrast(125%) saturate(105%) brightness(80%) sepia(35%)";
 }
 
-//ivory second filter
-export const toIvorySecond = (imageData) => {
-    return "contrast(100%) saturate(100%) brightness(100%) sepia(100%)";
-}
 
 
 

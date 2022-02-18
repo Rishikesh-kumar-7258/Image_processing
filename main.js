@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, toCool, toWarm, toWeightedGrayscale, toOil_painting, toSharpen, toFrost, toVignette, toKissMe, toBlackWhite, toIvory,toIvorySecond, toFade, toClassic, toSoft, toBlossom, toCartoon } from "./filter.js";
+import { toGrayscale, toCool, toWarm, toWeightedGrayscale, toSharpen, toFrost, toVignette, toKissMe, toBlackWhite, toIvory, toFade, toClassic, toSoft, toBlossom, toCartoon } from "./filter.js";
 
 // console.log("Image processing");
 
@@ -231,12 +231,6 @@ classicBtn.addEventListener("click", (e) => {
     ctx.drawImage(uploadedImg, 0, 0); 
 })
 
-// Ivory 2 filter
-let ivory2Btn = document.querySelector("#ivory2");
-ivory2Btn.addEventListener("click", (e) => {
-   ctx.filter = toIvorySecond(originalImageData);
-   ctx.drawImage(uploadedImg, 0, 0);
-})
 
 // Vignette filter
 let vignetteBtn = document.querySelector("#vignette");
