@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, toCool, toWarm, toWeightedGrayscale, toOil_painting, toSharpen, toFrost, toVignette, toKissMe, toBlackWhite, toIvory,toIvorySecond, toFade, toClassic, toSoft, toBlossom, toCartoon } from "./filter.js";
+import { toGrayscale, toCool, toWarm, toWeightedGrayscale, toSharpen, toFrost, toVignette, toKissMe, toBlackWhite, toIvory,toIvorySecond, toFade, toClassic, toSoft, toBlossom, toCartoon } from "./filter.js";
 
 // console.log("Image processing");
 
