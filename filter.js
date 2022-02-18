@@ -604,19 +604,3 @@ function flatten(matrix) {
     return result;
 }
 
-// //cartoonify an image in javascript
-// export const toCartoon = (imageData) => {
-//     let width = imageData.width;
-//     let height = imageData.height;
-//     let RGBVal = imageData.data;
-//     let newImageData = new ImageData(imageData.width, imageData.height);
-//     let newRGBVal = newImageData.data;
-
-//     for (let index = 0; index < RGBVal.length; index += 4) {
-//         newRGBVal[index] = RGBVal[index]*1.5;
-//         newRGBVal[index + 1] = RGBVal[index + 1]*1.5;
-//         newRGBVal[index + 2] = RGBVal[index + 2]*1.5;
-//         newRGBVal[index + 3] = RGBVal[index + 3];
-//     }
-//     return newImageData;
-// };
