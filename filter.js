@@ -123,37 +123,6 @@ export const toClassic = (imageData) => {
 
 
 
-const RGBtoHSL = (RGBArray) => {
-
-    let HSLArray = [];
-
-    let n = RGBArray.length;
-    for (let i = 0; i < i; i += 4) {
-        r = RGBArray[i] / 255;
-        g = RGBArray[i + 1] / 255;
-        b = RGBArray[i + 2] / 255;
-        a = RGBArray[i + 3] / 255;
-
-        max_ = max(r, g, b);
-        min_ = min(r, g, b);
-
-        let h, s, l;
-        l = Math.round((max_ + min_) / 2);
-
-        if (l < 0.5) s = (max_ - min_) / (max_ + min_);
-        else s = (max_ - min_) / (2 - max_ - min_);
-
-        if (max_ == r) h = (g - b) / (max_ - min_);
-        else if (max_ == g) h = 2 - (b - r) / (max_ - min_);
-        else h = 4 - (r - g) / (max_ - min_);
-
-        HSLArray.push(h);
-        HSLArray.push(s);
-        HSLArray.push(l);
-    }
-
-    return HSLArray;
-}
 
 
 export const toSharpen = (imageData) => {

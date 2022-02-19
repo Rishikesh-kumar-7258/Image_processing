@@ -255,6 +255,16 @@ let kissmeBtn = document.querySelector("#kissme");
 kissmeBtn.addEventListener("click", () => {
     
     ctx.putImageData(filteredImageData, 0, 0);
+})
+
+
+
+
+// magic filter
+let magicBtn = document.querySelector("#magic");
+magicBtn.addEventListener("click", (e) => { 
+    filteredImageData = magic(originalImageData);
+    ctx.putImageData(filteredImageData, 0, 0);
     
     let lipImage =new Image();
     lipImage.src = "lips-png-transparent-2.png";
