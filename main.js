@@ -199,12 +199,6 @@ const addContrast = (value) => {
     ctx.drawImage(uploadedImg, 0, 0);
 }
 
-//  Soft filter Working perfectly
-// const soft = () => {
-//     ctx.filter = 'blur(0.6px) saturate(101%) contrast(113%) brightness(105%)';
-//     ctx.drawImage(uploadedImg, 0, 0);
-// }
-
 //soft button filter
 let softBtn = document.querySelector("#soft");
 softBtn.addEventListener("click", (e) => {
@@ -212,13 +206,6 @@ softBtn.addEventListener("click", (e) => {
     ctx.filter = toSoft(originalImageData);
     ctx.drawImage(uploadedImg, 0, 0);
 })
-
-
-// working good just need to add the threshold value
-// const faded = () => {
-//     ctx.filter = 'blur(0.2px) saturate(80%) contrast(100%) brightness(110%) grayscale(30%)';
-//     ctx.drawImage(uploadedImg, 0, 0);
-// }
 
 //frost button filter
 let fadedBtn = document.querySelector("#faded");
@@ -228,23 +215,11 @@ fadedBtn.addEventListener("click", (e) => {
 })
 
 
-// Blossom Filter
-// const blossom = () => {
-//     ctx.filter = 'saturate(180%) contrast(95%) brightness(130%) ';
-//     ctx.drawImage(uploadedImg, 0, 0);
-// }
-
 let blossomBtn = document.querySelector("#blossom");
 blossomBtn.addEventListener("click", (e) => {
     ctx.filter = toBlossom(originalImageData);
     ctx.drawImage(uploadedImg,0,0);
 })
-
-//ivory filter button
-// const ivory = () => {
-//     ctx.filter = 'contrast(75%) saturate(105%) brightness(100%) sepia(15%)';
-//     ctx.drawImage(uploadedImg, 0, 0);
-// }
 
 
 let ivoryBtn = document.querySelector("#ivory");
@@ -253,12 +228,6 @@ ivoryBtn.addEventListener("click", (e) => {
     ctx.drawImage(uploadedImg, 0, 0);
 })
 
-// const blackwhite = () => {
-//     // ctx.filter = 'contrast(175%) saturate(0%) brightness(100%)';
-//     ctx.filter = trying(originalImageData);
-//     ctx.drawImage(uploadedImg, 0, 0);
-// }
-
 let blackwhiteBtn = document.querySelector("#blackwhite");
 blackwhiteBtn.addEventListener("click", (e) => {
     // blackwhite();
@@ -266,22 +235,12 @@ blackwhiteBtn.addEventListener("click", (e) => {
     ctx.drawImage(uploadedImg, 0, 0);
 })
 
-// 
-// const classic = () => {
-//     ctx.filter = 'contrast(125%) saturate(105%) brightness(80%) sepia(35%)';
-//     ctx.drawImage(uploadedImg, 0, 0);
-// }
 
 let classicBtn = document.querySelector("#classic");
 classicBtn.addEventListener("click", (e) => { 
     ctx.filter = toClassic(originalImageData);
     ctx.drawImage(uploadedImg, 0, 0); 
 })
-
-// const ivory2 = () => {
-//     ctx.filter = 'contrast(100%) saturate(100%) brightness(100%) sepia(100%)';
-//     ctx.drawImage(uploadedImg, 0, 0);
-// }
 
 let ivory2Btn = document.querySelector("#ivory2");
 ivory2Btn.addEventListener("click", (e) => {
@@ -307,7 +266,7 @@ frostBtn.addEventListener("click", (e) => {
 let cartoonBtn = document.querySelector("#cartoon");
 cartoonBtn.addEventListener("click", () => {
     filteredImageData = toCartoon(originalImageData);
-    ctx1.putImageData(filteredImageData, 0, 0);
+    ctx.putImageData(filteredImageData, 0, 0);
 })
 
 // checking a new filter
