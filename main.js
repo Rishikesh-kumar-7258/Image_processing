@@ -1,14 +1,11 @@
 // Importing functions from filter.js library
-import { toGrayscale, toCool, toWarm, toWeightedGrayscale, toSharpen, toFrost, toVignette, toKissMe, toBlackWhite, toIvory, toFade, toClassic, toSoft, toBlossom, toCartoon, toBlur } from "./filter.js";
+import { toGrayscale, toCool, toWarm, toWeightedGrayscale, toSharpen, toFrost, toVignette, toBlackWhite, toIvory, toFade, toClassic, toSoft, toBlossom, toCartoon, toBlur } from "./filter.js";
 
 // console.log("Image processing");
 
 const file = document.getElementById("img"); // File input
 let originalImageData; // Variable to store the image data of the uploded file
 let filteredImageData; // Variable to store the image data of the filtered image
-let brightnessValue = 0; // variable to store the currentBrightness value
-let coolValue = 0; // variable to store the currentCool value
-let warmValue = 0; // variable to store the current warm value
 
 // canvas element to draw the uploaded image
 let canvas = document.querySelector('#canvas');
@@ -16,6 +13,7 @@ let ctx = canvas.getContext('2d');
 
 // Variable to store the uploaded image
 let uploadedImg = new Image();
+let filteredImg = new Image();
 
 // On uploading the file on the file input
 file.addEventListener('change', (e) => {
@@ -52,9 +50,6 @@ uploadBtn.addEventListener("click", () => {
     originalImageData = ctx.getImageData(0, 0, uploadedImg.width, uploadedImg.height);
     filteredImageData = originalImageData;
 
-    brightnessValue = 0;
-    coolValue = 0;
-    warmValue = 0;
 })
 
 // Coverting the image to grayscale when clicking on grayscale button
@@ -100,7 +95,6 @@ coolBtn.addEventListener('change', (e) => {
 
     // Getting the modified, according to cool function, image data
     filteredImageData = toCool(filteredImageData, currentCoolValue);
-    coolValue = currentCoolValue;
 
     // Drawing the image on canvas
     ctx.putImageData(filteredImageData, 0, 0);
@@ -110,14 +104,11 @@ coolBtn.addEventListener('change', (e) => {
 let warmBtn = document.querySelector('#warm');
 warmBtn.addEventListener('change', (e) => {
 
-    // coolBtn.value = 0;
     // Getting the current warm value
     let currentWarmValue = parseInt(e.target.value);
 
     // Getting the modified, according to cool function, image data
     filteredImageData = toWarm(filteredImageData, currentWarmValue);
-
-    warmValue = currentWarmValue;
 
     // Drawing the image on canvas
     ctx.putImageData(filteredImageData, 0, 0);
@@ -133,10 +124,6 @@ originalImageBtn.addEventListener('click', (e) => {
     filteredImageData = originalImageData;
 
     ctx.putImageData(originalImageData, 0, 0);
-
-    brightnessValue = 0;
-    coolValue = 0;
-    warmValue = 0;
 })
 
 // Downloading filtered image
@@ -145,11 +132,12 @@ downloadBtn.addEventListener("click", (e) => {
     e.target.href = canvas.toDataURL("image/png");
 })
 
-// mean Blur filter
-let meanBlurBtn = document.querySelector("#meanBlur");
-meanBlurBtn.addEventListener("change", (e) => {
-
-    blurImage(parseInt(e.target.value));
+// blurring effect
+let blurSlider = document.querySelector("#blur");
+blurSlider.addEventListener("change", () => {
+    let blurValue = parseInt(blurSlider.value);
+    filteredImageData = toBlur(filteredImageData, blurValue);
+    ctx.putImageData(filteredImageData, 0, 0);
 })
 
 
@@ -169,63 +157,71 @@ contrast.addEventListener("change", (e) => {
 })
 
 // function to set change the blur of the image applicable only for this file
-const blurImage = (value) => {
+// const blurImage = (value) => {
 
-    filteredImageData = toBlur(originalImageData, value);
-    ctx.putImageData(filteredImageData, 0, 0);
-}
+//     filteredImageData = toBlur(originalImageData, value);
+//     ctx.putImageData(filteredImageData, 0, 0);
+// }
 
 const brightnessImage = (value) => {
 
+    filteredImg.src = canvas.toDataURL("image/png");
     ctx.filter = `brightness(${value}%)`;
-    ctx.drawImage(uploadedImg, 0, 0);
+    ctx.drawImage(filteredImg, 0, 0);
 }
 
 const addContrast = (value) => {
+    filteredImg.src = canvas.toDataURL("image/png");
     ctx.filter = `contrast(${value}%)`;
-    ctx.drawImage(uploadedImg, 0, 0);
+    ctx.drawImage(filteredImg, 0, 0);
 }
 
 //soft button filter
 let softBtn = document.querySelector("#soft");
 softBtn.addEventListener("click", (e) => {
+    filteredImg.src = canvas.toDataURL('image/png');
     ctx.filter = toSoft(filteredImageData);
-    ctx.drawImage(uploadedImg, 0, 0);
+    ctx.drawImage(filteredImg, 0, 0);
 })
 
 //frost button filter
 let fadedBtn = document.querySelector("#faded");
 fadedBtn.addEventListener("click", (e) => {
+    filteredImg.src = canvas.toDataURL("image/png");
     ctx.filter = toFade(filteredImageData);
-    ctx.drawImage(uploadedImg, 0, 0);
+    ctx.drawImage(filteredImg, 0, 0);
 })
 
 // Blossom filter
 let blossomBtn = document.querySelector("#blossom");
 blossomBtn.addEventListener("click", (e) => {
+    filteredImg.src = canvas.toDataURL("image/png");
     ctx.filter = toBlossom(originalImageData);
-    ctx.drawImage(uploadedImg,0,0);
+    ctx.drawImage(filteredImg,0,0);
 })
 
 // Ivory filter
 let ivoryBtn = document.querySelector("#ivory");
 ivoryBtn.addEventListener("click", (e) => {
+    filteredImg.src  = canvas.toDataURL("image/png");
     ctx.filter = toIvory(originalImageData);
-    ctx.drawImage(uploadedImg, 0, 0);
+    ctx.drawImage(filteredImg, 0, 0);
 })
 
 // Black and white filter
 let blackwhiteBtn = document.querySelector("#blackwhite");
 blackwhiteBtn.addEventListener("click", (e) => {
+    filteredImg.src = canvas.toDataURL("image/png");
     ctx.filter = toBlackWhite(originalImageData);
-    ctx.drawImage(uploadedImg, 0, 0);
+    ctx.drawImage(filteredImg, 0, 0);
 })
 
 // Classic filter
 let classicBtn = document.querySelector("#classic");
 classicBtn.addEventListener("click", (e) => { 
+    filteredImg.src = canvas.toDataURL("image/png");
     ctx.filter = toClassic(originalImageData);
-    ctx.drawImage(uploadedImg, 0, 0); 
+    ctx.drawImage(filteredImg, 0, 0); 
 })
 
 
@@ -254,17 +250,8 @@ cartoonBtn.addEventListener("click", () => {
 let kissmeBtn = document.querySelector("#kissme");
 kissmeBtn.addEventListener("click", () => {
     
-    ctx.putImageData(filteredImageData, 0, 0);
-})
-
-
-
-
-// magic filter
-let magicBtn = document.querySelector("#magic");
-magicBtn.addEventListener("click", (e) => { 
-    filteredImageData = magic(originalImageData);
-    ctx.putImageData(filteredImageData, 0, 0);
+    // filteredImageData = toBlur(originalImageData, 50);
+    // ctx.putImageData(filteredImageData, 0, 0);
     
     let lipImage =new Image();
     lipImage.src = "lips-png-transparent-2.png";
@@ -294,4 +281,15 @@ magicBtn.addEventListener("click", (e) => {
             countJ++;
         }
     }
+
+    filteredImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 })
+
+
+
+
+// // magic filter
+// let magicBtn = document.querySelector("#magic");
+// magicBtn.addEventListener("click", (e) => { 
+    
+// })
