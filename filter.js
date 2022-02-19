@@ -145,8 +145,7 @@ export const toSharpen = (imageData) => {
 
 export const toBlur = (imageData, value) => {
 
-    // let M = cv.Mat.eye(3, 3, cv.CV_32FC1);
-    // console.log(M);
+
 
     let originalMat = cv.matFromImageData(imageData); // Converting the image data to opencv mat
     let blurredMat = new cv.Mat();
@@ -271,52 +270,6 @@ export const toCartoon = (imageData) => {
 }
 
 
-// export const toKissMe = (imageData) => {
-
-//     let originalMat = new cv.matFromImageData(imageData);
-//     let anotherImageData = cv.imread('red-lips');
-
-//     cv.resize(anotherImageData, anotherImageData, new cv.Size(imageData.width/2, imageData.height/2), cv.INTER_AREA);
-
-//     let filteredImageData = new ImageData(imageData.width, imageData.height); // Converting the blurred image to image data
-
-//     for (let i = 0; i < imageData.data.length; i += 4) {
-//         filteredImageData.data[i] = imageData.data[i];
-//         filteredImageData.data[i+1] = imageData.data[i+1];
-//         filteredImageData.data[i+2] = imageData.data[i+2];
-//         filteredImageData.data[i+3] = imageData.data[i+3];
-//     }
-
-//     for (let i = 0; i < imageData.data.length; i += 4) {
-//         let x = i / (4 * imageData.width);
-//         x += (imageData.height / 2) - (anotherImageData.rows / 2);
-//         x = x * 4 * imageData.width;
-//         x = parseInt(x);
-
-//         if (anotherImageData.data[i] > 0) filteredImageData.data[x] = anotherImageData.data[i] & 255;
-//         if (anotherImageData.data[i+1] > 0) filteredImageData.data[x+1] = anotherImageData.data[i+1] & 255;
-//         if (anotherImageData.data[i+2] > 0) filteredImageData.data[x+2] = anotherImageData.data[i+2] & 255;
-//         if (anotherImageData.data[i+3] > 0) filteredImageData.data[x+3] = anotherImageData.data[i+3] & 255;
-//     }
-
-//     return filteredImageData;
-// }
-
-
-export const vickySaidThis = (imageData) => {
-
-    let filteredImageData = new ImageData(imageData.width, imageData.height);
-    let filteredData = filteredImageData.data;
-
-    let windowSize = 5;
-
-    for (let i = 0; i < imageData.data.length; i += 4*windowSize) {
-        filteredData[i] = imageData.data[i];
-        filteredData[i + 1] = imageData.data[i + 1];
-        filteredData[i + 2] = imageData.data[i + 2];
-        filteredData[i + 3] = imageData.data[i + 3];
-    }
-}
 
 //=============================== Utility functions ========================================
 
