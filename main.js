@@ -156,12 +156,6 @@ contrast.addEventListener("change", (e) => {
     addContrast(parseInt(e.target.value));
 })
 
-// function to set change the blur of the image applicable only for this file
-// const blurImage = (value) => {
-
-//     filteredImageData = toBlur(originalImageData, value);
-//     ctx.putImageData(filteredImageData, 0, 0);
-// }
 
 const brightnessImage = (value) => {
 
@@ -250,23 +244,8 @@ cartoonBtn.addEventListener("click", () => {
 let kissmeBtn = document.querySelector("#kissme");
 kissmeBtn.addEventListener("click", () => {
     
-    // filteredImageData = toBlur(originalImageData, 50);
-    // ctx.putImageData(filteredImageData, 0, 0);
-    
     let lipImage =new Image();
     lipImage.src = "lips-png-transparent-2.png";
-
-    // let windowcount = 4;
-    // let windowWidth = canvas.width / windowcount;
-    // let windowHeight = canvas.height / windowcount;
-
-    // for (let i = 0; i < windowcount; i++)
-    // {
-    //     for (let j = 0; j < windowcount; j++)
-    //     {
-    //         if (((i + j)&1) == 0) ctx.drawImage(lipImage, j * windowWidth, i * windowHeight, windowWidth, windowHeight);
-    //     }
-    // }
 
     let imageWidth = 100;
     let imageHeight = 70;
@@ -284,12 +263,3 @@ kissmeBtn.addEventListener("click", () => {
 
     filteredImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 })
-
-
-
-
-// // magic filter
-// let magicBtn = document.querySelector("#magic");
-// magicBtn.addEventListener("click", (e) => { 
-    
-// })
