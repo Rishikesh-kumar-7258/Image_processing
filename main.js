@@ -17,7 +17,6 @@ let filteredImg = new Image();
 
 // On uploading the file on the file input
 file.addEventListener('change', (e) => {
-    // console.log(e.target.files[0]);
 
     const imgFile = e.target.files[0]; // Getting the firs uploaded file
 

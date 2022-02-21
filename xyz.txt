@@ -3,6 +3,3 @@
 3. Remove some functions - done
 4. Self explanatory variables and functions names
 5. Apply one filter on top of other - done
-6. Original button - done
-7. Filters which are using sliders are not workign properly when applied on previously filtered image
-   like if the blur of and image is increased it cannot be decreased again.

@@ -145,8 +145,6 @@ export const toSharpen = (imageData) => {
 
 export const toBlur = (imageData, value) => {
 
-
-
     let originalMat = cv.matFromImageData(imageData); // Converting the image data to opencv mat
     let blurredMat = new cv.Mat();
 
