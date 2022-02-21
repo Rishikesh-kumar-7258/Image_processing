@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, toCool, toWarm, toWeightedGrayscale, toSharpen, toFrost, toVignette, toBlackWhite, toIvory, toFade, toClassic, toSoft, toBlossom, toCartoon, toBlur } from "./filter.js";
+import { toGrayscale, toCool, toWarm, toWeightedGrayscale, toSharpen, toFrost, toVignette, toBlackWhite, toIvory, toFade, toClassic, toSoft, toBlossom, toCartoon, toBlur, vickySaidThis } from "./filter.js";
 
 // console.log("Image processing");
 
@@ -256,28 +256,22 @@ kissmeBtn.addEventListener("click", () => {
     let lipImage =new Image();
     lipImage.src = "lips-png-transparent-2.png";
 
-    // let windowcount = 4;
-    // let windowWidth = canvas.width / windowcount;
-    // let windowHeight = canvas.height / windowcount;
-
-    // for (let i = 0; i < windowcount; i++)
-    // {
-    //     for (let j = 0; j < windowcount; j++)
-    //     {
-    //         if (((i + j)&1) == 0) ctx.drawImage(lipImage, j * windowWidth, i * windowHeight, windowWidth, windowHeight);
-    //     }
-    // }
-
     let imageWidth = 100;
     let imageHeight = 70;
 
-    let countI = 0, countJ = 0;
+    let countI = 0, countJ = 0, kisscount =0;
     for (let i = 0; i < canvas.width; i += imageWidth)
     {
         countI++;
         for (let j = 0; j < canvas.height; j += imageHeight)
         {
-            if ((countI+countJ) & 1) ctx.drawImage(lipImage, i, j, imageWidth, imageHeight);
+            if ((countI+countJ) & 1) 
+            {
+                let randomValue = Math.random();
+
+                if (randomValue > 0.5 && i+imageWidth < canvas.width && j+imageHeight < canvas.height && kisscount++ < 10)
+                    ctx.drawImage(lipImage, i, j, imageWidth, imageHeight);
+            }
             countJ++;
         }
     }
@@ -288,8 +282,9 @@ kissmeBtn.addEventListener("click", () => {
 
 
 
-// // magic filter
-// let magicBtn = document.querySelector("#magic");
-// magicBtn.addEventListener("click", (e) => { 
-    
-// })
+// magic filter
+let magicBtn = document.querySelector("#magic");
+magicBtn.addEventListener("click", (e) => { 
+    filteredImageData = vickySaidThis(filteredImageData);
+    ctx.putImageData(filteredImageData, 0, 0);
+})

@@ -95,7 +95,7 @@ export const toBlackWhite = (imageData) => {
 }
 
 //soft image filter
-export const toSoft = (imageData) => { 
+export const toSoft = (imageData) => {
     return "blur(0.6px) saturate(101%) contrast(113%) brightness(105%)";
 }
 
@@ -243,7 +243,7 @@ export const toEdge = (imageData) => {
 
     // converting the image to grayscale
     cv.cvtColor(edgeMat, edgeMat, cv.COLOR_RGBA2GRAY, 0);
-    cv.Canny(edgeMat, edgeMat, 100, 120, 5, false);
+    cv.Canny(edgeMat, edgeMat, 50, 100, 3.5, false);
     cv.cvtColor(edgeMat, edgeMat, cv.COLOR_GRAY2RGBA);
 
     let filteredImageData = new ImageData(imageData.width, imageData.height); // Converting the blurred image to image data
@@ -255,16 +255,17 @@ export const toEdge = (imageData) => {
 export const toCartoon = (imageData) => {
 
     let edgeData = toBlur(imageData, 8);
+    // let edgeData = vickySaidThis(imageData);
     // console.log(edgeData);
     edgeData = toEdge(edgeData);
-    
+
     let filteredImageData = new ImageData(imageData.width, imageData.height); // Converting the blurred image to image data
 
     for (let i = 0; i < imageData.data.length; i += 4) {
         filteredImageData.data[i] = imageData.data[i] | edgeData.data[i];
-        filteredImageData.data[i + 1] = imageData.data[i+1] | edgeData.data[i + 1];
-        filteredImageData.data[i + 2] = imageData.data[i+2] | edgeData.data[i + 2];
-        filteredImageData.data[i + 3] = imageData.data[i+3];
+        filteredImageData.data[i + 1] = imageData.data[i + 1] | edgeData.data[i + 1];
+        filteredImageData.data[i + 2] = imageData.data[i + 2] | edgeData.data[i + 2];
+        filteredImageData.data[i + 3] = imageData.data[i + 3];
     }
 
     return filteredImageData;
@@ -310,12 +311,39 @@ export const vickySaidThis = (imageData) => {
 
     let windowSize = 5;
 
-    for (let i = 0; i < imageData.data.length; i += 4*windowSize) {
-        filteredData[i] = imageData.data[i];
-        filteredData[i + 1] = imageData.data[i + 1];
-        filteredData[i + 2] = imageData.data[i + 2];
-        filteredData[i + 3] = imageData.data[i + 3];
+    for (let i = 0; i < imageData.height; i += windowSize) {
+        {
+            for (let j = 0; j < imageData.width; j += windowSize) {
+                let r = 0, g = 0, b = 0, a = 0;
+
+                for (let x = i; x <= i + windowSize; x++) {
+                    for (let y = j; y <= j + windowSize; y++) {
+                        if (x >= 0 && x < imageData.height && y >= 0 && y < imageData.width) {
+                            let index2 = (x * imageData.width + y) * 4;
+                            r += imageData.data[index2];
+                            g += imageData.data[index2 + 1];
+                            b += imageData.data[index2 + 2];
+                            // a += imageData.data[index2 + 3];
+                        }
+                    }
+                }
+
+                for (let x = i; x <= i + windowSize; x++) {
+                    for (let y = j; y <= j + windowSize; y++) {
+                        if (x >= 0 && x < imageData.height && y >= 0 && y < imageData.width) {
+                            let index2 = (x * imageData.width + y) * 4;
+                            filteredData[index2] = r / (windowSize * windowSize);
+                            filteredData[index2 + 1] = g / (windowSize * windowSize);
+                            filteredData[index2 + 2] = b / (windowSize * windowSize);
+                            filteredData[index2 + 3] = 255;
+                        }
+                    }
+                }
+            }
+        }
     }
+
+    return filteredImageData;
 }
 
 //=============================== Utility functions ========================================
