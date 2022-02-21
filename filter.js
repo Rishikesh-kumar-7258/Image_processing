@@ -295,7 +295,7 @@ export const toMeanBlur = (imageData, windowSize) => {
 }
 
 
-//=============================== Utility functions ========================================
+//=============================== Utility functions ============================================
 
 
 // Function to find the mean of a matrix
