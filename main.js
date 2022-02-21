@@ -88,7 +88,6 @@ brightnessBtn.addEventListener('change', (e) => {
 let coolBtn = document.querySelector('#cool');
 coolBtn.addEventListener('change', (e) => {
 
-    // warmBtn.value = 0;
     // Getting the current cool value
     let currentCoolValue = parseInt(e.target.value);
 
@@ -190,13 +189,13 @@ let blossomBtn = document.querySelector("#blossom");
 blossomBtn.addEventListener("click", (e) => {
     filteredImg.src = canvas.toDataURL("image/png");
     ctx.filter = toBlossom(originalImageData);
-    ctx.drawImage(filteredImg,0,0);
+    ctx.drawImage(filteredImg, 0, 0);
 })
 
 // Ivory filter
 let ivoryBtn = document.querySelector("#ivory");
 ivoryBtn.addEventListener("click", (e) => {
-    filteredImg.src  = canvas.toDataURL("image/png");
+    filteredImg.src = canvas.toDataURL("image/png");
     ctx.filter = toIvory(originalImageData);
     ctx.drawImage(filteredImg, 0, 0);
 })
@@ -211,10 +210,10 @@ blackwhiteBtn.addEventListener("click", (e) => {
 
 // Classic filter
 let classicBtn = document.querySelector("#classic");
-classicBtn.addEventListener("click", (e) => { 
+classicBtn.addEventListener("click", (e) => {
     filteredImg.src = canvas.toDataURL("image/png");
     ctx.filter = toClassic(originalImageData);
-    ctx.drawImage(filteredImg, 0, 0); 
+    ctx.drawImage(filteredImg, 0, 0);
 })
 
 
@@ -250,13 +249,16 @@ kissmeBtn.addEventListener("click", () => {
     let imageWidth = 100;
     let imageHeight = 70;
 
-    let countI = 0, countJ = 0;
-    for (let i = 0; i < canvas.width; i += imageWidth)
-    {
+    let countI = 0, countJ = 0, kisscount = 0;
+    for (let i = 0; i < canvas.width; i += imageWidth) {
         countI++;
-        for (let j = 0; j < canvas.height; j += imageHeight)
-        {
-            if ((countI+countJ) & 1) ctx.drawImage(lipImage, i, j, imageWidth, imageHeight);
+        for (let j = 0; j < canvas.height; j += imageHeight) {
+            if ((countI + countJ) & 1) {
+                let randomValue = Math.random();
+
+                if (randomValue > 0.5 && i + imageWidth < canvas.width && j + imageHeight < canvas.height && kisscount++ < 10)
+                    ctx.drawImage(lipImage, i, j, imageWidth/2, imageHeight/2);
+            }
             countJ++;
         }
     }
