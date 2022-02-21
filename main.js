@@ -1,5 +1,5 @@
 // Importing functions from filter.js library
-import { toGrayscale, toCool, toWarm, toWeightedGrayscale, toSharpen, toFrost, toVignette, toBlackWhite, toIvory, toFade, toClassic, toSoft, toBlossom, toCartoon, toBlur, vickySaidThis } from "./filter.js";
+import { toGrayscale, toCool, toWarm, toWeightedGrayscale, toSharpen, toFrost, toVignette, toBlackWhite, toIvory, toFade, toClassic, toSoft, toBlossom, toCartoon, toBlur, toBilateral } from "./filter.js";
 
 // console.log("Image processing");
 
@@ -197,13 +197,13 @@ let blossomBtn = document.querySelector("#blossom");
 blossomBtn.addEventListener("click", (e) => {
     filteredImg.src = canvas.toDataURL("image/png");
     ctx.filter = toBlossom(originalImageData);
-    ctx.drawImage(filteredImg,0,0);
+    ctx.drawImage(filteredImg, 0, 0);
 })
 
 // Ivory filter
 let ivoryBtn = document.querySelector("#ivory");
 ivoryBtn.addEventListener("click", (e) => {
-    filteredImg.src  = canvas.toDataURL("image/png");
+    filteredImg.src = canvas.toDataURL("image/png");
     ctx.filter = toIvory(originalImageData);
     ctx.drawImage(filteredImg, 0, 0);
 })
@@ -218,10 +218,10 @@ blackwhiteBtn.addEventListener("click", (e) => {
 
 // Classic filter
 let classicBtn = document.querySelector("#classic");
-classicBtn.addEventListener("click", (e) => { 
+classicBtn.addEventListener("click", (e) => {
     filteredImg.src = canvas.toDataURL("image/png");
     ctx.filter = toClassic(originalImageData);
-    ctx.drawImage(filteredImg, 0, 0); 
+    ctx.drawImage(filteredImg, 0, 0);
 })
 
 
@@ -249,27 +249,24 @@ cartoonBtn.addEventListener("click", () => {
 // Kiss me filter
 let kissmeBtn = document.querySelector("#kissme");
 kissmeBtn.addEventListener("click", () => {
-    
+
     // filteredImageData = toBlur(originalImageData, 50);
     // ctx.putImageData(filteredImageData, 0, 0);
-    
-    let lipImage =new Image();
+
+    let lipImage = new Image();
     lipImage.src = "lips-png-transparent-2.png";
 
     let imageWidth = 100;
     let imageHeight = 70;
 
-    let countI = 0, countJ = 0, kisscount =0;
-    for (let i = 0; i < canvas.width; i += imageWidth)
-    {
+    let countI = 0, countJ = 0, kisscount = 0;
+    for (let i = 0; i < canvas.width; i += imageWidth) {
         countI++;
-        for (let j = 0; j < canvas.height; j += imageHeight)
-        {
-            if ((countI+countJ) & 1) 
-            {
+        for (let j = 0; j < canvas.height; j += imageHeight) {
+            if ((countI + countJ) & 1) {
                 let randomValue = Math.random();
 
-                if (randomValue > 0.5 && i+imageWidth < canvas.width && j+imageHeight < canvas.height && kisscount++ < 10)
+                if (randomValue > 0.5 && i + imageWidth < canvas.width && j + imageHeight < canvas.height && kisscount++ < 10)
                     ctx.drawImage(lipImage, i, j, imageWidth, imageHeight);
             }
             countJ++;
@@ -283,8 +280,14 @@ kissmeBtn.addEventListener("click", () => {
 
 
 // magic filter
-let magicBtn = document.querySelector("#magic");
-magicBtn.addEventListener("click", (e) => { 
-    filteredImageData = vickySaidThis(filteredImageData);
-    ctx.putImageData(filteredImageData, 0, 0);
-})
+// let magicBtn = document.querySelector("#magic");
+// magicBtn.addEventListener("click", (e) => {
+//     let src = cv.imread('canvas');
+//     let dst = new cv.Mat();
+//     cv.cvtColor(src, src, cv.COLOR_RGBA2RGB, 0);
+//     // You can try more different parameters
+//     cv.bilateralFilter(src, dst, 3, 75, 75, cv.BORDER_DEFAULT);
+//     cv.imshow('canvas', dst);
+//     src.delete(); dst.delete();
+
+// })

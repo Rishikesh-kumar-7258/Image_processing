@@ -243,7 +243,7 @@ export const toEdge = (imageData) => {
 
     // converting the image to grayscale
     cv.cvtColor(edgeMat, edgeMat, cv.COLOR_RGBA2GRAY, 0);
-    cv.Canny(edgeMat, edgeMat, 50, 100, 3.5, false);
+    cv.Canny(edgeMat, edgeMat, 25, 50, 3, false);
     cv.cvtColor(edgeMat, edgeMat, cv.COLOR_GRAY2RGBA);
 
     let filteredImageData = new ImageData(imageData.width, imageData.height); // Converting the blurred image to image data
@@ -254,18 +254,20 @@ export const toEdge = (imageData) => {
 
 export const toCartoon = (imageData) => {
 
-    let edgeData = toBlur(imageData, 8);
-    // let edgeData = vickySaidThis(imageData);
-    // console.log(edgeData);
+    let edgeData = toBlur(imageData, 6);
     edgeData = toEdge(edgeData);
+    edgeData = vickySaidThis(edgeData);
+    console.log(edgeData);
 
     let filteredImageData = new ImageData(imageData.width, imageData.height); // Converting the blurred image to image data
+    imageData = toSharpen(imageData);
 
-    for (let i = 0; i < imageData.data.length; i += 4) {
+    for (let i = 0; i < edgeData.data.length; i += 4) {
+        
         filteredImageData.data[i] = imageData.data[i] | edgeData.data[i];
         filteredImageData.data[i + 1] = imageData.data[i + 1] | edgeData.data[i + 1];
         filteredImageData.data[i + 2] = imageData.data[i + 2] | edgeData.data[i + 2];
-        filteredImageData.data[i + 3] = imageData.data[i + 3];
+        filteredImageData.data[i + 3] = imageData.data[i + 3] | edgeData.data[i + 3];
     }
 
     return filteredImageData;
@@ -309,7 +311,7 @@ export const vickySaidThis = (imageData) => {
     let filteredImageData = new ImageData(imageData.width, imageData.height);
     let filteredData = filteredImageData.data;
 
-    let windowSize = 5;
+    let windowSize = 3;
 
     for (let i = 0; i < imageData.height; i += windowSize) {
         {
@@ -346,19 +348,24 @@ export const vickySaidThis = (imageData) => {
     return filteredImageData;
 }
 
+export const toBilateral = (imageData) => 
+{
+    let originalMat = new cv.matFromImageData(imageData);
+    let bilMat = new cv.Mat();
+
+    originalMat.convertTo(bilMat, cv.CV_8UC4, 1, 0);
+
+    cv.cvtColor(bilMat, bilMat, cv.COLOR_RGBA2RGB);
+    cv.bilateralFilter(originalMat, bilMat, 11, 75, 75, cv.BORDER_DEFAULT);
+    cv.cvtColor(bilMat, bilMat, cv.COLOR_RGB2RGBA);
+
+    let filteredImageData = new ImageData(imageData.width, imageData.height); // Converting the blurred image to image data
+    filteredImageData.data.set(bilMat.data);
+
+    return filteredImageData;
+}
+
 //=============================== Utility functions ========================================
 
 
 const trucate = (value) => Math.min(255, Math.max(0, value));
-
-function imageDataToImage(imagedata) {
-    var canvas = document.createElement('canvas');
-    var ctx = canvas.getContext('2d');
-    canvas.width = imagedata.width;
-    canvas.height = imagedata.height;
-    ctx.putImageData(imagedata, 0, 0);
-
-    var image = new Image();
-    image.src = canvas.toDataURL();
-    return image;
-}
