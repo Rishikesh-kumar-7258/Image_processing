@@ -256,7 +256,7 @@ kissmeBtn.addEventListener("click", () => {
             if ((countI + countJ) & 1) {
                 let randomValue = Math.random();
 
-                if (randomValue > 0.5 && i + imageWidth < canvas.width && j + imageHeight < canvas.height && kisscount++ < 10)
+                if (randomValue > 0.5 && i + imageWidth < canvas.width && j + imageHeight < canvas.height && kisscount++ < 100000)
                     ctx.drawImage(lipImage, i, j, imageWidth/2, imageHeight/2);
             }
             countJ++;
