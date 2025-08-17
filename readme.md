@@ -1,70 +1,183 @@
-# Image Processing Project (ZeroH Labs)
+# 🖼️ Image Processing Web App
 
-This project showcases core **image processing techniques** implemented in JavaScript, using OpenCV in the browser (`opencv.js`) and custom filters. It enables real-time filter application and image manipulation via a web interface.
-
-## Demo
-
-Open `index.html` in a modern browser to interact with your filters and view the processed results in real time.
+A browser-based image processing tool built with **JavaScript**, **HTML5 Canvas**, and **OpenCV.js**. This app allows users to apply various filters, transformations, and detection algorithms to images in real time — all without needing to install any software.
 
 ---
 
-## Repository Structure
+## 🚀 Features
+
+-   📸 Upload and display images directly in the browser
+-   🎨 Apply real-time image filters:
+    -   Grayscale
+    -   Thresholding
+    -   Inversion
+    -   Brightness adjustment
+    -   Blurring
+-   🧠 Perform advanced image processing:
+    -   Edge detection (Canny)
+    -   Contour detection
+-   🕹️ Interactive UI to control filter parameters
+-   🧰 Built with `opencv.js` for high-performance computer vision in the browser
+
+---
+
+## 🗂️ Project Structure
+
+```
 
 Image_processing/
-├── index.html ← Main web interface
-├── index.css ← Styles and layout
-├── main.js ← Application logic and event handling
-├── filter.js ← Custom filter implementations
-├── opencv.js ← OpenCV compiled for browser use
-└── lips-png-transparent-2.png ← Sample image asset
+├── index.html # Main interface
+├── index.css # Stylesheet
+├── main.js # Core logic and event handling
+├── filter.js # Filter implementations
+├── opencv.js # OpenCV compiled for browser
+└── lips-png-transparent-2.png # Sample image asset
+
+```
 
 ---
 
-## Image Processing Features & Algorithms
+## 🧪 Image Processing Algorithms
 
-Here's where you can list methods you've implemented. Example placeholders:
+### ✅ Basic Filters (`filter.js`)
 
-### `filter.js`
+-   **Grayscale**
+    ```js
+    applyGrayscale();
+    ```
 
--   `applyGrayscale()` — Converts images to grayscale.
--   `applyThreshold(thresholdValue)` — Applies binary thresholding to highlight features.
--   `invertColors()` — Inverts pixel colors for negative effect.
--   `adjustBrightness(amount)` — Increase or decrease image brightness.
--   `applyBlur(radius)` — Applies Gaussian or box blur to smooth image.
+Converts the image to shades of gray.
 
-### `main.js`
+-   **Thresholding**
 
--   `loadImage()` — Handles image upload/display and integration with `opencv.js`.
--   `detectEdges()` — Uses OpenCV’s Canny edge detection.
--   `detectContours()` — Finds and draws contours using OpenCV functions.
--   `applyCustomFilter()` — Runs filters from `filter.js` on the canvas.
--   `resetImage()` — Restores the original image state.
--   UI controls for selecting filters, adjusting parameters, and real-time updates.
+    ```js
+    applyThreshold(thresholdValue);
+    ```
 
-_(Adapt this list to reflect the actual functions you’ve written in your files.)_
+    Converts to a binary black-and-white image based on pixel intensity.
+
+-   **Invert Colors**
+
+    ```js
+    invertColors();
+    ```
+
+    Creates a negative of the original image by inverting pixel values.
+
+-   **Brightness Adjustment**
+
+    ```js
+    adjustBrightness(amount);
+    ```
+
+    Increases or decreases brightness based on a user-defined amount.
+
+-   **Blurring**
+
+    ```js
+    applyBlur(radius);
+    ```
+
+    Smooths the image using a Gaussian blur.
 
 ---
 
-## How to Use
+### 🧠 Advanced Processing (`main.js`)
 
-1. Clone the repository:
+-   **Load Image**
+
+    ```js
+    loadImage();
+    ```
+
+    Loads user-uploaded or sample image onto canvas.
+
+-   **Canny Edge Detection**
+
+    ```js
+    detectEdges();
+    ```
+
+    Highlights strong gradients using OpenCV's Canny algorithm.
+
+-   **Contour Detection**
+
+    ```js
+    detectContours();
+    ```
+
+    Finds object outlines using OpenCV contour detection.
+
+-   **Reset Image**
+
+    ```js
+    resetImage();
+    ```
+
+    Reverts canvas to the original state.
+
+-   **Apply Custom Filter**
+
+    ```js
+    applyCustomFilter();
+    ```
+
+    Binds filters from `filter.js` to UI interaction.
+
+---
+
+## 💻 How to Run
+
+1. **Clone the repo**
 
     ```bash
     git clone https://github.com/Rishikesh-kumar-7258/Image_processing.git
     cd Image_processing
-
     ```
 
-2. Open in browser
-   open index.html
+2. **Open `index.html`** in any modern browser (Chrome, Firefox, Edge).
 
-3. Interact with the UI to:
+    Or use a local development server:
 
-````Load your own image or use the sample.
-Choose and apply filters.
+    ```bash
+    npx serve .
+    ```
 
-See real-time processing results (e.g., edge detection, contours).
+3. **Upload an image**, choose a filter, and watch it work in real time!
 
-Adjust filter parameters (thresholds, blur radius, brightness, etc.).```
+---
 
-````
+## 🔧 Technologies Used
+
+-   ✅ **Vanilla JavaScript**
+-   ✅ **OpenCV.js (WebAssembly version)**
+-   ✅ **HTML5 Canvas**
+-   ✅ **CSS for UI Styling**
+
+---
+
+## 📈 Ideas for Improvement
+
+-   Add convolution filters like sharpen or emboss
+-   Enable chaining multiple filters
+-   Integrate webcam live feed processing
+-   Allow export/download of processed images
+-   Add thumbnails/previews of filter effects
+-   Support drag-and-drop image upload
+
+---
+
+## 🧑‍💻 Author
+
+**Rishikesh Kumar**
+GitHub: [@Rishikesh-kumar-7258](https://github.com/Rishikesh-kumar-7258)
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+> ⚠️ Make sure `opencv.js` is properly loaded before using advanced features like contour detection or edge detection.
